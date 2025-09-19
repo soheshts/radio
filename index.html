@@ -1,16 +1,507 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Radio Player</title>
-  <link rel="manifest" href="manifest.json">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radio Wave - PWA Radio Player</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#6366F1">
+    <meta name="description" content="Modern PWA Radio Player">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%236366F1'/><circle cx='50' cy='50' r='30' fill='white'/><circle cx='50' cy='50' r='15' fill='%236366F1'/></svg>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .radio-player {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #6366F1, #8B5CF6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo::before {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, #6366F1, #8B5CF6);
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        h1 {
+            color: #1f2937;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #6b7280;
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+
+        .station-selector {
+            margin-bottom: 30px;
+        }
+
+        select {
+            width: 100%;
+            padding: 16px 20px;
+            font-size: 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            background: white;
+            color: #1f2937;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 12px center;
+            background-repeat: no-repeat;
+            background-size: 16px;
+            padding-right: 48px;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #6366F1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .control-btn {
+            width: 64px;
+            height: 64px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .play-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
+        }
+
+        .play-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(16, 185, 129, 0.5);
+        }
+
+        .play-btn:active {
+            transform: translateY(0);
+        }
+
+        .pause-btn {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            box-shadow: 0 10px 25px rgba(239, 68, 68, 0.4);
+        }
+
+        .pause-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(239, 68, 68, 0.5);
+        }
+
+        .pause-btn:active {
+            transform: translateY(0);
+        }
+
+        .status {
+            padding: 20px;
+            background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+            border-radius: 16px;
+            margin-bottom: 20px;
+        }
+
+        .now-playing {
+            color: #374151;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .station-name {
+            color: #1f2937;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .volume-control {
+            margin-top: 20px;
+        }
+
+        .volume-slider {
+            width: 100%;
+            height: 6px;
+            background: #e5e7eb;
+            border-radius: 3px;
+            outline: none;
+            appearance: none;
+            cursor: pointer;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, #6366F1, #8B5CF6);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(99, 102, 241, 0.3);
+        }
+
+        .volume-slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, #6366F1, #8B5CF6);
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 4px 8px rgba(99, 102, 241, 0.3);
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 50%;
+            border-top-color: #6366F1;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .error {
+            color: #ef4444;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 480px) {
+            .radio-player {
+                padding: 30px 25px;
+                margin: 10px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .control-btn {
+                width: 56px;
+                height: 56px;
+                font-size: 20px;
+            }
+        }
+
+        .install-prompt {
+            background: linear-gradient(135deg, #6366F1, #8B5CF6);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            cursor: pointer;
+            border: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .install-prompt:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .install-prompt.hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-  <h1>My Radio PWA</h1>
-  <select id="stationList"></select>
-  <br><br>
-  <audio id="player" controls autoplay></audio>
+    <div class="radio-player">
+        <div class="logo"></div>
+        <h1>Radio Wave</h1>
+        <p class="subtitle">Your favorite stations</p>
+        
+        <div class="station-selector">
+            <select id="stationSelect">
+                <option value="">Select a station...</option>
+            </select>
+        </div>
+        
+        <div class="controls">
+            <button class="control-btn play-btn" id="playBtn">▶</button>
+            <button class="control-btn pause-btn" id="pauseBtn">⏸</button>
+        </div>
+        
+        <div class="status">
+            <div class="now-playing">Now Playing</div>
+            <div class="station-name" id="stationName">Select a station to begin</div>
+        </div>
+        
+        <div class="volume-control">
+            <input type="range" min="0" max="100" value="70" class="volume-slider" id="volumeSlider">
+        </div>
+        
+        <div class="error" id="errorMessage"></div>
+        
+        <button class="install-prompt hidden" id="installBtn">
+            📱 Install Radio Wave
+        </button>
+    </div>
 
-  <script src="app.js"></script>
+    <audio id="audioPlayer" preload="none"></audio>
+
+    <script>
+        class RadioPlayer {
+            constructor() {
+                this.audio = document.getElementById('audioPlayer');
+                this.stationSelect = document.getElementById('stationSelect');
+                this.playBtn = document.getElementById('playBtn');
+                this.pauseBtn = document.getElementById('pauseBtn');
+                this.stationName = document.getElementById('stationName');
+                this.volumeSlider = document.getElementById('volumeSlider');
+                this.errorMessage = document.getElementById('errorMessage');
+                this.installBtn = document.getElementById('installBtn');
+                
+                this.stations = [];
+                this.currentStation = null;
+                this.deferredPrompt = null;
+                
+                this.init();
+            }
+            
+            async init() {
+                await this.loadStations();
+                this.setupEventListeners();
+                this.setupPWA();
+                this.setupAudio();
+            }
+            
+            async loadStations() {
+                try {
+                    // Create default stations if stations.json doesn't exist
+                    const defaultStations = [
+                        { name: "BBC Radio 1", url: "http://stream.live.vc.bbcmedia.co.uk/bbc_radio_one" },
+                        { name: "NPR News", url: "https://npr-ice.streamguys1.com/live.mp3" },
+                        { name: "Classic FM", url: "http://media-ice.musicradio.com/ClassicFMMP3" },
+                        { name: "Jazz FM", url: "https://edge-bauerall-01-gos2.sharp-stream.com/jazzfm.mp3" },
+                        { name: "Smooth Radio", url: "http://media-ice.musicradio.com/SmoothUKMP3" }
+                    ];
+                    
+                    let stations;
+                    try {
+                        const response = await fetch('stations.json');
+                        if (response.ok) {
+                            stations = await response.json();
+                        } else {
+                            stations = defaultStations;
+                        }
+                    } catch {
+                        stations = defaultStations;
+                    }
+                    
+                    this.stations = stations;
+                    this.populateStations();
+                } catch (error) {
+                    console.error('Error loading stations:', error);
+                    this.showError('Failed to load radio stations');
+                }
+            }
+            
+            populateStations() {
+                this.stationSelect.innerHTML = '<option value="">Select a station...</option>';
+                this.stations.forEach((station, index) => {
+                    const option = document.createElement('option');
+                    option.value = index;
+                    option.textContent = station.name;
+                    this.stationSelect.appendChild(option);
+                });
+            }
+            
+            setupEventListeners() {
+                this.playBtn.addEventListener('click', () => this.play());
+                this.pauseBtn.addEventListener('click', () => this.pause());
+                this.stationSelect.addEventListener('change', (e) => this.selectStation(e.target.value));
+                this.volumeSlider.addEventListener('input', (e) => this.setVolume(e.target.value));
+                this.installBtn.addEventListener('click', () => this.installPWA());
+            }
+            
+            setupAudio() {
+                this.audio.volume = 0.7;
+                
+                this.audio.addEventListener('loadstart', () => {
+                    this.stationName.innerHTML = '<span class="loading"></span> Loading...';
+                    this.clearError();
+                });
+                
+                this.audio.addEventListener('canplay', () => {
+                    if (this.currentStation) {
+                        this.stationName.textContent = this.currentStation.name;
+                    }
+                });
+                
+                this.audio.addEventListener('error', (e) => {
+                    this.showError('Failed to load radio stream');
+                    this.stationName.textContent = 'Error loading station';
+                });
+                
+                this.audio.addEventListener('ended', () => {
+                    // Radio streams shouldn't end, but if they do, try to reconnect
+                    setTimeout(() => {
+                        if (this.currentStation && !this.audio.paused) {
+                            this.audio.play();
+                        }
+                    }, 2000);
+                });
+            }
+            
+            selectStation(index) {
+                if (index === '') {
+                    this.currentStation = null;
+                    this.stationName.textContent = 'Select a station to begin';
+                    this.pause();
+                    return;
+                }
+                
+                this.currentStation = this.stations[index];
+                this.audio.src = this.currentStation.url;
+                this.stationName.textContent = this.currentStation.name;
+                this.clearError();
+            }
+            
+            async play() {
+                if (!this.currentStation) {
+                    this.showError('Please select a station first');
+                    return;
+                }
+                
+                try {
+                    await this.audio.play();
+                    this.clearError();
+                } catch (error) {
+                    this.showError('Failed to play audio. Please try another station.');
+                }
+            }
+            
+            pause() {
+                this.audio.pause();
+                this.clearError();
+            }
+            
+            setVolume(value) {
+                this.audio.volume = value / 100;
+            }
+            
+            showError(message) {
+                this.errorMessage.textContent = message;
+            }
+            
+            clearError() {
+                this.errorMessage.textContent = '';
+            }
+            
+            setupPWA() {
+                // Register service worker
+                if ('serviceWorker' in navigator) {
+                    navigator.serviceWorker.register('service-worker.js')
+                        .then(registration => console.log('SW registered'))
+                        .catch(error => console.log('SW registration failed'));
+                }
+                
+                // Handle install prompt
+                window.addEventListener('beforeinstallprompt', (e) => {
+                    e.preventDefault();
+                    this.deferredPrompt = e;
+                    this.installBtn.classList.remove('hidden');
+                });
+                
+                window.addEventListener('appinstalled', () => {
+                    this.installBtn.classList.add('hidden');
+                    this.deferredPrompt = null;
+                });
+            }
+            
+            async installPWA() {
+                if (!this.deferredPrompt) return;
+                
+                this.deferredPrompt.prompt();
+                const result = await this.deferredPrompt.userChoice;
+                
+                if (result.outcome === 'accepted') {
+                    this.installBtn.classList.add('hidden');
+                }
+                
+                this.deferredPrompt = null;
+            }
+        }
+        
+        // Initialize the radio player when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            new RadioPlayer();
+        });
+    </script>
 </body>
 </html>
