@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Radio Wave - PWA Radio Player</title>
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="./manifest.json">
     <meta name="theme-color" content="#6366F1">
     <meta name="description" content="Modern PWA Radio Player">
     <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%236366F1'/><circle cx='50' cy='50' r='30' fill='white'/><circle cx='50' cy='50' r='15' fill='%236366F1'/></svg>">
@@ -132,34 +132,29 @@
             overflow: hidden;
         }
 
-        .play-btn {
+        .toggle-btn {
             background: linear-gradient(135deg, #10b981, #059669);
             color: white;
             box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
+            transition: all 0.3s ease;
         }
 
-        .play-btn:hover {
+        .toggle-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 15px 35px rgba(16, 185, 129, 0.5);
         }
 
-        .play-btn:active {
+        .toggle-btn:active {
             transform: translateY(0);
         }
 
-        .pause-btn {
+        .toggle-btn.playing {
             background: linear-gradient(135deg, #ef4444, #dc2626);
-            color: white;
             box-shadow: 0 10px 25px rgba(239, 68, 68, 0.4);
         }
 
-        .pause-btn:hover {
-            transform: translateY(-2px);
+        .toggle-btn.playing:hover {
             box-shadow: 0 15px 35px rgba(239, 68, 68, 0.5);
-        }
-
-        .pause-btn:active {
-            transform: translateY(0);
         }
 
         .status {
@@ -292,8 +287,7 @@
         </div>
         
         <div class="controls">
-            <button class="control-btn play-btn" id="playBtn">▶</button>
-            <button class="control-btn pause-btn" id="pauseBtn">⏸</button>
+            <button class="control-btn toggle-btn" id="toggleBtn">▶</button>
         </div>
         
         <div class="status">
@@ -319,8 +313,7 @@
             constructor() {
                 this.audio = document.getElementById('audioPlayer');
                 this.stationSelect = document.getElementById('stationSelect');
-                this.playBtn = document.getElementById('playBtn');
-                this.pauseBtn = document.getElementById('pauseBtn');
+                this.toggleBtn = document.getElementById('toggleBtn');
                 this.stationName = document.getElementById('stationName');
                 this.volumeSlider = document.getElementById('volumeSlider');
                 this.errorMessage = document.getElementById('errorMessage');
@@ -329,6 +322,7 @@
                 this.stations = [];
                 this.currentStation = null;
                 this.deferredPrompt = null;
+                this.isPlaying = false;
                 
                 this.init();
             }
@@ -353,13 +347,16 @@
                     
                     let stations;
                     try {
-                        const response = await fetch('stations.json');
+                        const response = await fetch('./stations.json');
                         if (response.ok) {
                             stations = await response.json();
+                            console.log('Loaded stations from stations.json');
                         } else {
+                            console.log('stations.json not found, using default stations');
                             stations = defaultStations;
                         }
-                    } catch {
+                    } catch (error) {
+                        console.log('Failed to fetch stations.json, using default stations:', error.message);
                         stations = defaultStations;
                     }
                     
@@ -382,8 +379,7 @@
             }
             
             setupEventListeners() {
-                this.playBtn.addEventListener('click', () => this.play());
-                this.pauseBtn.addEventListener('click', () => this.pause());
+                this.toggleBtn.addEventListener('click', () => this.togglePlayPause());
                 this.stationSelect.addEventListener('change', (e) => this.selectStation(e.target.value));
                 this.volumeSlider.addEventListener('input', (e) => this.setVolume(e.target.value));
                 this.installBtn.addEventListener('click', () => this.installPWA());
@@ -408,11 +404,23 @@
                     this.stationName.textContent = 'Error loading station';
                 });
                 
+                this.audio.addEventListener('play', () => {
+                    this.isPlaying = true;
+                    this.updateToggleButton();
+                });
+                
+                this.audio.addEventListener('pause', () => {
+                    this.isPlaying = false;
+                    this.updateToggleButton();
+                });
+                
                 this.audio.addEventListener('ended', () => {
+                    this.isPlaying = false;
+                    this.updateToggleButton();
                     // Radio streams shouldn't end, but if they do, try to reconnect
                     setTimeout(() => {
-                        if (this.currentStation && !this.audio.paused) {
-                            this.audio.play();
+                        if (this.currentStation) {
+                            this.play();
                         }
                     }, 2000);
                 });
@@ -430,6 +438,24 @@
                 this.audio.src = this.currentStation.url;
                 this.stationName.textContent = this.currentStation.name;
                 this.clearError();
+            }
+            
+            togglePlayPause() {
+                if (this.isPlaying) {
+                    this.pause();
+                } else {
+                    this.play();
+                }
+            }
+            
+            updateToggleButton() {
+                if (this.isPlaying) {
+                    this.toggleBtn.innerHTML = '⏸';
+                    this.toggleBtn.classList.add('playing');
+                } else {
+                    this.toggleBtn.innerHTML = '▶';
+                    this.toggleBtn.classList.remove('playing');
+                }
             }
             
             async play() {
@@ -466,9 +492,13 @@
             setupPWA() {
                 // Register service worker
                 if ('serviceWorker' in navigator) {
-                    navigator.serviceWorker.register('service-worker.js')
-                        .then(registration => console.log('SW registered'))
-                        .catch(error => console.log('SW registration failed'));
+                    navigator.serviceWorker.register('./service-worker.js')
+                        .then(registration => {
+                            console.log('Service Worker registered successfully');
+                        })
+                        .catch(error => {
+                            console.log('Service Worker registration failed (this is normal if files are not present):', error.message);
+                        });
                 }
                 
                 // Handle install prompt
