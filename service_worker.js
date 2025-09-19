@@ -2,8 +2,8 @@ const CACHE_NAME = 'radio-wave-v1';
 const urlsToCache = [
   '/',
   '/index.html',
-  '/manifest.json',
-  '/stations.json'
+  '/manifest_json.json',
+  '/stations_json.json'
 ];
 
 // Install event - cache resources
