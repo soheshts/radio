@@ -2,7 +2,7 @@
   "name": "Radio Wave - PWA Radio Player",
   "short_name": "Radio Wave",
   "description": "Modern PWA Radio Player for streaming your favorite radio stations",
-  "start_url": "/",
+  "start_url": "/radio",
   "display": "standalone",
   "background_color": "#667eea",
   "theme_color": "#6366F1",
