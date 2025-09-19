@@ -4,8 +4,24 @@
     "url": "https://radio.auralradiokerala.com:1305/stream"
   },
   {
-    "name": "NPR News",
-    "url": "https://npr-ice.streamguys1.com/live.mp3"
+    "name": "RP Main",
+    "url": "http://stream.radioparadise.com/flac"
+  },
+  {
+    "name": "RP Rock",
+    "url": "http://stream.radioparadise.com/rock-flac"
+  },
+  {
+    "name": "RP Global",
+    "url": "http://stream.radioparadise.com/global-flac"
+  },
+  {
+    "name": "BDPST",
+    "url": "https://s2.audiostream.hu/bdpstrock_FLAC"
+  },
+  {
+    "name": "Radio Calico",
+    "url": "http://radio3.radio-calico.com:8080/calico"
   },
   {
     "name": "Classic FM",
