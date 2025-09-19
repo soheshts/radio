@@ -338,21 +338,19 @@
                 try {
                     // Create default stations if stations.json doesn't exist
                     const defaultStations = [
-                        { name: "BBC Radio 1", url: "http://stream.live.vc.bbcmedia.co.uk/bbc_radio_one" },
-                        { name: "NPR News", url: "https://npr-ice.streamguys1.com/live.mp3" },
+                        { name: "Aural Radio Kerala", url: "https://radio.auralradiokerala.com:1305/stream" },
                         { name: "Classic FM", url: "http://media-ice.musicradio.com/ClassicFMMP3" },
-                        { name: "Jazz FM", url: "https://edge-bauerall-01-gos2.sharp-stream.com/jazzfm.mp3" },
-                        { name: "Smooth Radio", url: "http://media-ice.musicradio.com/SmoothUKMP3" }
+                        
                     ];
                     
                     let stations;
                     try {
-                        const response = await fetch('./stations.json');
+                        const response = await fetch('./stations_json.json');
                         if (response.ok) {
                             stations = await response.json();
-                            console.log('Loaded stations from stations.json');
+                            console.log('Loaded stations from stations_json.json');
                         } else {
-                            console.log('stations.json not found, using default stations');
+                            console.log('stations_json.json not found, using default stations');
                             stations = defaultStations;
                         }
                     } catch (error) {
