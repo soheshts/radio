@@ -298,7 +298,6 @@
         
         <div class="language-selector">
             <select id="languageSelect">
-                <option value="">Select language...</option>
             </select>
         </div>
         
@@ -533,15 +532,12 @@
             }
             
             selectLanguage(languageKey) {
-                if (languageKey === '') {
-                    this.stationSelect.innerHTML = '<option value="">Select a language first...</option>';
-                    this.stationSelect.disabled = true;
-                    this.pause();
-                    this.currentStation = null;
-                    this.stationName.textContent = 'Select a language first';
-                    return;
-                }
+                // Stop current playback when switching languages
+                this.pause();
+                this.currentStation = null;
+                this.stationName.textContent = 'Loading stations...';
                 
+                // Load stations for the selected language
                 this.loadStationsForLanguage(languageKey);
             }
             
