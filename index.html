@@ -539,7 +539,13 @@
                 
                 // Load stations for the selected language
                 this.loadStationsForLanguage(languageKey);
-                this.play();
+                 // Auto-select and play first station after a short delay to ensure stations are loaded
+                    setTimeout(() => {
+                        if (this.stations.length > 0) {
+                            this.stationSelect.value = '0'; // Select first station
+                            this.selectStation('0'); // This will auto-play
+                        }
+                    }, 500);
             }
             
             selectStation(index) {
