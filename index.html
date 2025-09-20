@@ -314,7 +314,7 @@
         
         <div class="status">
             <div class="now-playing">Now Playing</div>
-            <div class="station-name" id="stationName">Select a station to begin</div>
+            <div class="station-name" id="stationName">Starting Malayalam radio...</div>
         </div>
         
         <div class="volume-control">
@@ -356,14 +356,17 @@
                 this.setupEventListeners();
                 this.setupPWA();
                 this.setupAudio();
+                
+                // Auto-select Malayalam and load first station
+                await this.autoStartMalayalam();
             }
             
             async loadLanguages() {
                 try {
                     // Define available language files
                     this.languages = {
-                        'english': { name: 'English', file: 'stations_english.json' },
                         'malayalam': { name: 'മലയാളം (Malayalam)', file: 'stations_malayalam.json' },
+                        'english': { name: 'English', file: 'stations_english.json' },
                         'tamil': { name: 'தமிழ் (Tamil)', file: 'stations_tamil.json' },
                         'hindi': { name: 'हिन्दी (Hindi)', file: 'stations_hindi.json' }
                     };
@@ -458,6 +461,26 @@
                     this.stationSelect.appendChild(option);
                 });
                 this.stationSelect.disabled = false;
+            }
+            
+            async autoStartMalayalam() {
+                try {
+                    // Set Malayalam as default language
+                    this.languageSelect.value = 'malayalam';
+                    
+                    // Load Malayalam stations
+                    await this.loadStationsForLanguage('malayalam');
+                    
+                    // Auto-select and play first station after a short delay to ensure stations are loaded
+                    setTimeout(() => {
+                        if (this.stations.length > 0) {
+                            this.stationSelect.value = '0'; // Select first station
+                            this.selectStation('0'); // This will auto-play
+                        }
+                    }, 500);
+                } catch (error) {
+                    console.error('Error auto-starting Malayalam:', error);
+                }
             }
             
             setupEventListeners() {
