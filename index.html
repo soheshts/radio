@@ -586,8 +586,9 @@
             
             async play() {
                 if (!this.currentStation) {
-                    this.showError('Please select a station first');
-                    return;
+                    this.selectStation('0');
+                    //this.showError('Please select a station first');
+                   // return;
                 }
                 
                 try {
