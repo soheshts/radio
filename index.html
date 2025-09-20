@@ -5,54 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Radio Wave - PWA Radio Player</title>
     <link rel="manifest" href="./manifest_json.json">
-    <meta name="theme-color" content="#6750A4">
+    <meta name="theme-color" content="#FF6B35">
     <meta name="description" content="Modern PWA Radio Player">
-    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%236750A4'/><circle cx='50' cy='50' r='30' fill='white'/><circle cx='50' cy='50' r='15' fill='%236750A4'/></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23FF6B35'/><circle cx='50' cy='50' r='30' fill='white'/><circle cx='50' cy='50' r='15' fill='%23FF6B35'/></svg>">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
     <style>
-        :root {
-            /* Material 3 Color Tokens */
-            --md-sys-color-primary: #6750A4;
-            --md-sys-color-on-primary: #FFFFFF;
-            --md-sys-color-primary-container: #EADDFF;
-            --md-sys-color-on-primary-container: #21005D;
-            --md-sys-color-secondary: #625B71;
-            --md-sys-color-on-secondary: #FFFFFF;
-            --md-sys-color-secondary-container: #E8DEF8;
-            --md-sys-color-on-secondary-container: #1D192B;
-            --md-sys-color-tertiary: #7D5260;
-            --md-sys-color-on-tertiary: #FFFFFF;
-            --md-sys-color-tertiary-container: #FFD8E4;
-            --md-sys-color-on-tertiary-container: #31111D;
-            --md-sys-color-error: #BA1A1A;
-            --md-sys-color-on-error: #FFFFFF;
-            --md-sys-color-error-container: #FFDAD6;
-            --md-sys-color-on-error-container: #410002;
-            --md-sys-color-background: #FFFBFE;
-            --md-sys-color-on-background: #1C1B1F;
-            --md-sys-color-surface: #FFFBFE;
-            --md-sys-color-on-surface: #1C1B1F;
-            --md-sys-color-surface-variant: #E7E0EC;
-            --md-sys-color-on-surface-variant: #49454F;
-            --md-sys-color-outline: #79747E;
-            --md-sys-color-outline-variant: #CAC4D0;
-            --md-sys-color-surface-container: #F3EDF7;
-            --md-sys-color-surface-container-high: #ECE6F0;
-            --md-sys-color-surface-container-highest: #E6E0E9;
-            --md-sys-color-inverse-surface: #313033;
-            --md-sys-color-inverse-on-surface: #F4EFF4;
-            --md-sys-color-inverse-primary: #D0BCFF;
-            
-            /* Material 3 Elevation */
-            --md-sys-elevation-level0: 0px 0px 0px 0px rgba(0, 0, 0, 0.00), 0px 0px 0px 0px rgba(0, 0, 0, 0.00);
-            --md-sys-elevation-level1: 0px 1px 2px 0px rgba(0, 0, 0, 0.30), 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
-            --md-sys-elevation-level2: 0px 1px 2px 0px rgba(0, 0, 0, 0.30), 0px 2px 6px 2px rgba(0, 0, 0, 0.15);
-            --md-sys-elevation-level3: 0px 1px 3px 0px rgba(0, 0, 0, 0.30), 0px 4px 8px 3px rgba(0, 0, 0, 0.15);
-            --md-sys-elevation-level4: 0px 2px 3px 0px rgba(0, 0, 0, 0.30), 0px 6px 10px 4px rgba(0, 0, 0, 0.15);
-            --md-sys-elevation-level5: 0px 4px 4px 0px rgba(0, 0, 0, 0.30), 0px 8px 12px 6px rgba(0, 0, 0, 0.15);
-        }
-
         * {
             margin: 0;
             padding: 0;
@@ -61,60 +19,48 @@
 
         body {
             font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, var(--md-sys-color-primary-container) 0%, var(--md-sys-color-tertiary-container) 100%);
+            background: linear-gradient(135deg, #000000 0%, #1A0A00 50%, #2D1200 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 24px;
-            color: var(--md-sys-color-on-background);
+            color: #FFFFFF;
         }
 
         .radio-player {
-            background: var(--md-sys-color-surface-container);
+            background: #121212;
             border-radius: 28px;
             padding: 32px;
-            box-shadow: var(--md-sys-elevation-level3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 107, 53, 0.1);
             width: 100%;
             max-width: 400px;
             text-align: center;
             position: relative;
-            overflow: hidden;
-        }
-
-        .radio-player::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--md-sys-color-primary), var(--md-sys-color-tertiary));
-            border-radius: 28px 28px 0 0;
+            border-top: 3px solid #FF6B35;
         }
 
         .logo {
             width: 72px;
             height: 72px;
             margin: 0 auto 24px;
-            background: var(--md-sys-color-primary);
+            background: linear-gradient(135deg, #FF6B35, #FF8A50);
             border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
-            box-shadow: var(--md-sys-elevation-level2);
-            transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+            box-shadow: 0 4px 16px rgba(255, 107, 53, 0.4);
+            transition: all 0.3s ease;
         }
 
         .logo:hover {
             transform: scale(1.05);
-            box-shadow: var(--md-sys-elevation-level4);
+            box-shadow: 0 8px 24px rgba(255, 107, 53, 0.6);
         }
 
         .logo .material-symbols-outlined {
             font-size: 36px;
-            color: var(--md-sys-color-on-primary);
+            color: #000000;
             animation: pulse 2s infinite;
         }
 
@@ -124,7 +70,7 @@
         }
 
         h1 {
-            color: var(--md-sys-color-on-surface);
+            color: #FFFFFF;
             font-size: 32px;
             font-weight: 700;
             margin-bottom: 8px;
@@ -132,191 +78,162 @@
         }
 
         .subtitle {
-            color: var(--md-sys-color-on-surface-variant);
+            color: #CCCCCC;
             font-size: 16px;
             font-weight: 500;
             margin-bottom: 32px;
-            letter-spacing: 0.1px;
         }
 
+        /* Language Segmented Buttons */
         .language-selector {
             margin-bottom: 24px;
-        }
-        
-        .station-selector {
-            margin-bottom: 32px;
-        }
-
-        .input-container {
-            position: relative;
         }
 
         .segmented-buttons {
             display: flex;
-            border-radius: 20px;
-            background: var(--md-sys-color-surface-variant);
+            border-radius: 16px;
+            background: #1E1E1E;
             padding: 4px;
             gap: 0;
-            overflow: hidden;
-            border: 1px solid var(--md-sys-color-outline-variant);
+            border: 1px solid #333333;
         }
-        
+
         .segment-btn {
             flex: 1;
-            padding: 12px 16px;
+            padding: 14px 16px;
             border: none;
             background: transparent;
-            color: var(--md-sys-color-on-surface-variant);
+            color: #CCCCCC;
             font-size: 14px;
             font-weight: 500;
             cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
-            border-radius: 16px;
-            position: relative;
-            overflow: hidden;
+            transition: all 0.3s ease;
+            border-radius: 12px;
+            font-family: inherit;
         }
-        
-        .segment-btn::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: currentColor;
-            opacity: 0;
-            transition: opacity 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
-            border-radius: inherit;
+
+        .segment-btn:hover {
+            background: rgba(255, 107, 53, 0.1);
+            color: #FF6B35;
         }
-        
-        .segment-btn:hover::before {
-            opacity: 0.08;
-        }
-        
-        .segment-btn:active::before {
-            opacity: 0.16;
-        }
-        
+
         .segment-btn.active {
-            background: var(--md-sys-color-secondary-container);
-            color: var(--md-sys-color-on-secondary-container);
-            box-shadow: var(--md-sys-elevation-level1);
+            background: #FF6B35;
+            color: #000000;
+            box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
+            font-weight: 600;
         }
+
+        /* Station Dropdown */
+        .station-selector {
+            margin-bottom: 32px;
+        }
+
+        .station-select {
             width: 100%;
-            padding: 20px 16px 16px;
+            padding: 18px 48px 18px 18px;
             font-size: 16px;
             font-weight: 500;
-            border: 2px solid var(--md-sys-color-outline-variant);
+            font-family: inherit;
+            border: 2px solid #333333;
             border-radius: 16px;
-            background: var(--md-sys-color-surface);
-            color: var(--md-sys-color-on-surface);
+            background: #1E1E1E;
+            color: #FFFFFF;
             cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+            transition: all 0.3s ease;
             appearance: none;
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'%3e%3cpath stroke='%23625B71' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M6 9l6 6 6-6'/%3e%3c/svg%3e");
-            background-position: right 16px center;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            min-height: 56px;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'%3e%3cpath stroke='%23CCCCCC' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M6 9l6 6 6-6'/%3e%3c/svg%3e");
             background-repeat: no-repeat;
+            background-position: right 16px center;
             background-size: 20px;
-            padding-right: 48px;
+        }
+
+        .station-select:hover {
+            border-color: #FF6B35;
+            box-shadow: 0 0 0 1px rgba(255, 107, 53, 0.2);
         }
 
         .station-select:focus {
             outline: none;
-            border-color: var(--md-sys-color-primary);
-            box-shadow: 0 0 0 3px rgba(103, 80, 164, 0.12);
+            border-color: #FF6B35;
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.2);
         }
 
         .station-select:disabled {
-            background-color: var(--md-sys-color-surface-variant);
-            color: var(--md-sys-color-on-surface-variant);
+            background: #0F0F0F;
+            color: #666666;
             cursor: not-allowed;
-            border-color: var(--md-sys-color-outline-variant);
+            border-color: #222222;
             opacity: 0.6;
         }
 
-        .controls {
-            display: flex;
-            gap: 16px;
-            justify-content: center;
-            margin: 32px 0;
+        .station-select option {
+            background: #1E1E1E;
+            color: #FFFFFF;
+            padding: 12px;
         }
 
-        .fab {
-            width: 80px;
-            height: 80px;
-            border: none;
-            border-radius: 24px;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        /* Volume Control */
+        .volume-section {
+            margin-bottom: 32px;
+        }
+
+        .volume-container {
             position: relative;
-            overflow: hidden;
-            box-shadow: var(--md-sys-elevation-level3);
+            padding: 12px 0;
         }
 
-        .fab::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            background: currentColor;
-            opacity: 0;
-            transition: opacity 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+        .volume-slider {
+            width: 100%;
+            height: 6px;
+            background: #333333;
+            border-radius: 3px;
+            outline: none;
+            appearance: none;
+            cursor: pointer;
         }
 
-        .fab:hover::before {
-            opacity: 0.08;
+        .volume-slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            background: #FF6B35;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(255, 107, 53, 0.4);
+            transition: all 0.2s ease;
         }
 
-        .fab:active::before {
-            opacity: 0.16;
+        .volume-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.6);
         }
 
-        .toggle-btn {
-            background: var(--md-sys-color-primary);
-            color: var(--md-sys-color-on-primary);
+        .volume-slider::-moz-range-thumb {
+            width: 22px;
+            height: 22px;
+            background: #FF6B35;
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 8px rgba(255, 107, 53, 0.4);
         }
 
-        .toggle-btn:hover {
-            transform: scale(1.05);
-            box-shadow: var(--md-sys-elevation-level4);
-        }
-
-        .toggle-btn:active {
-            transform: scale(0.95);
-        }
-
-        .toggle-btn.playing {
-            background: var(--md-sys-color-error);
-            color: var(--md-sys-color-on-error);
-        }
-
-        .fab .material-symbols-outlined {
-            font-size: 32px;
-            z-index: 1;
-        }
-
+        /* Now Playing Card */
         .status-card {
-            background: var(--md-sys-color-surface-container-high);
+            background: #1A1A1A;
             border-radius: 20px;
             padding: 24px;
-            box-shadow: var(--md-sys-elevation-level1);
-            border: 1px solid var(--md-sys-color-outline-variant);
-            position: relative;
-            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+            border: 1px solid #333333;
             display: flex;
             align-items: center;
             gap: 20px;
-        }
-
-        .status-content {
-            flex: 1;
-            text-align: left;
-        }
-
-        .status-card .fab {
-            flex-shrink: 0;
-            width: 64px;
-            height: 64px;
+            position: relative;
+            overflow: hidden;
         }
 
         .status-card::before {
@@ -326,96 +243,79 @@
             left: 0;
             right: 0;
             height: 2px;
-            background: linear-gradient(90deg, var(--md-sys-color-primary), var(--md-sys-color-tertiary));
+            background: linear-gradient(90deg, #FF6B35, #FF8A50);
+        }
+
+        .status-content {
+            flex: 1;
+            text-align: left;
         }
 
         .now-playing-label {
-            color: var(--md-sys-color-on-surface-variant);
+            color: #999999;
             font-size: 12px;
             font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 1.2px;
+            letter-spacing: 1px;
             margin-bottom: 8px;
         }
 
         .station-name {
-            color: var(--md-sys-color-on-surface);
-            font-size: 20px;
+            color: #FFFFFF;
+            font-size: 18px;
             font-weight: 700;
-            letter-spacing: -0.25px;
             line-height: 1.2;
         }
 
-        .volume-section {
-            margin-bottom: 24px;
-        }
-
-        .volume-label {
-            display: none;
-        }
-
-        .volume-container {
-            position: relative;
-            padding: 8px 0;
-        }
-
-        .volume-slider {
-            width: 100%;
-            height: 4px;
-            background: var(--md-sys-color-outline-variant);
-            border-radius: 2px;
-            outline: none;
-            appearance: none;
-            cursor: pointer;
-            position: relative;
-        }
-
-        .volume-slider::-webkit-slider-track {
-            width: 100%;
-            height: 4px;
-            background: var(--md-sys-color-outline-variant);
-            border-radius: 2px;
-        }
-
-        .volume-slider::-webkit-slider-thumb {
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            background: var(--md-sys-color-primary);
-            border-radius: 50%;
-            cursor: pointer;
-            box-shadow: var(--md-sys-elevation-level2);
-            transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
-        }
-
-        .volume-slider::-webkit-slider-thumb:hover {
-            transform: scale(1.2);
-            box-shadow: var(--md-sys-elevation-level3);
-        }
-
-        .volume-slider::-moz-range-thumb {
-            width: 20px;
-            height: 20px;
-            background: var(--md-sys-color-primary);
-            border-radius: 50%;
-            cursor: pointer;
+        /* Play Button */
+        .fab {
+            width: 64px;
+            height: 64px;
             border: none;
-            box-shadow: var(--md-sys-elevation-level2);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #FF6B35;
+            color: #000000;
+            box-shadow: 0 4px 16px rgba(255, 107, 53, 0.4);
+            position: relative;
+            overflow: hidden;
         }
 
+        .fab:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.6);
+        }
+
+        .fab:active {
+            transform: scale(0.95);
+        }
+
+        .fab.playing {
+            background: #FF5722;
+        }
+
+        .fab .material-symbols-outlined {
+            font-size: 28px;
+        }
+
+        /* Loading and Error States */
         .loading-indicator {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            color: var(--md-sys-color-primary);
+            color: #FF6B35;
         }
 
         .spinner {
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--md-sys-color-outline-variant);
+            width: 18px;
+            height: 18px;
+            border: 2px solid #333333;
             border-radius: 50%;
-            border-top-color: var(--md-sys-color-primary);
+            border-top-color: #FF6B35;
             animation: spin 1s linear infinite;
         }
 
@@ -424,14 +324,13 @@
         }
 
         .error-message {
-            background: var(--md-sys-color-error-container);
-            color: var(--md-sys-color-on-error-container);
-            padding: 16px;
+            background: rgba(255, 87, 34, 0.1);
+            color: #FF8A65;
+            padding: 12px 16px;
             border-radius: 12px;
             font-size: 14px;
-            font-weight: 500;
             margin-top: 16px;
-            border: 1px solid var(--md-sys-color-error);
+            border: 1px solid rgba(255, 87, 34, 0.3);
             display: none;
         }
 
@@ -439,55 +338,42 @@
             display: block;
         }
 
+        /* Install Button */
         .install-btn {
-            background: var(--md-sys-color-secondary);
-            color: var(--md-sys-color-on-secondary);
+            background: #333333;
+            color: #FFFFFF;
             padding: 16px 24px;
-            border-radius: 20px;
+            border-radius: 16px;
             margin-top: 24px;
             cursor: pointer;
             border: none;
             font-size: 14px;
             font-weight: 500;
-            letter-spacing: 0.1px;
-            transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+            transition: all 0.3s ease;
             width: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            box-shadow: var(--md-sys-elevation-level1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .install-btn::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: currentColor;
-            opacity: 0;
-            transition: opacity 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
-        }
-
-        .install-btn:hover::before {
-            opacity: 0.08;
+            font-family: inherit;
         }
 
         .install-btn:hover {
+            background: #FF6B35;
+            color: #000000;
             transform: translateY(-2px);
-            box-shadow: var(--md-sys-elevation-level3);
+            box-shadow: 0 4px 16px rgba(255, 107, 53, 0.4);
         }
 
         .install-btn.hidden {
             display: none;
         }
 
+        /* Mobile Responsive */
         @media (max-width: 480px) {
             .radio-player {
                 padding: 24px;
                 margin: 16px;
-                border-radius: 20px;
             }
 
             h1 {
@@ -495,28 +381,24 @@
             }
 
             .fab {
-                width: 72px;
-                height: 72px;
+                width: 56px;
+                height: 56px;
             }
 
             .fab .material-symbols-outlined {
-                font-size: 28px;
+                font-size: 24px;
             }
         }
 
-        /* Material 3 Motion */
-        * {
-            transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
-        }
-
+        /* Smooth animations */
         .fade-in {
-            animation: fadeIn 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+            animation: fadeIn 0.5s ease-out;
         }
 
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(8px);
+                transform: translateY(20px);
             }
             to {
                 opacity: 1;
@@ -547,10 +429,6 @@
         </div>
         
         <div class="volume-section">
-            <div class="volume-label">
-                <span class="material-symbols-outlined">volume_up</span>
-                Volume
-            </div>
             <div class="volume-container">
                 <input type="range" min="0" max="100" value="70" class="volume-slider" id="volumeSlider">
             </div>
@@ -610,12 +488,9 @@
             
             async loadLanguages() {
                 try {
-                    // Define available language files
                     this.languages = {
                         'malayalam': { name: 'മലയാളം (Malayalam)', file: 'stations_malayalam.json' },
                         'english': { name: 'English', file: 'stations_english.json' }
-                        // 'tamil': { name: 'தமிழ் (Tamil)', file: 'stations_tamil.json' },
-                        // 'hindi': { name: 'हिन्दी (Hindi)', file: 'stations_hindi.json' }
                     };
                     
                     this.populateLanguages();
@@ -626,16 +501,11 @@
             }
             
             populateLanguages() {
-                // Languages are now handled by segmented buttons in HTML
-                // Set up event listeners for language buttons
                 const buttons = this.languageButtons.querySelectorAll('.segment-btn');
                 buttons.forEach(btn => {
                     btn.addEventListener('click', () => {
-                        // Remove active from all buttons
                         buttons.forEach(b => b.classList.remove('active'));
-                        // Add active to clicked button
                         btn.classList.add('active');
-                        // Select the language
                         this.selectLanguage(btn.dataset.lang);
                     });
                 });
@@ -649,7 +519,6 @@
                     this.stationSelect.innerHTML = '<option value="">Loading stations...</option>';
                     this.stationSelect.disabled = true;
                     
-                    // Default stations for fallback
                     const defaultStations = {
                         'english': [
                             { name: "BBC Radio 1", url: "http://stream.live.vc.bbcmedia.co.uk/bbc_radio_one" },
@@ -657,20 +526,10 @@
                             { name: "Classic FM", url: "http://media-ice.musicradio.com/ClassicFMMP3" },
                             { name: "Jazz FM", url: "https://edge-bauerall-01-gos2.sharp-stream.com/jazzfm.mp3" }
                         ],
-                        'hindi': [
-                            { name: "All India Radio Hindi", url: "http://air.pc.cdn.bitgravity.com/air/live/pbaudio056/playlist.m3u8" },
-                            { name: "Radio City Hindi", url: "http://prclive1.listenon.in:9960" },
-                            { name: "Bollywood Radio", url: "http://hemnos.cdnstream.com:80/1648_128" }
-                        ],
                         'malayalam': [
                             { name: "AIR Malayalam", url: "http://air.pc.cdn.bitgravity.com/air/live/pbaudio022/playlist.m3u8" },
                             { name: "Radio Mango", url: "http://bcovlive-a.akamaihd.net/1d86dc6e8a174dbf9647fbeee9c0e8b1/ap-south-1/6034685947001/playlist.m3u8" },
                             { name: "Asianet Radio", url: "http://bcovlive-a.akamaihd.net/1d86dc6e8a174dbf9647fbeee9c0e8b1/ap-south-1/6034685947001/playlist.m3u8" }
-                        ],
-                        'tamil': [
-                            { name: "AIR Tamil", url: "http://air.pc.cdn.bitgravity.com/air/live/pbaudio016/playlist.m3u8" },
-                            { name: "Radio City Tamil", url: "http://prclive1.listenon.in:9938" },
-                            { name: "Hello FM Tamil", url: "http://hello.mediacast4u.com:9616/stream" }
                         ]
                     };
                     
@@ -679,13 +538,10 @@
                         const response = await fetch(language.file);
                         if (response.ok) {
                             stations = await response.json();
-                            console.log(`Loaded stations from ${language.file}`);
                         } else {
-                            console.log(`${language.file} not found, using default stations`);
                             stations = defaultStations[languageKey] || [];
                         }
                     } catch (error) {
-                        console.log(`Failed to fetch ${language.file}, using default stations:`, error.message);
                         stations = defaultStations[languageKey] || [];
                     }
                     
@@ -718,13 +574,9 @@
             
             async autoStartMalayalam() {
                 try {
-                    // Malayalam is already selected by default in HTML
                     this.selectedLanguage = 'malayalam';
-                    
-                    // Load Malayalam stations
                     await this.loadStationsForLanguage('malayalam');
                     
-                    // Auto-select first station after a short delay
                     setTimeout(() => {
                         if (this.stations.length > 0) {
                             this.stationSelect.value = '0';
@@ -738,7 +590,6 @@
             
             setupEventListeners() {
                 this.toggleBtn.addEventListener('click', () => this.togglePlayPause());
-                // Language buttons are handled in populateLanguages()
                 this.stationSelect.addEventListener('change', (e) => this.selectStation(e.target.value));
                 this.volumeSlider.addEventListener('input', (e) => this.setVolume(e.target.value));
                 this.installBtn.addEventListener('click', () => this.installPWA());
@@ -776,7 +627,6 @@
                 this.audio.addEventListener('ended', () => {
                     this.isPlaying = false;
                     this.updateToggleButton();
-                    // Radio streams shouldn't end, but if they do, try to reconnect
                     setTimeout(() => {
                         if (this.currentStation) {
                             this.play();
@@ -786,16 +636,13 @@
             }
             
             selectLanguage(languageKey) {
-                // Stop current playback when switching languages
                 this.pause();
                 this.currentStation = null;
                 this.stationName.textContent = 'Loading stations...';
                 this.selectedLanguage = languageKey;
                 
-                // Load stations for the selected language
                 this.loadStationsForLanguage(languageKey);
                 
-                // Auto-select first station after loading
                 setTimeout(() => {
                     if (this.stations.length > 0) {
                         this.stationSelect.value = '0';
@@ -817,7 +664,6 @@
                 this.stationName.textContent = this.currentStation.name;
                 this.clearError();
                 
-                // Auto-play when selecting a station
                 this.play();
             }
             
@@ -867,7 +713,6 @@
                 this.errorMessage.textContent = message;
                 this.errorMessage.classList.add('show');
                 
-                // Auto-hide error after 5 seconds
                 setTimeout(() => {
                     this.clearError();
                 }, 5000);
@@ -879,18 +724,16 @@
             }
             
             setupPWA() {
-                // Register service worker
                 if ('serviceWorker' in navigator) {
                     navigator.serviceWorker.register('./service-worker.js')
                         .then(registration => {
                             console.log('Service Worker registered successfully');
                         })
                         .catch(error => {
-                            console.log('Service Worker registration failed (this is normal if files are not present):', error.message);
+                            console.log('Service Worker registration failed:', error.message);
                         });
                 }
                 
-                // Handle install prompt
                 window.addEventListener('beforeinstallprompt', (e) => {
                     e.preventDefault();
                     this.deferredPrompt = e;
@@ -917,7 +760,6 @@
             }
         }
         
-        // Initialize the radio player when DOM is loaded
         document.addEventListener('DOMContentLoaded', () => {
             new RadioPlayer();
         });
