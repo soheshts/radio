@@ -8,6 +8,18 @@
     "url": "https://schedule.radiolemonlive.com:7443/radio/8000/live"
   },
   {
+    "name": "Gramaphone FM",
+    "url": "https://usa15.fastcast4u.com/proxy/radiomall/stream"
+  },
+  {
+    "name": "Radio Tirur",
+    "url": "https://sonic01.instainternet.com/8002/stream"
+  },
+  {
+    "name": "Radio Onattukara",
+    "url": "https://stream.zeno.fm/fu94u25kqd0uv/;stream.mp3"
+  },
+  {
     "name": "RP Main",
     "url": "http://stream.radioparadise.com/flac"
   },
