@@ -331,300 +331,327 @@
 
     <script>
         class RadioPlayer {
-    constructor() {
-        this.audio = document.getElementById('audioPlayer');
-        this.languageSelect = document.getElementById('languageSelect');
-        this.stationSelect = document.getElementById('stationSelect');
-        this.toggleBtn = document.getElementById('toggleBtn');
-        this.stationName = document.getElementById('stationName');
-        this.volumeSlider = document.getElementById('volumeSlider');
-        this.errorMessage = document.getElementById('errorMessage');
-        this.installBtn = document.getElementById('installBtn');
-
-        this.languages = {};
-        this.stations = [];
-        this.currentStation = null;
-        this.deferredPrompt = null;
-        this.isPlaying = false;
-        this.isMobile = this.detectMobileDevice();
-        this.firstPlayAttempt = true; // Flag to track the first play attempt
-
-        this.init();
-    }
-
-    async init() {
-        await this.loadLanguages();
-        this.setupEventListeners();
-        this.setupPWA();
-        this.setupAudio();
-
-        // Set initial state based on device type
-        this.languageSelect.value = 'malayalam';
-        await this.loadStationsForLanguage('malayalam');
-        this.stationSelect.value = '0';
-        this.selectStation('0', false); // Don't auto-play
-
-        if (this.isMobile) {
-            this.stationName.textContent = 'Press play button';
-        }
-    }
-
-    // --- Media and UI Logic ---
-
-    detectMobileDevice() {
-        const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-        // Simple detection for common mobile OS
-        return /android|iphone|ipad|ipod|windows phone/i.test(userAgent);
-    }
-
-    async loadLanguages() {
-        try {
-            this.languages = {
-                'malayalam': { name: 'മലയാളം (Malayalam)', file: 'stations_malayalam.json' },
-                'english': { name: 'English', file: 'stations_english.json' },
-                'tamil': { name: 'தமிழ் (Tamil)', file: 'stations_tamil.json' },
-                'hindi': { name: 'हिन्दी (Hindi)', file: 'stations_hindi.json' }
-            };
-            this.populateLanguages();
-        } catch (error) {
-            console.error('Error loading languages:', error);
-            this.showError('Failed to load language options');
-        }
-    }
-
-    populateLanguages() {
-        this.languageSelect.innerHTML = '';
-        Object.keys(this.languages).forEach(langKey => {
-            const option = document.createElement('option');
-            option.value = langKey;
-            option.textContent = this.languages[langKey].name;
-            this.languageSelect.appendChild(option);
-        });
-    }
-
-    async loadStationsForLanguage(languageKey) {
-        try {
-            const language = this.languages[languageKey];
-            if (!language) return;
-            
-            this.stationSelect.innerHTML = '<option value="">Loading stations...</option>';
-            this.stationSelect.disabled = true;
-            
-            const defaultStations = {
-                'english': [
-                    { name: "BBC Radio 1", url: "http://stream.live.vc.bbcmedia.co.uk/bbc_radio_one" },
-                    { name: "NPR News", url: "https://npr-ice.streamguys1.com/live.mp3" },
-                ],
-                'hindi': [
-                    { name: "All India Radio Hindi", url: "http://air.pc.cdn.bitgravity.com/air/live/pbaudio056/playlist.m3u8" },
-                    { name: "Radio City Hindi", url: "http://prclive1.listenon.in:9960" },
-                ],
-                'malayalam': [
-                    { name: "AIR Malayalam", url: "http://air.pc.cdn.bitgravity.com/air/live/pbaudio022/playlist.m3u8" },
-                    { name: "Radio Mango", url: "http://bcovlive-a.akamaihd.net/1d86dc6e8a174dbf9647fbeee9c0e8b1/ap-south-1/6034685947001/playlist.m3u8" },
-                ],
-                'tamil': [
-                    { name: "AIR Tamil", url: "http://air.pc.cdn.bitgravity.com/air/live/pbaudio016/playlist.m3u8" },
-                    { name: "Radio City Tamil", url: "http://prclive1.listenon.in:9938" },
-                ]
-            };
-            
-            let stations;
-            try {
-                const response = await fetch(language.file);
-                stations = response.ok ? await response.json() : defaultStations[languageKey] || [];
-            } catch (error) {
-                console.log(`Failed to fetch ${language.file}, using default stations:`, error.message);
-                stations = defaultStations[languageKey] || [];
+            constructor() {
+                this.audio = document.getElementById('audioPlayer');
+                this.languageSelect = document.getElementById('languageSelect');
+                this.stationSelect = document.getElementById('stationSelect');
+                this.toggleBtn = document.getElementById('toggleBtn');
+                this.stationName = document.getElementById('stationName');
+                this.volumeSlider = document.getElementById('volumeSlider');
+                this.errorMessage = document.getElementById('errorMessage');
+                this.installBtn = document.getElementById('installBtn');
+                
+                this.languages = {};
+                this.stations = [];
+                this.currentStation = null;
+                this.deferredPrompt = null;
+                this.isPlaying = false;
+                
+                this.init();
             }
             
-            this.stations = stations;
-            this.populateStations();
-        } catch (error) {
-            console.error('Error loading stations for language:', error);
-            this.showError('Failed to load radio stations for this language');
-            this.stationSelect.innerHTML = '<option value="">Error loading stations</option>';
-            this.stationSelect.disabled = false;
-        }
-    }
-
-    populateStations() {
-        if (this.stations.length === 0) {
-            this.stationSelect.innerHTML = '<option value="">No stations available</option>';
-            this.stationSelect.disabled = true;
-            return;
-        }
-        
-        this.stationSelect.innerHTML = '';
-        this.stations.forEach((station, index) => {
-            const option = document.createElement('option');
-            option.value = index;
-            option.textContent = station.name;
-            this.stationSelect.appendChild(option);
-        });
-        this.stationSelect.disabled = false;
-    }
-    
-    setupEventListeners() {
-        this.toggleBtn.addEventListener('click', () => this.togglePlayPause());
-        this.languageSelect.addEventListener('change', (e) => this.selectLanguage(e.target.value));
-        this.stationSelect.addEventListener('change', (e) => this.selectStation(e.target.value, true));
-        this.volumeSlider.addEventListener('input', (e) => this.setVolume(e.target.value));
-        this.installBtn.addEventListener('click', () => this.installPWA());
-    }
-
-    setupAudio() {
-        this.audio.volume = 0.7;
-        
-        this.audio.addEventListener('loadstart', () => {
-            // Check if it's the first time and a mobile device
-            if (!this.firstPlayAttempt || !this.isMobile) {
-                this.stationName.innerHTML = '<span class="loading"></span> Loading...';
+            async init() {
+                await this.loadLanguages();
+                this.setupEventListeners();
+                this.setupPWA();
+                this.setupAudio();
+                
+                // Auto-select Malayalam and load first station
+                await this.autoStartMalayalam();
             }
-            this.clearError();
-        });
-        
-        this.audio.addEventListener('canplay', () => {
-            if (this.currentStation) {
+            
+            async loadLanguages() {
+                try {
+                    // Define available language files
+                    this.languages = {
+                        'malayalam': { name: 'മലയാളം (Malayalam)', file: 'stations_malayalam.json' },
+                        'english': { name: 'English', file: 'stations_english.json' },
+                        'tamil': { name: 'தமிழ் (Tamil)', file: 'stations_tamil.json' },
+                        'hindi': { name: 'हिन्दी (Hindi)', file: 'stations_hindi.json' }
+                    };
+                    
+                    this.populateLanguages();
+                } catch (error) {
+                    console.error('Error loading languages:', error);
+                    this.showError('Failed to load language options');
+                }
+            }
+            
+            populateLanguages() {
+                this.languageSelect.innerHTML = '';
+                Object.keys(this.languages).forEach(langKey => {
+                    const option = document.createElement('option');
+                    option.value = langKey;
+                    option.textContent = this.languages[langKey].name;
+                    this.languageSelect.appendChild(option);
+                });
+            }
+            
+            async loadStationsForLanguage(languageKey) {
+                try {
+                    const language = this.languages[languageKey];
+                    if (!language) return;
+                    
+                    this.stationSelect.innerHTML = '<option value="">Loading stations...</option>';
+                    this.stationSelect.disabled = true;
+                    
+                    // Default stations for fallback
+                    const defaultStations = {
+                        'english': [
+                            { name: "BBC Radio 1", url: "http://stream.live.vc.bbcmedia.co.uk/bbc_radio_one" },
+                            { name: "NPR News", url: "https://npr-ice.streamguys1.com/live.mp3" },
+                            { name: "Classic FM", url: "http://media-ice.musicradio.com/ClassicFMMP3" },
+                            { name: "Jazz FM", url: "https://edge-bauerall-01-gos2.sharp-stream.com/jazzfm.mp3" }
+                        ],
+                        'hindi': [
+                            { name: "All India Radio Hindi", url: "http://air.pc.cdn.bitgravity.com/air/live/pbaudio056/playlist.m3u8" },
+                            { name: "Radio City Hindi", url: "http://prclive1.listenon.in:9960" },
+                            { name: "Bollywood Radio", url: "http://hemnos.cdnstream.com:80/1648_128" }
+                        ],
+                        'malayalam': [
+                            { name: "AIR Malayalam", url: "http://air.pc.cdn.bitgravity.com/air/live/pbaudio022/playlist.m3u8" },
+                            { name: "Radio Mango", url: "http://bcovlive-a.akamaihd.net/1d86dc6e8a174dbf9647fbeee9c0e8b1/ap-south-1/6034685947001/playlist.m3u8" },
+                            { name: "Asianet Radio", url: "http://bcovlive-a.akamaihd.net/1d86dc6e8a174dbf9647fbeee9c0e8b1/ap-south-1/6034685947001/playlist.m3u8" }
+                        ],
+                        'tamil': [
+                            { name: "AIR Tamil", url: "http://air.pc.cdn.bitgravity.com/air/live/pbaudio016/playlist.m3u8" },
+                            { name: "Radio City Tamil", url: "http://prclive1.listenon.in:9938" },
+                            { name: "Hello FM Tamil", url: "http://hello.mediacast4u.com:9616/stream" }
+                        ]
+                    };
+                    
+                    let stations;
+                    try {
+                        const response = await fetch(language.file);
+                        if (response.ok) {
+                            stations = await response.json();
+                            console.log(`Loaded stations from ${language.file}`);
+                        } else {
+                            console.log(`${language.file} not found, using default stations`);
+                            stations = defaultStations[languageKey] || [];
+                        }
+                    } catch (error) {
+                        console.log(`Failed to fetch ${language.file}, using default stations:`, error.message);
+                        stations = defaultStations[languageKey] || [];
+                    }
+                    
+                    this.stations = stations;
+                    this.populateStations();
+                } catch (error) {
+                    console.error('Error loading stations for language:', error);
+                    this.showError('Failed to load radio stations for this language');
+                    this.stationSelect.innerHTML = '<option value="">Error loading stations</option>';
+                    this.stationSelect.disabled = false;
+                }
+            }
+            
+            populateStations() {
+                if (this.stations.length === 0) {
+                    this.stationSelect.innerHTML = '<option value="">No stations available</option>';
+                    this.stationSelect.disabled = true;
+                    return;
+                }
+                
+                this.stationSelect.innerHTML = '';
+                this.stations.forEach((station, index) => {
+                    const option = document.createElement('option');
+                    option.value = index;
+                    option.textContent = station.name;
+                    this.stationSelect.appendChild(option);
+                });
+                this.stationSelect.disabled = false;
+            }
+            
+            async autoStartMalayalam() {
+                try {
+                    // Set Malayalam as default language
+                    this.languageSelect.value = 'malayalam';
+                    
+                    // Load Malayalam stations
+                    await this.loadStationsForLanguage('malayalam');
+                    
+                    // Auto-select and play first station after a short delay to ensure stations are loaded
+                    setTimeout(() => {
+                        if (this.stations.length > 0) {
+                            this.stationSelect.value = '0'; // Select first station
+                            this.selectStation('0'); // This will auto-play
+                        }
+                    }, 500);
+                } catch (error) {
+                    console.error('Error auto-starting Malayalam:', error);
+                }
+            }
+            
+            setupEventListeners() {
+                this.toggleBtn.addEventListener('click', () => this.togglePlayPause());
+                this.languageSelect.addEventListener('change', (e) => this.selectLanguage(e.target.value));
+                this.stationSelect.addEventListener('change', (e) => this.selectStation(e.target.value));
+                this.volumeSlider.addEventListener('input', (e) => this.setVolume(e.target.value));
+                this.installBtn.addEventListener('click', () => this.installPWA());
+            }
+            
+            setupAudio() {
+                this.audio.volume = 0.7;
+                
+                this.audio.addEventListener('loadstart', () => {
+                    this.stationName.innerHTML = '<span class="loading"></span> Loading...';
+                    this.clearError();
+                });
+                
+                this.audio.addEventListener('canplay', () => {
+                    if (this.currentStation) {
+                        this.stationName.textContent = this.currentStation.name;
+                    }
+                });
+                
+                this.audio.addEventListener('error', (e) => {
+                    this.showError('Failed to load radio stream');
+                    this.stationName.textContent = 'Error loading station';
+                });
+                
+                this.audio.addEventListener('play', () => {
+                    this.isPlaying = true;
+                    this.updateToggleButton();
+                });
+                
+                this.audio.addEventListener('pause', () => {
+                    this.isPlaying = false;
+                    this.updateToggleButton();
+                });
+                
+                this.audio.addEventListener('ended', () => {
+                    this.isPlaying = false;
+                    this.updateToggleButton();
+                    // Radio streams shouldn't end, but if they do, try to reconnect
+                    setTimeout(() => {
+                        if (this.currentStation) {
+                            this.play();
+                        }
+                    }, 2000);
+                });
+            }
+            
+            selectLanguage(languageKey) {
+                // Stop current playback when switching languages
+                this.pause();
+                this.currentStation = null;
+                this.stationName.textContent = 'Loading stations...';
+                
+                // Load stations for the selected language
+                this.loadStationsForLanguage(languageKey);
+                 // Auto-select and play first station after a short delay to ensure stations are loaded
+                    setTimeout(() => {
+                        if (this.stations.length > 0) {
+                            this.stationSelect.value = '0'; // Select first station
+                            this.selectStation('0'); // This will auto-play
+                        }
+                    }, 500);
+            }
+            
+            selectStation(index) {
+                if (index === '') {
+                    this.currentStation = null;
+                    this.stationName.textContent = 'Select a station to begin';
+                    this.pause();
+                    return;
+                }
+                
+                this.currentStation = this.stations[index];
+                this.audio.src = this.currentStation.url;
                 this.stationName.textContent = this.currentStation.name;
+                this.clearError();
+                
+                // Auto-play when selecting a station
+                this.play();
             }
-        });
-        
-        this.audio.addEventListener('error', (e) => {
-            this.showError('Failed to load radio stream');
-            this.stationName.textContent = 'Error loading station';
-        });
-        
-        this.audio.addEventListener('play', () => {
-            this.isPlaying = true;
-            this.updateToggleButton();
-        });
-        
-        this.audio.addEventListener('pause', () => {
-            this.isPlaying = false;
-            this.updateToggleButton();
-        });
-        
-        this.audio.addEventListener('ended', () => {
-            this.isPlaying = false;
-            this.updateToggleButton();
-            setTimeout(() => {
-                if (this.currentStation) {
+            
+            togglePlayPause() {
+                if (this.isPlaying) {
+                    this.pause();
+                } else {
                     this.play();
                 }
-            }, 2000);
-        });
-    }
-
-    selectLanguage(languageKey) {
-        this.pause();
-        this.currentStation = null;
-        this.stationName.textContent = 'Loading stations...';
-        this.loadStationsForLanguage(languageKey);
-    }
-
-    selectStation(index, shouldPlay = true) {
-        if (index === '') {
-            this.currentStation = null;
-            this.stationName.textContent = 'Select a station to begin';
-            this.pause();
-            return;
-        }
-        
-        this.currentStation = this.stations[index];
-        this.audio.src = this.currentStation.url;
-        this.stationName.textContent = this.currentStation.name;
-        this.clearError();
-        
-        if (shouldPlay) {
-            this.play();
-        }
-    }
-    
-    async togglePlayPause() {
-        if (!this.currentStation) {
-            const firstStationIndex = this.stationSelect.options[0].value;
-            if (firstStationIndex) {
-                this.stationSelect.value = firstStationIndex;
-                await this.selectStation(firstStationIndex, true);
-            } else {
-                this.showError('Please select a station first.');
-                return;
             }
-        } else if (this.isPlaying) {
-            this.pause();
-        } else {
-            this.play();
-        }
-        
-        // After the first click, clear the flag
-        this.firstPlayAttempt = false;
-    }
-    
-    async play() {
-        try {
-            await this.audio.play();
-            this.clearError();
-        } catch (error) {
-            this.showError('Failed to play audio. Please try another station or tap the play button again.');
-        }
-    }
-    
-    pause() {
-        this.audio.pause();
-        this.clearError();
-    }
-    
-    setVolume(value) {
-        this.audio.volume = value / 100;
-    }
-    
-    showError(message) {
-        this.errorMessage.textContent = message;
-    }
-    
-    clearError() {
-        this.errorMessage.textContent = '';
-    }
-    
-    // --- PWA Logic ---
-    
-    setupPWA() {
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('./service-worker.js')
-                .then(registration => {
-                    console.log('Service Worker registered successfully');
-                })
-                .catch(error => {
-                    console.log('Service Worker registration failed (this is normal if files are not present):', error.message);
+            
+            updateToggleButton() {
+                if (this.isPlaying) {
+                    this.toggleBtn.innerHTML = '⏸';
+                    this.toggleBtn.classList.add('playing');
+                } else {
+                    this.toggleBtn.innerHTML = '▶';
+                    this.toggleBtn.classList.remove('playing');
+                }
+            }
+            
+            async play() {
+                if (!this.currentStation) {
+                    this.showError('Please select a station first');
+                    return;
+                }
+                
+                try {
+                    await this.audio.play();
+                    this.clearError();
+                } catch (error) {
+                    this.showError('Failed to play audio. Please try another station.');
+                }
+            }
+            
+            pause() {
+                this.audio.pause();
+                this.clearError();
+            }
+            
+            setVolume(value) {
+                this.audio.volume = value / 100;
+            }
+            
+            showError(message) {
+                this.errorMessage.textContent = message;
+            }
+            
+            clearError() {
+                this.errorMessage.textContent = '';
+            }
+            
+            setupPWA() {
+                // Register service worker
+                if ('serviceWorker' in navigator) {
+                    navigator.serviceWorker.register('./service-worker.js')
+                        .then(registration => {
+                            console.log('Service Worker registered successfully');
+                        })
+                        .catch(error => {
+                            console.log('Service Worker registration failed (this is normal if files are not present):', error.message);
+                        });
+                }
+                
+                // Handle install prompt
+                window.addEventListener('beforeinstallprompt', (e) => {
+                    e.preventDefault();
+                    this.deferredPrompt = e;
+                    this.installBtn.classList.remove('hidden');
                 });
+                
+                window.addEventListener('appinstalled', () => {
+                    this.installBtn.classList.add('hidden');
+                    this.deferredPrompt = null;
+                });
+            }
+            
+            async installPWA() {
+                if (!this.deferredPrompt) return;
+                
+                this.deferredPrompt.prompt();
+                const result = await this.deferredPrompt.userChoice;
+                
+                if (result.outcome === 'accepted') {
+                    this.installBtn.classList.add('hidden');
+                }
+                
+                this.deferredPrompt = null;
+            }
         }
-        
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            this.deferredPrompt = e;
-            this.installBtn.classList.remove('hidden');
-        });
-        
-        window.addEventListener('appinstalled', () => {
-            this.installBtn.classList.add('hidden');
-            this.deferredPrompt = null;
-        });
-    }
-    
-    async installPWA() {
-        if (!this.deferredPrompt) return;
-        
-        this.deferredPrompt.prompt();
-        const result = await this.deferredPrompt.userChoice;
-        
-        if (result.outcome === 'accepted') {
-            this.installBtn.classList.add('hidden');
-        }
-        
-        this.deferredPrompt = null;
-    }
-}
         
         // Initialize the radio player when DOM is loaded
         document.addEventListener('DOMContentLoaded', () => {
