@@ -362,12 +362,10 @@
                 try {
                     // Define available language files
                     this.languages = {
-                        'english': { name: 'English', file: './stations-english.json' },
-                        'malayalam': { name: 'മലയാളം (Malayalam)', file: './stations-malayalam.json' },
-                        'tamil': { name: 'தமிழ் (Tamil)', file: './stations-tamil.json' },
-                        'hindi': { name: 'हिन्दी (Hindi)', file: './stations-hindi.json' },
-                        'spanish': { name: 'Español (Spanish)', file: './stations-spanish.json' },
-                        'french': { name: 'Français (French)', file: './stations-french.json' }
+                        'english': { name: 'English', file: 'stations-english.json' },
+                        'malayalam': { name: 'മലയാളം (Malayalam)', file: 'stations-malayalam.json' },
+                        'tamil': { name: 'தமிழ் (Tamil)', file: 'stations-tamil.json' },
+                        'hindi': { name: 'हिन्दी (Hindi)', file: 'stations-hindi.json' }
                     };
                     
                     this.populateLanguages();
@@ -417,16 +415,6 @@
                             { name: "AIR Tamil", url: "http://air.pc.cdn.bitgravity.com/air/live/pbaudio016/playlist.m3u8" },
                             { name: "Radio City Tamil", url: "http://prclive1.listenon.in:9938" },
                             { name: "Hello FM Tamil", url: "http://hello.mediacast4u.com:9616/stream" }
-                        ],
-                        'spanish': [
-                            { name: "Radio Nacional España", url: "http://rtveradio.fplive.net/rneradio1" },
-                            { name: "Los 40 Principales", url: "http://playerservices.streamtheworld.com/api/livestream-redirect/LOS40.mp3" },
-                            { name: "Cadena SER", url: "http://playerservices.streamtheworld.com/api/livestream-redirect/CADENASER.mp3" }
-                        ],
-                        'french': [
-                            { name: "France Inter", url: "http://direct.franceinter.fr/live/franceinter-midfi.mp3" },
-                            { name: "RTL", url: "http://streaming.radio.rtl.fr/rtl-1-44-128" },
-                            { name: "Europe 1", url: "http://e1-live-mp3-128.scdn.arkena.com/europe1.mp3" }
                         ]
                     };
                     
