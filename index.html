@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Radio Wave - PWA Radio Player</title>
-    <link rel="manifest" href="manifest_json.json">
+    <link rel="manifest" href="./manifest_json.json">
     <meta name="theme-color" content="#6366F1">
     <meta name="description" content="Modern PWA Radio Player">
     <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%236366F1'/><circle cx='50' cy='50' r='30' fill='white'/><circle cx='50' cy='50' r='15' fill='%236366F1'/></svg>">
@@ -82,6 +82,10 @@
             margin-bottom: 30px;
         }
 
+        .language-selector {
+            margin-bottom: 20px;
+        }
+
         .station-selector {
             margin-bottom: 30px;
         }
@@ -104,10 +108,22 @@
             padding-right: 48px;
         }
 
+        select:disabled {
+            background-color: #f3f4f6;
+            color: #9ca3af;
+            cursor: not-allowed;
+            border-color: #d1d5db;
+        }
+
         select:focus {
             outline: none;
             border-color: #6366F1;
             box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        select:disabled:focus {
+            border-color: #d1d5db;
+            box-shadow: none;
         }
 
         .controls {
@@ -280,9 +296,15 @@
         <h1>Radio Wave</h1>
         <p class="subtitle">Your favorite stations</p>
         
+        <div class="language-selector">
+            <select id="languageSelect">
+                <option value="">Select language...</option>
+            </select>
+        </div>
+        
         <div class="station-selector">
-            <select id="stationSelect">
-                <option value="">Select a station...</option>
+            <select id="stationSelect" disabled>
+                <option value="">Select a language first...</option>
             </select>
         </div>
         
@@ -312,6 +334,7 @@
         class RadioPlayer {
             constructor() {
                 this.audio = document.getElementById('audioPlayer');
+                this.languageSelect = document.getElementById('languageSelect');
                 this.stationSelect = document.getElementById('stationSelect');
                 this.toggleBtn = document.getElementById('toggleBtn');
                 this.stationName = document.getElementById('stationName');
@@ -319,6 +342,7 @@
                 this.errorMessage = document.getElementById('errorMessage');
                 this.installBtn = document.getElementById('installBtn');
                 
+                this.languages = {};
                 this.stations = [];
                 this.currentStation = null;
                 this.deferredPrompt = null;
@@ -328,45 +352,116 @@
             }
             
             async init() {
-                await this.loadStations();
+                await this.loadLanguages();
                 this.setupEventListeners();
                 this.setupPWA();
                 this.setupAudio();
             }
             
-            async loadStations() {
+            async loadLanguages() {
                 try {
-                    // Create default stations if stations.json doesn't exist
-                    const defaultStations = [
-                        { name: "Aural Radio Kerala", url: "https://radio.auralradiokerala.com:1305/stream" },
-                        { name: "Classic FM", url: "http://media-ice.musicradio.com/ClassicFMMP3" },
-                        
-                    ];
+                    // Define available language files
+                    this.languages = {
+                        'english': { name: 'English', file: './stations-english.json' },
+                        'malayalam': { name: 'മലയാളം (Malayalam)', file: './stations-malayalam.json' },
+                        'tamil': { name: 'தமிழ் (Tamil)', file: './stations-tamil.json' },
+                        'hindi': { name: 'हिन्दी (Hindi)', file: './stations-hindi.json' },
+                        'spanish': { name: 'Español (Spanish)', file: './stations-spanish.json' },
+                        'french': { name: 'Français (French)', file: './stations-french.json' }
+                    };
+                    
+                    this.populateLanguages();
+                } catch (error) {
+                    console.error('Error loading languages:', error);
+                    this.showError('Failed to load language options');
+                }
+            }
+            
+            populateLanguages() {
+                this.languageSelect.innerHTML = '<option value="">Select language...</option>';
+                Object.keys(this.languages).forEach(langKey => {
+                    const option = document.createElement('option');
+                    option.value = langKey;
+                    option.textContent = this.languages[langKey].name;
+                    this.languageSelect.appendChild(option);
+                });
+            }
+            
+            async loadStationsForLanguage(languageKey) {
+                try {
+                    const language = this.languages[languageKey];
+                    if (!language) return;
+                    
+                    this.stationSelect.innerHTML = '<option value="">Loading stations...</option>';
+                    this.stationSelect.disabled = true;
+                    
+                    // Default stations for fallback
+                    const defaultStations = {
+                        'english': [
+                            { name: "BBC Radio 1", url: "http://stream.live.vc.bbcmedia.co.uk/bbc_radio_one" },
+                            { name: "NPR News", url: "https://npr-ice.streamguys1.com/live.mp3" },
+                            { name: "Classic FM", url: "http://media-ice.musicradio.com/ClassicFMMP3" },
+                            { name: "Jazz FM", url: "https://edge-bauerall-01-gos2.sharp-stream.com/jazzfm.mp3" }
+                        ],
+                        'hindi': [
+                            { name: "All India Radio Hindi", url: "http://air.pc.cdn.bitgravity.com/air/live/pbaudio056/playlist.m3u8" },
+                            { name: "Radio City Hindi", url: "http://prclive1.listenon.in:9960" },
+                            { name: "Bollywood Radio", url: "http://hemnos.cdnstream.com:80/1648_128" }
+                        ],
+                        'malayalam': [
+                            { name: "AIR Malayalam", url: "http://air.pc.cdn.bitgravity.com/air/live/pbaudio022/playlist.m3u8" },
+                            { name: "Radio Mango", url: "http://bcovlive-a.akamaihd.net/1d86dc6e8a174dbf9647fbeee9c0e8b1/ap-south-1/6034685947001/playlist.m3u8" },
+                            { name: "Asianet Radio", url: "http://bcovlive-a.akamaihd.net/1d86dc6e8a174dbf9647fbeee9c0e8b1/ap-south-1/6034685947001/playlist.m3u8" }
+                        ],
+                        'tamil': [
+                            { name: "AIR Tamil", url: "http://air.pc.cdn.bitgravity.com/air/live/pbaudio016/playlist.m3u8" },
+                            { name: "Radio City Tamil", url: "http://prclive1.listenon.in:9938" },
+                            { name: "Hello FM Tamil", url: "http://hello.mediacast4u.com:9616/stream" }
+                        ],
+                        'spanish': [
+                            { name: "Radio Nacional España", url: "http://rtveradio.fplive.net/rneradio1" },
+                            { name: "Los 40 Principales", url: "http://playerservices.streamtheworld.com/api/livestream-redirect/LOS40.mp3" },
+                            { name: "Cadena SER", url: "http://playerservices.streamtheworld.com/api/livestream-redirect/CADENASER.mp3" }
+                        ],
+                        'french': [
+                            { name: "France Inter", url: "http://direct.franceinter.fr/live/franceinter-midfi.mp3" },
+                            { name: "RTL", url: "http://streaming.radio.rtl.fr/rtl-1-44-128" },
+                            { name: "Europe 1", url: "http://e1-live-mp3-128.scdn.arkena.com/europe1.mp3" }
+                        ]
+                    };
                     
                     let stations;
                     try {
-                        const response = await fetch('./stations_json.json');
+                        const response = await fetch(language.file);
                         if (response.ok) {
                             stations = await response.json();
-                            console.log('Loaded stations from stations_json.json');
+                            console.log(`Loaded stations from ${language.file}`);
                         } else {
-                            console.log('stations_json.json not found, using default stations');
-                            stations = defaultStations;
+                            console.log(`${language.file} not found, using default stations`);
+                            stations = defaultStations[languageKey] || [];
                         }
                     } catch (error) {
-                        console.log('Failed to fetch stations.json, using default stations:', error.message);
-                        stations = defaultStations;
+                        console.log(`Failed to fetch ${language.file}, using default stations:`, error.message);
+                        stations = defaultStations[languageKey] || [];
                     }
                     
                     this.stations = stations;
                     this.populateStations();
                 } catch (error) {
-                    console.error('Error loading stations:', error);
-                    this.showError('Failed to load radio stations');
+                    console.error('Error loading stations for language:', error);
+                    this.showError('Failed to load radio stations for this language');
+                    this.stationSelect.innerHTML = '<option value="">Error loading stations</option>';
+                    this.stationSelect.disabled = false;
                 }
             }
             
             populateStations() {
+                if (this.stations.length === 0) {
+                    this.stationSelect.innerHTML = '<option value="">No stations available</option>';
+                    this.stationSelect.disabled = true;
+                    return;
+                }
+                
                 this.stationSelect.innerHTML = '<option value="">Select a station...</option>';
                 this.stations.forEach((station, index) => {
                     const option = document.createElement('option');
@@ -374,10 +469,12 @@
                     option.textContent = station.name;
                     this.stationSelect.appendChild(option);
                 });
+                this.stationSelect.disabled = false;
             }
             
             setupEventListeners() {
                 this.toggleBtn.addEventListener('click', () => this.togglePlayPause());
+                this.languageSelect.addEventListener('change', (e) => this.selectLanguage(e.target.value));
                 this.stationSelect.addEventListener('change', (e) => this.selectStation(e.target.value));
                 this.volumeSlider.addEventListener('input', (e) => this.setVolume(e.target.value));
                 this.installBtn.addEventListener('click', () => this.installPWA());
@@ -422,6 +519,19 @@
                         }
                     }, 2000);
                 });
+            }
+            
+            selectLanguage(languageKey) {
+                if (languageKey === '') {
+                    this.stationSelect.innerHTML = '<option value="">Select a language first...</option>';
+                    this.stationSelect.disabled = true;
+                    this.pause();
+                    this.currentStation = null;
+                    this.stationName.textContent = 'Select a language first';
+                    return;
+                }
+                
+                this.loadStationsForLanguage(languageKey);
             }
             
             selectStation(index) {
