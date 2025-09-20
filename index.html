@@ -379,7 +379,7 @@
             }
             
             populateLanguages() {
-                this.languageSelect.innerHTML = '<option value="">Select language...</option>';
+                this.languageSelect.innerHTML = '';
                 Object.keys(this.languages).forEach(langKey => {
                     const option = document.createElement('option');
                     option.value = langKey;
@@ -453,7 +453,7 @@
                     return;
                 }
                 
-                this.stationSelect.innerHTML = '<option value="">Select a station...</option>';
+                this.stationSelect.innerHTML = '';
                 this.stations.forEach((station, index) => {
                     const option = document.createElement('option');
                     option.value = index;
