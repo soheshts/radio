@@ -1,30 +1,30 @@
 {
-  "name": "Radio Wave - PWA Radio Player",
+  "name": "Radio Wave",
   "short_name": "Radio Wave",
   "description": "Modern PWA Radio Player for streaming your favorite radio stations",
   "start_url": "/radio",
   "display": "standalone",
-  "background_color": "#667eea",
-  "theme_color": "#6366F1",
+  "background_color": "#000000",
+  "theme_color": "#FF6B35",
   "orientation": "portrait-primary",
   "scope": "/",
   "lang": "en",
   "categories": ["music", "entertainment"],
   "icons": [
     {
-      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' fill='%236366F1' rx='48'/><circle cx='96' cy='96' r='60' fill='white'/><circle cx='96' cy='96' r='30' fill='%236366F1'/></svg>",
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' fill='%23000000' rx='48'/><circle cx='96' cy='96' r='60' fill='%23FF6B35'/><circle cx='96' cy='96' r='30' fill='%23000000'/></svg>",
       "sizes": "192x192",
       "type": "image/svg+xml",
       "purpose": "any"
     },
     {
-      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' fill='%236366F1' rx='128'/><circle cx='256' cy='256' r='160' fill='white'/><circle cx='256' cy='256' r='80' fill='%236366F1'/></svg>",
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' fill='%23000000' rx='128'/><circle cx='256' cy='256' r='160' fill='%23FF6B35'/><circle cx='256' cy='256' r='80' fill='%23000000'/></svg>",
       "sizes": "512x512",
       "type": "image/svg+xml",
       "purpose": "any"
     },
     {
-      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' fill='%236366F1' rx='48'/><circle cx='96' cy='96' r='60' fill='white'/><circle cx='96' cy='96' r='30' fill='%236366F1'/></svg>",
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' fill='%23000000' rx='48'/><circle cx='96' cy='96' r='60' fill='%23FF6B35'/><circle cx='96' cy='96' r='30' fill='%23000000'/></svg>",
       "sizes": "192x192",
       "type": "image/svg+xml",
       "purpose": "maskable"
@@ -38,7 +38,7 @@
       "url": "/?action=play",
       "icons": [
         {
-          "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2310b981'><path d='M8 5v14l11-7z'/></svg>",
+          "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23FF6B35'><path d='M8 5v14l11-7z'/></svg>",
           "sizes": "96x96"
         }
       ]
