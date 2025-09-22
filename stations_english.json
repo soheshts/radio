@@ -1,14 +1,14 @@
 [
   {
-    "name": "RP Main",
+    "name": "Radio Paradise Main",
     "url": "http://stream.radioparadise.com/flac"
   },
   {
-    "name": "RP Rock",
+    "name": "Radio Paradise Rock",
     "url": "http://stream.radioparadise.com/rock-flac"
   },
   {
-    "name": "RP Global",
+    "name": "Radio Paradise Global",
     "url": "http://stream.radioparadise.com/global-flac"
   },
   {
@@ -16,8 +16,44 @@
     "url": "https://s2.audiostream.hu/bdpstrock_FLAC"
   },
   {
-    "name": "Radio Calico",
-    "url": "http://radio3.radio-calico.com:8080/calico"
+    "name": "Danubius Radio",
+    "url": "https://stream.danubiusradio.hu/danubius_HiFi"
+  },
+  {
+    "name": "Juventus Radio",
+    "url": "  https://s2.audiostream.hu/juventus_FLAC"
+  },
+  {
+    "name": "Roxy Radio",
+    "url": "https://s2.audiostream.hu/roxy_FLAC"
+  },
+  {
+    "name": "HiFi Dream Radio",
+    "url": "https://cdn06-us-east.radio.cloud/80ba63862a97bd69c593cc7a2ccaab1c_hq"
+  },
+{
+    "name": "Riverside Radio",
+    "url": "https://stream.and-stuff.nl:8443/riverside"
+  },
+  {
+    "name": "95bFM Radio",
+    "url": "https://ice.radiorandom.org/WBJM-FLAC"
+  },
+  {
+    "name": "Open Sky Radio",
+    "url": "https://audio.opensky.radio:8082/flac"
+  },
+  {
+    "name": "JB Radio",
+    "url": "https://mediacp.jb-radio.net:8001/flac"
+  },
+  {
+    "name": "Violent Forces Radio",
+    "url": "https://tuneintoradio1.com/listen/violent_forces_radio/stream.flac"
+  },
+  {
+    "name": "Djam Radio",
+    "url": "https://stream10.xdevel.com/audio15s976748-2280/stream/icecast.audio"
   },
   {
     "name": "Classic FM",
