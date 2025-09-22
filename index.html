@@ -236,7 +236,7 @@
             border: 1px solid #333333;
             display: flex;
             align-items: center;
-            gap: 24px;
+            gap: 16px;
             position: relative;
             overflow: hidden;
             max-width: 500px;
@@ -274,11 +274,17 @@
             line-height: 1.2;
         }
 
+        .controls-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
         .fab {
-            width: 72px;
-            height: 72px;
+            width: 64px;
+            height: 64px;
             border: none;
-            border-radius: 24px;
+            border-radius: 20px;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
@@ -303,7 +309,46 @@
         }
 
         .fab .material-symbols-outlined {
-            font-size: 32px;
+            font-size: 28px;
+        }
+
+        .next-btn {
+            width: 48px;
+            height: 48px;
+            border: none;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #333333;
+            color: #FFFFFF;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .next-btn:hover {
+            background: #FF6B35;
+            color: #000000;
+            transform: scale(1.05);
+            box-shadow: 0 6px 16px rgba(255, 107, 53, 0.4);
+        }
+
+        .next-btn:active {
+            transform: scale(0.95);
+        }
+
+        .next-btn:disabled {
+            background: #222222;
+            color: #666666;
+            cursor: not-allowed;
+            opacity: 0.5;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .next-btn .material-symbols-outlined {
+            font-size: 24px;
         }
 
         .loading-indicator {
@@ -409,18 +454,31 @@
                 padding: 18px 45px 18px 18px;
             }
 
+            .controls-group {
+                gap: 10px;
+            }
+
             .fab {
-                width: 64px;
-                height: 64px;
+                width: 56px;
+                height: 56px;
             }
 
             .fab .material-symbols-outlined {
-                font-size: 28px;
+                font-size: 24px;
+            }
+
+            .next-btn {
+                width: 42px;
+                height: 42px;
+            }
+
+            .next-btn .material-symbols-outlined {
+                font-size: 20px;
             }
             
             .status-card {
                 padding: 24px;
-                gap: 20px;
+                gap: 16px;
             }
             
             .station-name {
@@ -451,18 +509,31 @@
                 min-height: 54px;
             }
             
+            .controls-group {
+                gap: 8px;
+            }
+            
             .status-card {
                 padding: 20px;
-                gap: 16px;
+                gap: 12px;
             }
             
             .fab {
-                width: 56px;
-                height: 56px;
+                width: 52px;
+                height: 52px;
             }
             
             .fab .material-symbols-outlined {
-                font-size: 24px;
+                font-size: 22px;
+            }
+
+            .next-btn {
+                width: 38px;
+                height: 38px;
+            }
+
+            .next-btn .material-symbols-outlined {
+                font-size: 18px;
             }
         }
     </style>
@@ -500,9 +571,14 @@
                     <div class="now-playing-label">Now Playing</div>
                     <div class="station-name" id="stationName">Starting radio...</div>
                 </div>
-                <button class="fab toggle-btn" id="toggleBtn">
-                    <span class="material-symbols-outlined">play_arrow</span>
-                </button>
+                <div class="controls-group">
+                    <button class="fab toggle-btn" id="toggleBtn">
+                        <span class="material-symbols-outlined">play_arrow</span>
+                    </button>
+                    <button class="next-btn" id="nextBtn" disabled>
+                        <span class="material-symbols-outlined">skip_next</span>
+                    </button>
+                </div>
             </div>
             
             <div class="error-message" id="errorMessage"></div>
@@ -523,6 +599,7 @@
                 this.languageButtons = document.getElementById('languageButtons');
                 this.stationSelect = document.getElementById('stationSelect');
                 this.toggleBtn = document.getElementById('toggleBtn');
+                this.nextBtn = document.getElementById('nextBtn');
                 this.stationName = document.getElementById('stationName');
                 this.volumeSlider = document.getElementById('volumeSlider');
                 this.errorMessage = document.getElementById('errorMessage');
@@ -531,6 +608,7 @@
                 this.languages = {};
                 this.stations = [];
                 this.currentStation = null;
+                this.currentStationIndex = 0;
                 this.deferredPrompt = null;
                 this.isPlaying = false;
                 this.selectedLanguage = 'malayalam';
@@ -620,6 +698,7 @@
                 if (this.stations.length === 0) {
                     this.stationSelect.innerHTML = '<option value="">No stations available</option>';
                     this.stationSelect.disabled = true;
+                    this.nextBtn.disabled = true;
                     return;
                 }
                 
@@ -631,6 +710,7 @@
                     this.stationSelect.appendChild(option);
                 });
                 this.stationSelect.disabled = false;
+                this.nextBtn.disabled = false;
             }
             
             async autoStartMalayalam() {
@@ -640,6 +720,7 @@
                     
                     setTimeout(() => {
                         if (this.stations.length > 0) {
+                            this.currentStationIndex = 0;
                             this.stationSelect.value = '0';
                             this.stationName.textContent = 'Press Play';
                         }
@@ -651,6 +732,7 @@
             
             setupEventListeners() {
                 this.toggleBtn.addEventListener('click', () => this.togglePlayPause());
+                this.nextBtn.addEventListener('click', () => this.nextStation());
                 this.stationSelect.addEventListener('change', (e) => this.selectStation(e.target.value));
                 this.volumeSlider.addEventListener('input', (e) => this.setVolume(e.target.value));
                 this.installBtn.addEventListener('click', () => this.installPWA());
@@ -699,13 +781,16 @@
             selectLanguage(languageKey) {
                 this.pause();
                 this.currentStation = null;
+                this.currentStationIndex = 0;
                 this.stationName.textContent = 'Loading stations...';
                 this.selectedLanguage = languageKey;
+                this.nextBtn.disabled = true;
                 
                 this.loadStationsForLanguage(languageKey);
                 
                 setTimeout(() => {
                     if (this.stations.length > 0) {
+                        this.currentStationIndex = 0;
                         this.stationSelect.value = '0';
                         this.selectStation('0');
                     }
@@ -715,17 +800,29 @@
             selectStation(index) {
                 if (index === '') {
                     this.currentStation = null;
+                    this.currentStationIndex = 0;
                     this.stationName.textContent = 'Select a station to begin';
                     this.pause();
                     return;
                 }
                 
-                this.currentStation = this.stations[index];
+                const stationIndex = parseInt(index);
+                this.currentStationIndex = stationIndex;
+                this.currentStation = this.stations[stationIndex];
                 this.audio.src = this.currentStation.url;
                 this.stationName.textContent = this.currentStation.name;
+                this.stationSelect.value = index;
                 this.clearError();
                 
                 this.play();
+            }
+            
+            nextStation() {
+                if (this.stations.length === 0) return;
+                
+                // Move to next station, wrap around to beginning if at end
+                this.currentStationIndex = (this.currentStationIndex + 1) % this.stations.length;
+                this.selectStation(this.currentStationIndex.toString());
             }
             
             togglePlayPause() {
@@ -749,7 +846,9 @@
             
             async play() {
                 if (!this.currentStation) {
-                    this.selectStation('0');
+                    if (this.stations.length > 0) {
+                        this.selectStation('0');
+                    }
                     return;
                 }
                 
