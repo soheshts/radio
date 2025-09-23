@@ -849,8 +849,8 @@
                     }
                     if (genre) {
                         // Limit chip size to 20 characters
-                        if (genre.length > 20) {
-                            genre = genre.slice(0, 17) + '...';
+                        if (genre.length > 30) {
+                            genre = genre.slice(0, 27) + '...';
                         }
                         this.genreChip.textContent = genre;
                         this.genreChip.style.display = 'inline-block';

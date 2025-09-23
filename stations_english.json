@@ -1,15 +1,15 @@
 [
   {
     "name": "Radio Paradise Main",
-    "url": "http://stream.radioparadise.com/flac"
+    "url": "http://stream.radioparadise.com/flacm"
   },
   {
     "name": "Radio Paradise Rock",
-    "url": "http://stream.radioparadise.com/rock-flac"
+    "url": "http://stream.radioparadise.com/rock-flacm"
   },
   {
     "name": "Radio Paradise Global",
-    "url": "http://stream.radioparadise.com/global-flac"
+    "url": "http://stream.radioparadise.com/global-flacm"
   },
   {
     "name": "BDPST",
