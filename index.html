@@ -415,6 +415,19 @@
             display: none;
         }
 
+        .genre-chip {
+            display: inline-block;
+            background: #FF6B35;
+            color: #000;
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: 10px;
+            padding: 4px 12px;
+            vertical-align: middle;
+            box-shadow: 0 2px 8px rgba(255, 107, 53, 0.15);
+            letter-spacing: 0.5px;
+        }
+
         @media (max-width: 768px) {
             .radio-player {
                 padding: 32px 24px;
@@ -570,6 +583,7 @@
                 <div class="status-content">
                     <div class="now-playing-label">Now Playing</div>
                     <div class="station-name" id="stationName">Starting radio...</div>
+                    <span class="genre-chip" id="genreChip" style="display:none;"></span>
                 </div>
                 <div class="controls-group">
                     <button class="fab toggle-btn" id="toggleBtn">
@@ -604,6 +618,7 @@
                 this.volumeSlider = document.getElementById('volumeSlider');
                 this.errorMessage = document.getElementById('errorMessage');
                 this.installBtn = document.getElementById('installBtn');
+                this.genreChip = document.getElementById('genreChip');
                 
                 this.languages = {};
                 this.stations = [];
@@ -813,8 +828,38 @@
                 this.stationName.textContent = this.currentStation.name;
                 this.stationSelect.value = index;
                 this.clearError();
-                
+
+                this.genreChip.style.display = 'none';
+                this.genreChip.textContent = '';
+
+                this.fetchGenreHeader(this.currentStation.url);
+
                 this.play();
+            }
+
+            async fetchGenreHeader(url) {
+                // Only works for CORS-enabled streams and non-HLS
+                try {
+                    // Try to fetch headers using a HEAD request
+                    const response = await fetch(url, { method: 'HEAD' });
+                    let genre = response.headers.get('icy-genre');
+                    if (!genre) {
+                        // Some servers use lowercase or other variants
+                        genre = response.headers.get('Genre') || response.headers.get('genre');
+                    }
+                    if (genre) {
+                        // Limit chip size to 20 characters
+                        if (genre.length > 20) {
+                            genre = genre.slice(0, 17) + '...';
+                        }
+                        this.genreChip.textContent = genre;
+                        this.genreChip.style.display = 'inline-block';
+                    } else {
+                        this.genreChip.style.display = 'none';
+                    }
+                } catch (e) {
+                    this.genreChip.style.display = 'none';
+                }
             }
             
             nextStation() {
