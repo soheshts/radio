@@ -838,29 +838,38 @@
             }
 
             async fetchGenreHeader(url) {
-                // Only works for CORS-enabled streams and non-HLS
+            // Try HEAD first, fallback to GET if not supported
+            let genre = null;
+            try {
+                const response = await fetch(url, { method: 'HEAD' });
+                genre = response.headers.get('icy-genre') ||
+                        response.headers.get('Genre') ||
+                        response.headers.get('genre');
+            } catch (e) {
+                // HEAD failed, try GET with Range header for minimal data
                 try {
-                    // Try to fetch headers using a HEAD request
-                    const response = await fetch(url, { method: 'HEAD' });
-                    let genre = response.headers.get('icy-genre');
-                    if (!genre) {
-                        // Some servers use lowercase or other variants
-                        genre = response.headers.get('Genre') || response.headers.get('genre');
-                    }
-                    if (genre) {
-                        // Limit chip size to 20 characters
-                        if (genre.length > 30) {
-                            genre = genre.slice(0, 27) + '...';
-                        }
-                        this.genreChip.textContent = genre;
-                        this.genreChip.style.display = 'inline-block';
-                    } else {
-                        this.genreChip.style.display = 'none';
-                    }
-                } catch (e) {
-                    this.genreChip.style.display = 'none';
+                    const response = await fetch(url, {
+                        method: 'GET',
+                        headers: { Range: 'bytes=0-1023' }
+                    });
+                    genre = response.headers.get('icy-genre') ||
+                            response.headers.get('Genre') ||
+                            response.headers.get('genre');
+                } catch (err) {
+                    genre = null;
                 }
             }
+            if (genre) {
+                // Limit chip size to 20 characters
+                if (genre.length > 30) {
+                    genre = genre.slice(0, 27) + '...';
+                }
+                this.genreChip.textContent = genre;
+                this.genreChip.style.display = 'inline-block';
+            } else {
+                this.genreChip.style.display = 'none';
+            }
+        }
             
             nextStation() {
                 if (this.stations.length === 0) return;
