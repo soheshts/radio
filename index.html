@@ -27,7 +27,8 @@
             min-height: 100vh;
             color: #2D3748;
             margin: 0;
-            padding-bottom: 120px; /* Space for floating toolbar */
+            padding-bottom: 120px;
+            transition: all 0.3s ease;
         }
 
         .radio-player {
@@ -44,6 +45,42 @@
         .header-section {
             text-align: center;
             margin-bottom: 40px;
+            position: relative;
+        }
+
+        .theme-toggle-container {
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: 10;
+        }
+
+        .theme-toggle {
+            width: 56px;
+            height: 56px;
+            border: none;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #FFFFFF;
+            color: #FF6B35;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            border: 2px solid #E2E8F0;
+        }
+
+        .theme-toggle:hover {
+            background: #FF6B35;
+            color: #FFFFFF;
+            transform: scale(1.05);
+            box-shadow: 0 8px 24px rgba(255, 107, 53, 0.3);
+        }
+
+        .theme-toggle .material-symbols-outlined {
+            font-size: 28px;
+            transition: all 0.3s ease;
         }
 
         .logo {
@@ -232,14 +269,6 @@
             50% { opacity: 0.5; }
         }
 
-        .volume-section,
-        .volume-label,
-        .volume-container,
-        .volume-slider {
-            display: none;
-        }
-
-        /* Floating Now Playing Toolbar */
         .floating-toolbar {
             position: fixed;
             bottom: 0;
@@ -445,7 +474,129 @@
             margin-bottom: 16px;
         }
 
+        /* Dark Theme Styles */
+        body.dark-theme {
+            background: linear-gradient(135deg, #18191A 0%, #23272F 100%);
+            color: #FFFFFF;
+        }
+
+        body.dark-theme html {
+            background-color: #18191A;
+        }
+
+        body.dark-theme .radio-player {
+            background: #23272F;
+            box-shadow: 0 0 40px rgba(0,0,0,0.5);
+        }
+
+        body.dark-theme h1 {
+            color: #FFFFFF;
+        }
+
+        body.dark-theme .subtitle {
+            color: #CCCCCC;
+        }
+
+        body.dark-theme .section-title {
+            color: #FFFFFF;
+        }
+
+        body.dark-theme .theme-toggle {
+            background: #23272F;
+            color: #FF6B35;
+            border-color: #2C2F36;
+            box-shadow: 4px 4px 12px #18191A, -4px -4px 12px #2C2F36;
+        }
+
+        body.dark-theme .theme-toggle:hover {
+            background: #FF6B35;
+            color: #23272F;
+            box-shadow: 2px 2px 8px #FF8A50, -2px -2px 8px #FF6B35;
+        }
+
+        body.dark-theme .segmented-buttons {
+            background: #23272F;
+            border-color: #2C2F36;
+            box-shadow: 4px 4px 12px #18191A, -4px -4px 12px #2C2F36;
+        }
+
+        body.dark-theme .segment-btn {
+            color: #CCCCCC;
+        }
+
+        body.dark-theme .segment-btn:hover {
+            background: #2C2F36;
+            color: #FF6B35;
+        }
+
+        body.dark-theme .segment-btn.active {
+            background: #FF6B35;
+            color: #23272F;
+            box-shadow: 2px 2px 8px #FF8A50, -2px -2px 8px #FF6B35;
+        }
+
+        body.dark-theme .stations-list {
+            background: #23272F;
+            border-color: #2C2F36;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        body.dark-theme .station-item {
+            border-bottom-color: #2C2F36;
+        }
+
+        body.dark-theme .station-item:hover {
+            background: #2C2F36;
+        }
+
+        body.dark-theme .station-item.active {
+            background: linear-gradient(135deg, #FF6B35, #FF8A50);
+            color: #FFFFFF;
+        }
+
+        body.dark-theme .station-name {
+            color: #FFFFFF;
+        }
+
+        body.dark-theme .station-genre {
+            color: #CCCCCC;
+        }
+
+        body.dark-theme .error-message {
+            background: #2C2F36;
+            color: #FF8A65;
+            border-color: #FF6B35;
+            box-shadow: 2px 2px 8px #FF8A50, -2px -2px 8px #FF6B35;
+        }
+
+        body.dark-theme .install-btn {
+            background: #23272F;
+            color: #FF6B35;
+            border-color: #2C2F36;
+            box-shadow: 2px 2px 8px #18191A, -2px -2px 8px #2C2F36;
+        }
+
+        body.dark-theme .install-btn:hover {
+            background: #FF6B35;
+            color: #23272F;
+            box-shadow: 2px 2px 8px #FF8A50, -2px -2px 8px #FF6B35;
+        }
+
+        body.dark-theme .spinner {
+            border-color: #2C2F36;
+            border-top-color: #FF6B35;
+        }
+
         @media (max-width: 768px) {
+            .theme-toggle {
+                width: 48px;
+                height: 48px;
+            }
+            
+            .theme-toggle .material-symbols-outlined {
+                font-size: 24px;
+            }
+            
             .radio-player {
                 padding: 32px 24px;
                 max-width: 100%;
@@ -525,6 +676,15 @@
         }
 
         @media (max-width: 480px) {
+            .theme-toggle {
+                width: 44px;
+                height: 44px;
+            }
+            
+            .theme-toggle .material-symbols-outlined {
+                font-size: 22px;
+            }
+            
             .radio-player {
                 padding: 24px 16px;
             }
@@ -577,6 +737,11 @@
 <body>
     <div class="radio-player">
         <div class="header-section">
+            <div class="theme-toggle-container">
+                <button class="theme-toggle" id="themeToggle">
+                    <span class="material-symbols-outlined" id="themeIcon">light_mode</span>
+                </button>
+            </div>
             <div class="logo">
                 <span class="material-symbols-outlined">radio</span>
             </div>
@@ -601,8 +766,6 @@
             </div>
         </div>
         
-
-        
         <div class="error-message" id="errorMessage"></div>
         
         <button class="install-btn hidden" id="installBtn">
@@ -611,7 +774,6 @@
         </button>
     </div>
 
-    <!-- Floating Toolbar -->
     <div class="floating-toolbar">
         <div class="toolbar-content">
             <div class="station-info-toolbar">
@@ -640,9 +802,10 @@
                 this.toggleBtn = document.getElementById('toggleBtn');
                 this.nextBtn = document.getElementById('nextBtn');
                 this.currentStationName = document.getElementById('currentStationName');
-                this.volumeSlider = null;
                 this.errorMessage = document.getElementById('errorMessage');
                 this.installBtn = document.getElementById('installBtn');
+                this.themeToggle = document.getElementById('themeToggle');
+                this.themeIcon = document.getElementById('themeIcon');
                 
                 this.languages = {};
                 this.stations = [];
@@ -651,17 +814,65 @@
                 this.deferredPrompt = null;
                 this.isPlaying = false;
                 this.selectedLanguage = 'malayalam';
+                this.isDarkMode = false;
                 
                 this.init();
             }
             
             async init() {
+                this.loadTheme();
                 await this.loadLanguages();
                 this.setupEventListeners();
                 this.setupPWA();
                 this.setupAudio();
                 
                 await this.autoStartMalayalam();
+            }
+            
+            loadTheme() {
+                try {
+                    const savedTheme = this.getSavedTheme();
+                    
+                    if (savedTheme === 'dark') {
+                        this.isDarkMode = true;
+                        document.body.classList.add('dark-theme');
+                        this.themeIcon.textContent = 'dark_mode';
+                    } else {
+                        this.isDarkMode = false;
+                        document.body.classList.remove('dark-theme');
+                        this.themeIcon.textContent = 'light_mode';
+                    }
+                } catch (error) {
+                    console.log('Theme loading fallback to light mode');
+                    this.isDarkMode = false;
+                }
+            }
+            
+            getSavedTheme() {
+                return window.radioAppTheme || 'light';
+            }
+            
+            saveTheme(theme) {
+                window.radioAppTheme = theme;
+            }
+            
+            toggleTheme() {
+                this.isDarkMode = !this.isDarkMode;
+                
+                if (this.isDarkMode) {
+                    document.body.classList.add('dark-theme');
+                    this.themeIcon.textContent = 'dark_mode';
+                    this.saveTheme('dark');
+                } else {
+                    document.body.classList.remove('dark-theme');
+                    this.themeIcon.textContent = 'light_mode';
+                    this.saveTheme('light');
+                }
+                
+                document.body.style.transition = 'all 0.3s ease';
+                setTimeout(() => {
+                    document.body.style.transition = '';
+                }, 300);
             }
             
             async loadLanguages() {
@@ -789,7 +1000,7 @@
                     
                     setTimeout(() => {
                         if (this.stations.length > 0) {
-                            this.selectStation(0); // Auto-play first station
+                            this.selectStation(0);
                         }
                     }, 500);
                 } catch (error) {
@@ -801,10 +1012,11 @@
                 this.toggleBtn.addEventListener('click', () => this.togglePlayPause());
                 this.nextBtn.addEventListener('click', () => this.nextStation());
                 this.installBtn.addEventListener('click', () => this.installPWA());
+                this.themeToggle.addEventListener('click', () => this.toggleTheme());
             }
             
             setupAudio() {
-                this.audio.volume = 1.0; // Set to full volume, let device control it
+                this.audio.volume = 1.0;
                 
                 this.audio.addEventListener('loadstart', () => {
                     this.currentStationName.innerHTML = '<div class="loading-indicator"><div class="spinner"></div>Loading...</div>';
@@ -857,7 +1069,6 @@
                 this.updatePlayingIndicators();
                 
                 this.loadStationsForLanguage(languageKey).then(() => {
-                    // Auto-play the first station after loading
                     setTimeout(() => {
                         if (this.stations.length > 0) {
                             this.selectStation(0);
@@ -867,7 +1078,6 @@
             }
             
             selectStation(index) {
-                // Update visual selection
                 const allItems = this.stationsList.querySelectorAll('.station-item');
                 allItems.forEach(item => item.classList.remove('active'));
                 
@@ -889,7 +1099,6 @@
             nextStation() {
                 if (this.stations.length === 0) return;
                 
-                // Move to next station, wrap around to beginning if at end
                 this.currentStationIndex = (this.currentStationIndex + 1) % this.stations.length;
                 this.selectStation(this.currentStationIndex);
             }
@@ -945,10 +1154,6 @@
             pause() {
                 this.audio.pause();
                 this.clearError();
-            }
-            
-            setVolume(value) {
-                // Volume control removed - let device handle it
             }
             
             showError(message) {
