@@ -23,7 +23,7 @@
 
         body {
             font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #000000 0%, #1A0A00 50%, #2D1200 100%);
+            background: #18191A;
             min-height: 100vh;
             display: flex;
             align-items: stretch;
@@ -34,7 +34,7 @@
         }
 
         .radio-player {
-            background: #121212;
+            background: #23272F;
             width: 100vw;
             height: 100vh;
             text-align: center;
@@ -46,34 +46,41 @@
             align-items: center;
             overflow-y: auto;
             padding: 40px 32px;
+            box-shadow: 8px 8px 24px #18191A, -8px -8px 24px #2C2F36;
+            border-radius: 32px;
         }
 
         .content-container {
             width: 100%;
             max-width: 500px;
             margin: 0 auto;
+            box-shadow: 6px 6px 18px #18191A, -6px -6px 18px #2C2F36;
+            border-radius: 28px;
+            background: #23272F;
+            padding: 24px 0;
         }
 
         .logo {
             width: 80px;
             height: 80px;
             margin: 0 auto 32px;
-            background: linear-gradient(135deg, #FF6B35, #FF8A50);
+            background: #23272F;
             border-radius: 24px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+            box-shadow: 8px 8px 24px #18191A, -8px -8px 24px #2C2F36;
             transition: all 0.3s ease;
         }
 
         .logo:hover {
             transform: scale(1.05);
+            box-shadow: 4px 4px 12px #18191A, -4px -4px 12px #2C2F36;
         }
 
         .logo .material-symbols-outlined {
             font-size: 40px;
-            color: #000000;
+            color: #FF6B35;
         }
 
         h1 {
@@ -82,6 +89,7 @@
             font-weight: 700;
             margin-bottom: 12px;
             letter-spacing: -0.5px;
+            text-shadow: 2px 2px 8px #18191A;
         }
 
         .subtitle {
@@ -89,6 +97,7 @@
             font-size: 18px;
             font-weight: 500;
             margin-bottom: 48px;
+            text-shadow: 1px 1px 4px #18191A;
         }
 
         .language-selector {
@@ -98,18 +107,19 @@
         .segmented-buttons {
             display: flex;
             border-radius: 20px;
-            background: #1E1E1E;
+            background: #23272F;
             padding: 6px;
-            border: 1px solid #333333;
+            border: none;
             max-width: 320px;
             margin: 0 auto;
+            box-shadow: 4px 4px 12px #18191A, -4px -4px 12px #2C2F36;
         }
 
         .segment-btn {
             flex: 1;
             padding: 16px 20px;
             border: none;
-            background: transparent;
+            background: #23272F;
             color: #CCCCCC;
             font-size: 16px;
             font-weight: 500;
@@ -117,17 +127,19 @@
             transition: all 0.3s ease;
             border-radius: 14px;
             font-family: inherit;
+            box-shadow: 2px 2px 6px #18191A, -2px -2px 6px #2C2F36;
         }
 
         .segment-btn:hover {
-            background: rgba(255, 107, 53, 0.1);
+            background: #23272F;
             color: #FF6B35;
+            box-shadow: inset 2px 2px 6px #18191A, inset -2px -2px 6px #2C2F36;
         }
 
         .segment-btn.active {
             background: #FF6B35;
-            color: #000000;
-            box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
+            color: #23272F;
+            box-shadow: 2px 2px 8px #FF8A50, -2px -2px 8px #FF6B35;
             font-weight: 600;
         }
 
@@ -143,14 +155,15 @@
             font-size: 18px;
             font-weight: 500;
             font-family: inherit;
-            border: 2px solid #333333;
+            border: none;
             border-radius: 20px;
-            background: #1E1E1E;
+            background: #23272F;
             color: #FFFFFF;
             cursor: pointer;
             transition: all 0.3s ease;
             appearance: none;
             min-height: 64px;
+            box-shadow: 4px 4px 12px #18191A, -4px -4px 12px #2C2F36;
             background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'%3e%3cpath stroke='%23CCCCCC' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M6 9l6 6 6-6'/%3e%3c/svg%3e");
             background-repeat: no-repeat;
             background-position: right 20px center;
@@ -158,26 +171,20 @@
             display: block;
         }
 
-        .station-select:hover {
-            border-color: #FF6B35;
-        }
-
         .station-select:focus {
             outline: none;
-            border-color: #FF6B35;
-            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.2);
+            box-shadow: 0 0 0 3px #FF6B35;
         }
 
         .station-select:disabled {
-            background: #0F0F0F;
+            background: #18191A;
             color: #666666;
             cursor: not-allowed;
-            border-color: #222222;
             opacity: 0.6;
         }
 
         .station-select option {
-            background: #1E1E1E;
+            background: #23272F;
             color: #FFFFFF;
             padding: 12px;
         }
@@ -196,11 +203,12 @@
         .volume-slider {
             width: 100%;
             height: 8px;
-            background: #333333;
+            background: #23272F;
             border-radius: 4px;
             outline: none;
             appearance: none;
             cursor: pointer;
+            box-shadow: 2px 2px 8px #18191A, -2px -2px 8px #2C2F36;
         }
 
         .volume-slider::-webkit-slider-thumb {
@@ -210,7 +218,7 @@
             background: #FF6B35;
             border-radius: 50%;
             cursor: pointer;
-            box-shadow: 0 3px 12px rgba(255, 107, 53, 0.4);
+            box-shadow: 2px 2px 8px #FF8A50, -2px -2px 8px #FF6B35;
             transition: all 0.2s ease;
         }
 
@@ -225,15 +233,15 @@
             border-radius: 50%;
             cursor: pointer;
             border: none;
-            box-shadow: 0 3px 12px rgba(255, 107, 53, 0.4);
+            box-shadow: 2px 2px 8px #FF8A50, -2px -2px 8px #FF6B35;
         }
 
         .status-card {
-            background: #1A1A1A;
+            background: #23272F;
             border-radius: 24px;
             padding: 32px;
-            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
-            border: 1px solid #333333;
+            box-shadow: 8px 8px 24px #18191A, -8px -8px 24px #2C2F36;
+            border: none;
             display: flex;
             align-items: center;
             gap: 16px;
@@ -251,6 +259,7 @@
             right: 0;
             height: 3px;
             background: linear-gradient(90deg, #FF6B35, #FF8A50);
+            opacity: 0.7;
         }
 
         .status-content {
@@ -265,6 +274,7 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 8px;
+            text-shadow: 1px 1px 4px #18191A;
         }
 
         .station-name {
@@ -272,6 +282,27 @@
             font-size: 20px;
             font-weight: 700;
             line-height: 1.2;
+            text-shadow: 1px 1px 4px #18191A;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .genre-chip {
+            display: inline-block;
+            background: #FF6B35;
+            color: #23272F;
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: 10px;
+            padding: 4px 12px;
+            vertical-align: middle;
+            box-shadow: 2px 2px 8px #FF8A50, -2px -2px 8px #FF6B35;
+            letter-spacing: 0.5px;
+            margin-left: 8px;
+            max-width: 140px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .controls-group {
@@ -291,13 +322,13 @@
             align-items: center;
             justify-content: center;
             background: #FF6B35;
-            color: #000000;
-            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+            color: #23272F;
+            box-shadow: 4px 4px 16px #FF8A50, -4px -4px 16px #FF6B35;
         }
 
         .fab:hover {
             transform: scale(1.05);
-            box-shadow: 0 8px 24px rgba(255, 107, 53, 0.6);
+            box-shadow: 2px 2px 8px #FF8A50, -2px -2px 8px #FF6B35;
         }
 
         .fab:active {
@@ -306,6 +337,8 @@
 
         .fab.playing {
             background: #FF5722;
+            color: #23272F;
+            box-shadow: 2px 2px 8px #FF8A50, -2px -2px 8px #FF5722;
         }
 
         .fab .material-symbols-outlined {
@@ -322,16 +355,16 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #333333;
-            color: #FFFFFF;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            background: #23272F;
+            color: #FF6B35;
+            box-shadow: 2px 2px 8px #18191A, -2px -2px 8px #2C2F36;
         }
 
         .next-btn:hover {
             background: #FF6B35;
-            color: #000000;
+            color: #23272F;
             transform: scale(1.05);
-            box-shadow: 0 6px 16px rgba(255, 107, 53, 0.4);
+            box-shadow: 2px 2px 8px #FF8A50, -2px -2px 8px #FF6B35;
         }
 
         .next-btn:active {
@@ -339,7 +372,7 @@
         }
 
         .next-btn:disabled {
-            background: #222222;
+            background: #18191A;
             color: #666666;
             cursor: not-allowed;
             opacity: 0.5;
@@ -361,7 +394,7 @@
         .spinner {
             width: 18px;
             height: 18px;
-            border: 2px solid #333333;
+            border: 2px solid #23272F;
             border-radius: 50%;
             border-top-color: #FF6B35;
             animation: spin 1s linear infinite;
@@ -372,13 +405,14 @@
         }
 
         .error-message {
-            background: rgba(255, 87, 34, 0.1);
+            background: #23272F;
             color: #FF8A65;
             padding: 12px 16px;
             border-radius: 12px;
             font-size: 14px;
             margin-top: 16px;
-            border: 1px solid rgba(255, 87, 34, 0.3);
+            border: none;
+            box-shadow: 2px 2px 8px #FF8A50, -2px -2px 8px #FF6B35;
             display: none;
         }
 
@@ -387,8 +421,8 @@
         }
 
         .install-btn {
-            background: #333333;
-            color: #FFFFFF;
+            background: #23272F;
+            color: #FF6B35;
             padding: 16px 24px;
             border-radius: 16px;
             margin-top: 24px;
@@ -403,97 +437,79 @@
             justify-content: center;
             gap: 8px;
             font-family: inherit;
+            box-shadow: 2px 2px 8px #18191A, -2px -2px 8px #2C2F36;
         }
 
         .install-btn:hover {
             background: #FF6B35;
-            color: #000000;
+            color: #23272F;
             transform: translateY(-2px);
+            box-shadow: 2px 2px 8px #FF8A50, -2px -2px 8px #FF6B35;
         }
 
         .install-btn.hidden {
             display: none;
         }
 
-        .genre-chip {
-            display: inline-block;
-            background: #FF6B35;
-            color: #000;
-            font-size: 13px;
-            font-weight: 500;
-            border-radius: 10px;
-            padding: 4px 12px;
-            vertical-align: middle;
-            box-shadow: 0 2px 8px rgba(255, 107, 53, 0.15);
-            letter-spacing: 0.5px;
-        }
-
         @media (max-width: 768px) {
             .radio-player {
                 padding: 32px 24px;
+                border-radius: 24px;
             }
-            
+            .content-container {
+                border-radius: 20px;
+                padding: 16px 0;
+            }
             h1 {
                 font-size: 32px;
             }
-            
             .subtitle {
                 font-size: 16px;
                 margin-bottom: 40px;
             }
-
             .logo {
                 width: 72px;
                 height: 72px;
                 margin-bottom: 28px;
+                border-radius: 18px;
             }
-            
             .logo .material-symbols-outlined {
                 font-size: 36px;
             }
-
             .segmented-buttons {
                 max-width: 280px;
             }
-            
             .segment-btn {
                 padding: 14px 16px;
                 font-size: 15px;
             }
-
             .station-select {
                 font-size: 16px;
                 min-height: 58px;
                 padding: 18px 45px 18px 18px;
             }
-
             .controls-group {
                 gap: 10px;
             }
-
             .fab {
                 width: 56px;
                 height: 56px;
             }
-
             .fab .material-symbols-outlined {
                 font-size: 24px;
             }
-
             .next-btn {
                 width: 42px;
                 height: 42px;
             }
-
             .next-btn .material-symbols-outlined {
                 font-size: 20px;
             }
-            
             .status-card {
                 padding: 24px;
                 gap: 16px;
+                border-radius: 18px;
             }
-            
             .station-name {
                 font-size: 18px;
             }
@@ -501,50 +517,46 @@
 
         @media (max-width: 480px) {
             .radio-player {
-                padding: 24px 20px;
+                padding: 24px 10px;
+                border-radius: 0;
             }
-            
+            .content-container {
+                border-radius: 0;
+                padding: 8px 0;
+            }
             h1 {
                 font-size: 28px;
             }
-            
             .subtitle {
                 font-size: 15px;
             }
-            
             .segment-btn {
                 padding: 12px 14px;
                 font-size: 14px;
             }
-            
             .station-select {
                 font-size: 15px;
                 min-height: 54px;
             }
-            
             .controls-group {
                 gap: 8px;
             }
-            
             .status-card {
-                padding: 20px;
-                gap: 12px;
+                padding: 12px;
+                gap: 8px;
+                border-radius: 0;
             }
-            
             .fab {
                 width: 52px;
                 height: 52px;
             }
-            
             .fab .material-symbols-outlined {
                 font-size: 22px;
             }
-
             .next-btn {
                 width: 38px;
                 height: 38px;
             }
-
             .next-btn .material-symbols-outlined {
                 font-size: 18px;
             }
