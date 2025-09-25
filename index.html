@@ -1,13 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <script>
+        // Set html background color instantly based on saved theme
+        (function () {
+            var theme = localStorage.getItem('radioAppTheme');
+            if (theme === 'dark') {
+                document.documentElement.style.backgroundColor = '#18191A';
+            } else {
+                document.documentElement.style.backgroundColor = '#F5F7FA';
+            }
+        })();
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Radio Wave - PWA Radio Player</title>
     <link rel="manifest" href="./manifest_json.json">
     <meta name="theme-color" content="#FF6B35">
     <meta name="description" content="Modern PWA Radio Player">
-    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23FF6B35'/><circle cx='50' cy='50' r='30' fill='white'/><circle cx='50' cy='50' r='15' fill='%23FF6B35'/></svg>">
+    <link rel="apple-touch-icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23FF6B35'/><circle cx='50' cy='50' r='30' fill='white'/><circle cx='50' cy='50' r='15' fill='%23FF6B35'/></svg>">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
     <style>
@@ -37,7 +50,7 @@
             margin: 0 auto;
             min-height: 100vh;
             position: relative;
-            box-shadow: 0 0 40px rgba(0,0,0,0.1);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
             overflow-y: auto;
             padding: 40px 32px;
         }
@@ -67,7 +80,7 @@
             justify-content: center;
             background: #FFFFFF;
             color: #FF6B35;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
             border: 2px solid #E2E8F0;
         }
 
@@ -133,7 +146,7 @@
             border: 2px solid #E2E8F0;
             max-width: 320px;
             margin: 0 auto;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
         }
 
         .segment-btn {
@@ -177,7 +190,7 @@
         .stations-list {
             background: #FFFFFF;
             border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             border: 1px solid #E2E8F0;
             overflow: hidden;
         }
@@ -265,8 +278,15 @@
         }
 
         @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
         }
 
         .floating-toolbar {
@@ -353,8 +373,15 @@
         }
 
         @keyframes playingGlow {
-            0%, 100% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.3); }
-            50% { box-shadow: 0 0 30px rgba(255, 255, 255, 0.5); }
+
+            0%,
+            100% {
+                box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            }
+
+            50% {
+                box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+            }
         }
 
         .fab .material-symbols-outlined {
@@ -413,7 +440,9 @@
         }
 
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         .error-message {
@@ -448,7 +477,7 @@
             justify-content: center;
             gap: 8px;
             font-family: inherit;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
         }
 
         .install-btn:hover {
@@ -486,7 +515,7 @@
 
         body.dark-theme .radio-player {
             background: #23272F;
-            box-shadow: 0 0 40px rgba(0,0,0,0.5);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
         }
 
         body.dark-theme h1 {
@@ -538,7 +567,7 @@
         body.dark-theme .stations-list {
             background: #23272F;
             border-color: #2C2F36;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
 
         body.dark-theme .station-item {
@@ -592,84 +621,84 @@
                 width: 48px;
                 height: 48px;
             }
-            
+
             .theme-toggle .material-symbols-outlined {
                 font-size: 24px;
             }
-            
+
             .radio-player {
                 padding: 32px 24px;
                 max-width: 100%;
             }
-            
+
             h1 {
                 font-size: 32px;
             }
-            
+
             .subtitle {
                 font-size: 16px;
                 margin-bottom: 40px;
             }
-            
+
             .logo {
                 width: 72px;
                 height: 72px;
                 margin-bottom: 28px;
             }
-            
+
             .logo .material-symbols-outlined {
                 font-size: 36px;
             }
-            
+
             .segmented-buttons {
                 max-width: 280px;
             }
-            
+
             .segment-btn {
                 padding: 14px 16px;
                 font-size: 15px;
             }
-            
+
             .station-item {
                 padding: 16px 20px;
             }
-            
+
             .station-icon {
                 width: 40px;
                 height: 40px;
                 margin-right: 12px;
             }
-            
+
             .station-icon .material-symbols-outlined {
                 font-size: 20px;
             }
-            
+
             .station-name {
                 font-size: 16px;
             }
-            
+
             .floating-toolbar {
                 padding: 16px 20px;
             }
-            
+
             .fab {
                 width: 52px;
                 height: 52px;
             }
-            
+
             .fab .material-symbols-outlined {
                 font-size: 24px;
             }
-            
+
             .next-btn {
                 width: 44px;
                 height: 44px;
             }
-            
+
             .next-btn .material-symbols-outlined {
                 font-size: 20px;
             }
-            
+
             .current-station-name {
                 font-size: 16px;
             }
@@ -680,60 +709,61 @@
                 width: 44px;
                 height: 44px;
             }
-            
+
             .theme-toggle .material-symbols-outlined {
                 font-size: 22px;
             }
-            
+
             .radio-player {
                 padding: 24px 16px;
             }
-            
+
             h1 {
                 font-size: 28px;
             }
-            
+
             .subtitle {
                 font-size: 15px;
             }
-            
+
             .segment-btn {
                 padding: 12px 14px;
                 font-size: 14px;
             }
-            
+
             .station-item {
                 padding: 14px 16px;
             }
-            
+
             .floating-toolbar {
                 padding: 14px 16px;
             }
-            
+
             .controls-group {
                 gap: 8px;
             }
-            
+
             .fab {
                 width: 48px;
                 height: 48px;
             }
-            
+
             .fab .material-symbols-outlined {
                 font-size: 22px;
             }
-            
+
             .next-btn {
                 width: 40px;
                 height: 40px;
             }
-            
+
             .next-btn .material-symbols-outlined {
                 font-size: 18px;
             }
         }
     </style>
 </head>
+
 <body>
     <div class="radio-player">
         <div class="header-section">
@@ -748,14 +778,14 @@
             <h1>Radio Wave</h1>
             <p class="subtitle">Your favorite stations, everywhere</p>
         </div>
-        
+
         <div class="language-selector">
             <div class="segmented-buttons" id="languageButtons">
                 <button class="segment-btn active" data-lang="malayalam">മലയാളം</button>
                 <button class="segment-btn" data-lang="english">English</button>
             </div>
         </div>
-        
+
         <div class="stations-section">
             <div class="section-title">Radio Stations</div>
             <div class="stations-list" id="stationsList">
@@ -765,9 +795,9 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="error-message" id="errorMessage"></div>
-        
+
         <button class="install-btn hidden" id="installBtn">
             <span class="material-symbols-outlined">install_mobile</span>
             Install Radio Wave
@@ -806,7 +836,7 @@
                 this.installBtn = document.getElementById('installBtn');
                 this.themeToggle = document.getElementById('themeToggle');
                 this.themeIcon = document.getElementById('themeIcon');
-                
+
                 this.languages = {};
                 this.stations = [];
                 this.currentStation = null;
@@ -815,24 +845,24 @@
                 this.isPlaying = false;
                 this.selectedLanguage = 'malayalam';
                 this.isDarkMode = false;
-                
+
                 this.init();
             }
-            
+
             async init() {
                 this.loadTheme();
                 await this.loadLanguages();
                 this.setupEventListeners();
                 this.setupPWA();
                 this.setupAudio();
-                
+
                 await this.autoStartMalayalam();
             }
-            
+
             loadTheme() {
                 try {
                     const savedTheme = this.getSavedTheme();
-                    
+
                     if (savedTheme === 'dark') {
                         this.isDarkMode = true;
                         document.body.classList.add('dark-theme');
@@ -847,11 +877,11 @@
                     this.isDarkMode = false;
                 }
             }
-            
+
             // getSavedTheme() {
             //     return window.radioAppTheme || 'light';
             // }
-            
+
             // saveTheme(theme) {
             //     window.radioAppTheme = theme;
             // }
@@ -864,10 +894,10 @@
                 localStorage.setItem('radioAppTheme', theme);
             }
 
-            
+
             toggleTheme() {
                 this.isDarkMode = !this.isDarkMode;
-                
+
                 if (this.isDarkMode) {
                     document.body.classList.add('dark-theme');
                     this.themeIcon.textContent = 'dark_mode';
@@ -877,27 +907,27 @@
                     this.themeIcon.textContent = 'light_mode';
                     this.saveTheme('light');
                 }
-                
+
                 document.body.style.transition = 'all 0.3s ease';
                 setTimeout(() => {
                     document.body.style.transition = '';
                 }, 300);
             }
-            
+
             async loadLanguages() {
                 try {
                     this.languages = {
                         'malayalam': { name: 'മലയാളം (Malayalam)', file: 'stations_malayalam.json' },
                         'english': { name: 'English', file: 'stations_english.json' }
                     };
-                    
+
                     this.populateLanguages();
                 } catch (error) {
                     console.error('Error loading languages:', error);
                     this.showError('Failed to load language options');
                 }
             }
-            
+
             populateLanguages() {
                 const buttons = this.languageButtons.querySelectorAll('.segment-btn');
                 buttons.forEach(btn => {
@@ -908,19 +938,19 @@
                     });
                 });
             }
-            
+
             async loadStationsForLanguage(languageKey) {
                 try {
                     const language = this.languages[languageKey];
                     if (!language) return;
-                    
+
                     this.stationsList.innerHTML = `
                         <div class="empty-state">
                             <div class="spinner"></div>
                             <p>Loading stations...</p>
                         </div>
                     `;
-                    
+
                     const defaultStations = {
                         'english': [
                             { name: "BBC Radio 1", url: "http://stream.live.vc.bbcmedia.co.uk/bbc_radio_one", genre: "Pop Music" },
@@ -934,7 +964,7 @@
                             { name: "Asianet Radio", url: "http://bcovlive-a.akamaihd.net/1d86dc6e8a174dbf9647fbeee9c0e8b1/ap-south-1/6034685947001/playlist.m3u8", genre: "Entertainment" }
                         ]
                     };
-                    
+
                     let stations;
                     try {
                         const response = await fetch(language.file);
@@ -946,7 +976,7 @@
                     } catch (error) {
                         stations = defaultStations[languageKey] || [];
                     }
-                    
+
                     this.stations = stations;
                     this.populateStationsList();
                 } catch (error) {
@@ -960,7 +990,7 @@
                     `;
                 }
             }
-            
+
             populateStationsList() {
                 if (this.stations.length === 0) {
                     this.stationsList.innerHTML = `
@@ -972,13 +1002,13 @@
                     this.nextBtn.disabled = true;
                     return;
                 }
-                
+
                 this.stationsList.innerHTML = '';
                 this.stations.forEach((station, index) => {
                     const stationItem = document.createElement('div');
                     stationItem.className = 'station-item';
                     stationItem.dataset.index = index;
-                    
+
                     stationItem.innerHTML = `
                         <div class="station-icon">
                             <span class="material-symbols-outlined">radio</span>
@@ -991,71 +1021,72 @@
                             <span class="material-symbols-outlined">graphic_eq</span>
                         </div>
                     `;
-                    
+
                     stationItem.addEventListener('click', () => {
                         this.selectStation(index);
                     });
-                    
+
                     this.stationsList.appendChild(stationItem);
                 });
-                
+
                 this.nextBtn.disabled = false;
             }
-            
+
             async autoStartMalayalam() {
                 try {
                     this.selectedLanguage = 'malayalam';
                     await this.loadStationsForLanguage('malayalam');
-                    
+
                     setTimeout(() => {
                         if (this.stations.length > 0) {
                             this.selectStation(0);
+                            this.currentStationName.textContent = 'Press Play';
                         }
                     }, 500);
                 } catch (error) {
                     console.error('Error auto-starting Malayalam:', error);
                 }
             }
-            
+
             setupEventListeners() {
                 this.toggleBtn.addEventListener('click', () => this.togglePlayPause());
                 this.nextBtn.addEventListener('click', () => this.nextStation());
                 this.installBtn.addEventListener('click', () => this.installPWA());
                 this.themeToggle.addEventListener('click', () => this.toggleTheme());
             }
-            
+
             setupAudio() {
                 this.audio.volume = 1.0;
-                
+
                 this.audio.addEventListener('loadstart', () => {
                     this.currentStationName.innerHTML = '<div class="loading-indicator"><div class="spinner"></div>Loading...</div>';
                     this.clearError();
                 });
-                
+
                 this.audio.addEventListener('canplay', () => {
                     if (this.currentStation) {
                         this.currentStationName.textContent = this.currentStation.name;
                     }
                 });
-                
+
                 this.audio.addEventListener('error', (e) => {
                     this.showError('Failed to load radio stream');
                     this.currentStationName.textContent = 'Error loading station';
                     this.updatePlayingIndicators();
                 });
-                
+
                 this.audio.addEventListener('play', () => {
                     this.isPlaying = true;
                     this.updateToggleButton();
                     this.updatePlayingIndicators();
                 });
-                
+
                 this.audio.addEventListener('pause', () => {
                     this.isPlaying = false;
                     this.updateToggleButton();
                     this.updatePlayingIndicators();
                 });
-                
+
                 this.audio.addEventListener('ended', () => {
                     this.isPlaying = false;
                     this.updateToggleButton();
@@ -1067,7 +1098,7 @@
                     }, 2000);
                 });
             }
-            
+
             selectLanguage(languageKey) {
                 this.pause();
                 this.currentStation = null;
@@ -1076,7 +1107,7 @@
                 this.selectedLanguage = languageKey;
                 this.nextBtn.disabled = true;
                 this.updatePlayingIndicators();
-                
+
                 this.loadStationsForLanguage(languageKey).then(() => {
                     setTimeout(() => {
                         if (this.stations.length > 0) {
@@ -1085,33 +1116,33 @@
                     }, 500);
                 });
             }
-            
+
             selectStation(index) {
                 const allItems = this.stationsList.querySelectorAll('.station-item');
                 allItems.forEach(item => item.classList.remove('active'));
-                
+
                 const selectedItem = this.stationsList.querySelector(`[data-index="${index}"]`);
                 if (selectedItem) {
                     selectedItem.classList.add('active');
                 }
-                
+
                 this.currentStationIndex = index;
                 this.currentStation = this.stations[index];
                 this.audio.src = this.currentStation.url;
                 this.currentStationName.textContent = this.currentStation.name;
                 this.clearError();
-                
+
                 this.updatePlayingIndicators();
                 this.play();
             }
-            
+
             nextStation() {
                 if (this.stations.length === 0) return;
-                
+
                 this.currentStationIndex = (this.currentStationIndex + 1) % this.stations.length;
                 this.selectStation(this.currentStationIndex);
             }
-            
+
             togglePlayPause() {
                 if (this.isPlaying) {
                     this.pause();
@@ -1119,7 +1150,7 @@
                     this.play();
                 }
             }
-            
+
             updateToggleButton() {
                 const icon = this.toggleBtn.querySelector('.material-symbols-outlined');
                 if (this.isPlaying) {
@@ -1130,7 +1161,7 @@
                     this.toggleBtn.classList.remove('playing');
                 }
             }
-            
+
             updatePlayingIndicators() {
                 const allItems = this.stationsList.querySelectorAll('.station-item');
                 allItems.forEach((item, index) => {
@@ -1142,7 +1173,7 @@
                     }
                 });
             }
-            
+
             async play() {
                 if (!this.currentStation) {
                     if (this.stations.length > 0) {
@@ -1150,7 +1181,7 @@
                     }
                     return;
                 }
-                
+
                 try {
                     await this.audio.play();
                     this.clearError();
@@ -1159,26 +1190,26 @@
                     this.updatePlayingIndicators();
                 }
             }
-            
+
             pause() {
                 this.audio.pause();
                 this.clearError();
             }
-            
+
             showError(message) {
                 this.errorMessage.textContent = message;
                 this.errorMessage.classList.add('show');
-                
+
                 setTimeout(() => {
                     this.clearError();
                 }, 5000);
             }
-            
+
             clearError() {
                 this.errorMessage.textContent = '';
                 this.errorMessage.classList.remove('show');
             }
-            
+
             setupPWA() {
                 if ('serviceWorker' in navigator) {
                     navigator.serviceWorker.register('./service-worker.js')
@@ -1189,36 +1220,37 @@
                             console.log('Service Worker registration failed:', error.message);
                         });
                 }
-                
+
                 window.addEventListener('beforeinstallprompt', (e) => {
                     e.preventDefault();
                     this.deferredPrompt = e;
                     this.installBtn.classList.remove('hidden');
                 });
-                
+
                 window.addEventListener('appinstalled', () => {
                     this.installBtn.classList.add('hidden');
                     this.deferredPrompt = null;
                 });
             }
-            
+
             async installPWA() {
                 if (!this.deferredPrompt) return;
-                
+
                 this.deferredPrompt.prompt();
                 const result = await this.deferredPrompt.userChoice;
-                
+
                 if (result.outcome === 'accepted') {
                     this.installBtn.classList.add('hidden');
                 }
-                
+
                 this.deferredPrompt = null;
             }
         }
-        
+
         document.addEventListener('DOMContentLoaded', () => {
             new RadioPlayer();
         });
     </script>
 </body>
+
 </html>
