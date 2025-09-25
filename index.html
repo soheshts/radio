@@ -1039,8 +1039,9 @@
 
                     setTimeout(() => {
                         if (this.stations.length > 0) {
-                            this.selectStation(0);
                             this.currentStationName.textContent = 'Press Play';
+                            this.selectStation(0);
+                            
                         }
                     }, 500);
                 } catch (error) {
