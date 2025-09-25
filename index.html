@@ -848,13 +848,22 @@
                 }
             }
             
-            getSavedTheme() {
-                return window.radioAppTheme || 'light';
-            }
+            // getSavedTheme() {
+            //     return window.radioAppTheme || 'light';
+            // }
             
-            saveTheme(theme) {
-                window.radioAppTheme = theme;
+            // saveTheme(theme) {
+            //     window.radioAppTheme = theme;
+            // }
+
+            getSavedTheme() {
+                return localStorage.getItem('radioAppTheme') || 'light';
             }
+
+            saveTheme(theme) {
+                localStorage.setItem('radioAppTheme', theme);
+            }
+
             
             toggleTheme() {
                 this.isDarkMode = !this.isDarkMode;
