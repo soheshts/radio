@@ -335,6 +335,26 @@
             text-overflow: ellipsis;
         }
 
+        .press-play-message {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .press-play-message .material-symbols-outlined {
+            font-size: 16px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-3px); }
+            60% { transform: translateY(-1px); }
+        }
+
         .controls-group {
             display: flex;
             align-items: center;
@@ -386,6 +406,41 @@
 
         .fab .material-symbols-outlined {
             font-size: 28px;
+        }
+
+        .prev-btn {
+            width: 48px;
+            height: 48px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.15);
+            color: #FFFFFF;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .prev-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.05);
+        }
+
+        .prev-btn:active {
+            transform: scale(0.95);
+        }
+
+        .prev-btn:disabled {
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .prev-btn .material-symbols-outlined {
+            font-size: 24px;
         }
 
         .next-btn {
@@ -690,6 +745,15 @@
                 font-size: 24px;
             }
 
+            .prev-btn {
+                width: 44px;
+                height: 44px;
+            }
+
+            .prev-btn .material-symbols-outlined {
+                font-size: 20px;
+            }
+
             .next-btn {
                 width: 44px;
                 height: 44px;
@@ -752,6 +816,15 @@
                 font-size: 22px;
             }
 
+            .prev-btn {
+                width: 40px;
+                height: 40px;
+            }
+
+            .prev-btn .material-symbols-outlined {
+                font-size: 18px;
+            }
+
             .next-btn {
                 width: 40px;
                 height: 40px;
@@ -808,9 +881,17 @@
         <div class="toolbar-content">
             <div class="station-info-toolbar">
                 <div class="now-playing-label">Now Playing</div>
-                <div class="current-station-name" id="currentStationName">Select a station to begin</div>
+                <div class="current-station-name" id="currentStationName">
+                    <div class="press-play-message">
+                        <span class="material-symbols-outlined">play_arrow</span>
+                        Press play to begin
+                    </div>
+                </div>
             </div>
             <div class="controls-group">
+                <button class="prev-btn" id="prevBtn" disabled>
+                    <span class="material-symbols-outlined">skip_previous</span>
+                </button>
                 <button class="fab toggle-btn" id="toggleBtn">
                     <span class="material-symbols-outlined">play_arrow</span>
                 </button>
@@ -830,6 +911,7 @@
                 this.languageButtons = document.getElementById('languageButtons');
                 this.stationsList = document.getElementById('stationsList');
                 this.toggleBtn = document.getElementById('toggleBtn');
+                this.prevBtn = document.getElementById('prevBtn');
                 this.nextBtn = document.getElementById('nextBtn');
                 this.currentStationName = document.getElementById('currentStationName');
                 this.errorMessage = document.getElementById('errorMessage');
@@ -845,6 +927,7 @@
                 this.isPlaying = false;
                 this.selectedLanguage = 'malayalam';
                 this.isDarkMode = false;
+                this.hasPlayedOnce = false;
 
                 this.init();
             }
@@ -855,6 +938,7 @@
                 this.setupEventListeners();
                 this.setupPWA();
                 this.setupAudio();
+                this.setupMediaSession();
 
                 await this.autoStartMalayalam();
             }
@@ -878,14 +962,6 @@
                 }
             }
 
-            // getSavedTheme() {
-            //     return window.radioAppTheme || 'light';
-            // }
-
-            // saveTheme(theme) {
-            //     window.radioAppTheme = theme;
-            // }
-
             getSavedTheme() {
                 return localStorage.getItem('radioAppTheme') || 'light';
             }
@@ -893,7 +969,6 @@
             saveTheme(theme) {
                 localStorage.setItem('radioAppTheme', theme);
             }
-
 
             toggleTheme() {
                 this.isDarkMode = !this.isDarkMode;
@@ -912,6 +987,49 @@
                 setTimeout(() => {
                     document.body.style.transition = '';
                 }, 300);
+            }
+
+            setupMediaSession() {
+                if ('mediaSession' in navigator) {
+                    navigator.mediaSession.setActionHandler('play', () => {
+                        this.play();
+                    });
+
+                    navigator.mediaSession.setActionHandler('pause', () => {
+                        this.pause();
+                    });
+
+                    navigator.mediaSession.setActionHandler('nexttrack', () => {
+                        this.nextStation();
+                    });
+
+                    navigator.mediaSession.setActionHandler('previoustrack', () => {
+                        this.previousStation();
+                    });
+
+                    navigator.mediaSession.setActionHandler('stop', () => {
+                        this.pause();
+                    });
+                }
+            }
+
+            updateMediaSessionMetadata() {
+                if ('mediaSession' in navigator && this.currentStation) {
+                    navigator.mediaSession.metadata = new MediaMetadata({
+                        title: this.currentStation.name,
+                        artist: this.currentStation.genre || 'Radio Station',
+                        album: 'Radio Wave',
+                        artwork: [
+                            {
+                                src: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" fill="%23FF6B35"/><circle cx="256" cy="256" r="150" fill="white"/><circle cx="256" cy="256" r="75" fill="%23FF6B35"/></svg>',
+                                sizes: '512x512',
+                                type: 'image/svg+xml'
+                            }
+                        ]
+                    });
+
+                    navigator.mediaSession.playbackState = this.isPlaying ? 'playing' : 'paused';
+                }
             }
 
             async loadLanguages() {
@@ -1000,6 +1118,7 @@
                         </div>
                     `;
                     this.nextBtn.disabled = true;
+                    this.prevBtn.disabled = true;
                     return;
                 }
 
@@ -1030,6 +1149,7 @@
                 });
 
                 this.nextBtn.disabled = false;
+                this.prevBtn.disabled = false;
             }
 
             async autoStartMalayalam() {
@@ -1039,9 +1159,7 @@
 
                     setTimeout(() => {
                         if (this.stations.length > 0) {
-                            this.currentStationName.textContent = 'Press Play';
-                            this.selectStation(0);
-                            
+                            this.selectStation(0, false); // Don't auto-play, just select
                         }
                     }, 500);
                 } catch (error) {
@@ -1051,6 +1169,7 @@
 
             setupEventListeners() {
                 this.toggleBtn.addEventListener('click', () => this.togglePlayPause());
+                this.prevBtn.addEventListener('click', () => this.previousStation());
                 this.nextBtn.addEventListener('click', () => this.nextStation());
                 this.installBtn.addEventListener('click', () => this.installPWA());
                 this.themeToggle.addEventListener('click', () => this.toggleTheme());
@@ -1060,38 +1179,52 @@
                 this.audio.volume = 1.0;
 
                 this.audio.addEventListener('loadstart', () => {
-                    this.currentStationName.innerHTML = '<div class="loading-indicator"><div class="spinner"></div>Loading...</div>';
+                    if (this.hasPlayedOnce) {
+                        this.currentStationName.innerHTML = '<div class="loading-indicator"><div class="spinner"></div>Loading...</div>';
+                    }
                     this.clearError();
                 });
 
                 this.audio.addEventListener('canplay', () => {
-                    if (this.currentStation) {
+                    if (this.currentStation && this.hasPlayedOnce) {
                         this.currentStationName.textContent = this.currentStation.name;
                     }
                 });
 
                 this.audio.addEventListener('error', (e) => {
                     this.showError('Failed to load radio stream');
-                    this.currentStationName.textContent = 'Error loading station';
+                    if (this.hasPlayedOnce) {
+                        this.currentStationName.textContent = 'Error loading station';
+                    } else {
+                        this.showPressPlayMessage();
+                    }
                     this.updatePlayingIndicators();
                 });
 
                 this.audio.addEventListener('play', () => {
                     this.isPlaying = true;
+                    this.hasPlayedOnce = true;
                     this.updateToggleButton();
                     this.updatePlayingIndicators();
+                    this.updateMediaSessionMetadata();
+                    
+                    if (this.currentStation) {
+                        this.currentStationName.textContent = this.currentStation.name;
+                    }
                 });
 
                 this.audio.addEventListener('pause', () => {
                     this.isPlaying = false;
                     this.updateToggleButton();
                     this.updatePlayingIndicators();
+                    this.updateMediaSessionMetadata();
                 });
 
                 this.audio.addEventListener('ended', () => {
                     this.isPlaying = false;
                     this.updateToggleButton();
                     this.updatePlayingIndicators();
+                    this.updateMediaSessionMetadata();
                     setTimeout(() => {
                         if (this.currentStation) {
                             this.play();
@@ -1100,25 +1233,43 @@
                 });
             }
 
+            showPressPlayMessage() {
+                this.currentStationName.innerHTML = `
+                    <div class="press-play-message">
+                        <span class="material-symbols-outlined">play_arrow</span>
+                        Press play to begin
+                    </div>
+                `;
+            }
+
             selectLanguage(languageKey) {
+                const wasPlaying = this.isPlaying;
                 this.pause();
                 this.currentStation = null;
                 this.currentStationIndex = 0;
-                this.currentStationName.textContent = 'Loading stations...';
+                
+                if (!this.hasPlayedOnce) {
+                    this.showPressPlayMessage();
+                } else {
+                    this.currentStationName.textContent = 'Loading stations...';
+                }
+                
                 this.selectedLanguage = languageKey;
                 this.nextBtn.disabled = true;
+                this.prevBtn.disabled = true;
                 this.updatePlayingIndicators();
 
                 this.loadStationsForLanguage(languageKey).then(() => {
                     setTimeout(() => {
                         if (this.stations.length > 0) {
-                            this.selectStation(0);
+                            // If audio was playing before language change, resume playing
+                            this.selectStation(0, wasPlaying && this.hasPlayedOnce);
                         }
                     }, 500);
                 });
             }
 
-            selectStation(index) {
+            selectStation(index, autoPlay = false) {
                 const allItems = this.stationsList.querySelectorAll('.station-item');
                 allItems.forEach(item => item.classList.remove('active'));
 
@@ -1130,18 +1281,35 @@
                 this.currentStationIndex = index;
                 this.currentStation = this.stations[index];
                 this.audio.src = this.currentStation.url;
-                this.currentStationName.textContent = this.currentStation.name;
+                
+                if (!this.hasPlayedOnce) {
+                    this.showPressPlayMessage();
+                } else {
+                    this.currentStationName.textContent = this.currentStation.name;
+                }
+                
                 this.clearError();
-
                 this.updatePlayingIndicators();
-                this.play();
+                this.updateMediaSessionMetadata();
+
+                if (autoPlay) {
+                    this.play();
+                }
             }
 
             nextStation() {
                 if (this.stations.length === 0) return;
 
                 this.currentStationIndex = (this.currentStationIndex + 1) % this.stations.length;
-                this.selectStation(this.currentStationIndex);
+                this.selectStation(this.currentStationIndex, this.isPlaying);
+            }
+
+            previousStation() {
+                if (this.stations.length === 0) return;
+
+                this.currentStationIndex = this.currentStationIndex === 0 ? 
+                    this.stations.length - 1 : this.currentStationIndex - 1;
+                this.selectStation(this.currentStationIndex, this.isPlaying);
             }
 
             togglePlayPause() {
@@ -1178,7 +1346,7 @@
             async play() {
                 if (!this.currentStation) {
                     if (this.stations.length > 0) {
-                        this.selectStation(0);
+                        this.selectStation(0, false);
                     }
                     return;
                 }
