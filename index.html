@@ -189,6 +189,14 @@
             transition: all 0.2s cubic-bezier(0.2, 0.0, 0, 1.0);
             border-radius: 16px;
             font-family: inherit;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .language-btn .material-symbols-rounded {
+            font-size: 18px;
         }
 
         .language-btn.active {
@@ -260,6 +268,7 @@
         .station-details {
             flex: 1;
             min-width: 0;
+            margin-right: 8px;
         }
 
         .station-name {
@@ -306,9 +315,62 @@
             color: var(--md-sys-color-on-primary-container);
         }
 
+        .favorite-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.2, 0.0, 0, 1.0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            color: var(--md-sys-color-on-surface-variant);
+            margin-right: 8px;
+        }
+
+        .favorite-btn:hover {
+            background: var(--md-sys-color-surface-container);
+            color: var(--md-sys-color-on-surface);
+        }
+
+        .favorite-btn.favorited {
+            color: var(--md-sys-color-error);
+        }
+
+        .favorite-btn.favorited:hover {
+            background: var(--md-sys-color-error-container);
+            color: var(--md-sys-color-on-error-container);
+        }
+
+        .station-item.active .favorite-btn {
+            color: var(--md-sys-color-on-primary-container);
+        }
+
+        .station-item.active .favorite-btn.favorited {
+            color: var(--md-sys-color-error);
+        }
+
+        .favorite-btn .material-symbols-rounded {
+            color: var(--md-sys-color-on-surface-variant);
+            transition: color 0.2s;
+        }
+
+        .favorite-btn.favorited .material-symbols-rounded {
+            color: var(--md-sys-color-error);
+        }
+
         @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
         }
 
         .player-bar {
@@ -412,9 +474,22 @@
         }
 
         @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-3px); }
-            60% { transform: translateY(-2px); }
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-3px);
+            }
+
+            60% {
+                transform: translateY(-2px);
+            }
         }
 
         .player-controls {
@@ -490,7 +565,9 @@
         }
 
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         .error-message {
@@ -553,35 +630,35 @@
             .app-bar {
                 padding: 8px 12px 16px;
             }
-            
+
             .content {
                 padding: 16px 12px;
             }
-            
+
             .player-content {
                 padding: 12px;
             }
-            
+
             .station-item {
                 padding: 12px;
             }
-            
+
             .station-avatar {
                 width: 40px;
                 height: 40px;
                 border-radius: 20px;
                 margin-right: 12px;
             }
-            
+
             .station-avatar .material-symbols-rounded {
                 font-size: 20px;
             }
-            
+
             .control-btn {
                 width: 44px;
                 height: 44px;
             }
-            
+
             .play-pause-btn {
                 width: 52px;
                 height: 52px;
@@ -605,11 +682,14 @@
             <div class="language-selector" id="languageSelector">
                 <button class="language-btn active" data-lang="malayalam">മലയാളം</button>
                 <button class="language-btn" data-lang="english">English</button>
+                <button class="language-btn" data-lang="favorites">
+                    <span class="material-symbols-rounded">favorite</span>
+                </button>
             </div>
         </div>
 
         <div class="content">
-            <div class="section-title">Stations</div>
+            <div class="section-title" id="sectionTitle">Stations</div>
             <div class="stations-container" id="stationsContainer">
                 <div class="empty-state">
                     <span class="material-symbols-rounded">radio</span>
@@ -673,6 +753,7 @@
                 this.themeToggle = document.getElementById('themeToggle');
                 this.themeIcon = document.getElementById('themeIcon');
                 this.languageSelector = document.getElementById('languageSelector');
+                this.sectionTitle = document.getElementById('sectionTitle');
 
                 this.stations = [];
                 this.currentStation = null;
@@ -684,6 +765,8 @@
                 this.deferredPrompt = null;
                 this.statusPollInterval = null;
                 this.currentStatusUrl = null;
+                this.favorites = this.loadFavorites();
+                this.currentView = 'malayalam'; // Track current view: 'malayalam', 'english', 'favorites'
 
                 this.init();
             }
@@ -729,13 +812,21 @@
                 this.installPrompt.addEventListener('click', () => this.installPWA());
 
                 this.languageSelector.addEventListener('click', (e) => {
-                    if (e.target.classList.contains('language-btn')) {
+                    const button = e.target.closest('.language-btn');
+                    if (button) {
                         const buttons = this.languageSelector.querySelectorAll('.language-btn');
                         buttons.forEach(btn => btn.classList.remove('active'));
-                        e.target.classList.add('active');
-                        this.selectLanguage(e.target.dataset.lang);
+                        button.classList.add('active');
+
+                        const lang = button.dataset.lang;
+                        if (lang === 'favorites') {
+                            this.showFavorites();
+                        } else {
+                            this.selectLanguage(lang);
+                        }
                     }
                 });
+
             }
 
             setupMediaSession() {
@@ -752,7 +843,7 @@
                 if ('mediaSession' in navigator && this.currentStation) {
                     const title = currentSong || this.currentStation.name;
                     const artist = this.currentGenre || this.currentStation.genre || 'Radio Station';
-                    
+
                     navigator.mediaSession.metadata = new MediaMetadata({
                         title: title,
                         artist: artist,
@@ -791,7 +882,7 @@
                     this.updatePlayButton();
                     this.updatePlayingIndicators();
                     this.updateMediaSessionMetadata();
-                    
+
                     if (this.currentStation) {
                         this.stationTitle.textContent = this.currentStation.name;
                         this.extractMetadata();
@@ -833,11 +924,11 @@
             async extractMetadata() {
                 // Try to extract ICY metadata from stream headers
                 try {
-                    const response = await fetch(this.currentStation.url, { 
+                    const response = await fetch(this.currentStation.url, {
                         method: 'HEAD',
                         mode: 'cors'
                     });
-                    
+
                     const icyGenre = response.headers.get('icy-genre');
                     if (icyGenre && icyGenre.trim()) {
                         this.currentGenre = icyGenre.trim();
@@ -860,18 +951,18 @@
             showGenreChips(genreString) {
                 // Clear existing chips
                 this.genreChips.innerHTML = '';
-                
+
                 if (!genreString) {
                     this.currentGenre = '';
                     return;
                 }
-                
+
                 // Split by comma and clean up each genre
                 const genres = genreString.split(',')
                     .map(genre => genre.trim())
                     .filter(genre => genre.length > 0)
                     .slice(0, 3); // Limit to 3 genres
-                
+
                 if (genres.length > 0) {
                     genres.forEach(genre => {
                         const chip = document.createElement('div');
@@ -879,7 +970,7 @@
                         chip.textContent = genre;
                         this.genreChips.appendChild(chip);
                     });
-                    
+
                     this.currentGenre = genres.join(', ');
                 }
             }
@@ -903,6 +994,75 @@
                 this.currentSong.textContent = '';
             }
 
+            loadFavorites() {
+                try {
+                    const saved = localStorage.getItem('radioWaveFavorites');
+                    return saved ? JSON.parse(saved) : [];
+                } catch (error) {
+                    console.log('Error loading favorites:', error);
+                    return [];
+                }
+            }
+
+            saveFavorites() {
+                try {
+                    localStorage.setItem('radioWaveFavorites', JSON.stringify(this.favorites));
+                } catch (error) {
+                    console.log('Error saving favorites:', error);
+                }
+            }
+
+            toggleFavorite(station, stationIndex = null) {
+                const stationId = `${station.name}-${station.url}`;
+                const existingIndex = this.favorites.findIndex(fav =>
+                    `${fav.name}-${fav.url}` === stationId
+                );
+
+                if (existingIndex >= 0) {
+                    // Remove from favorites
+                    this.favorites.splice(existingIndex, 1);
+                } else {
+                    // Add to favorites
+                    this.favorites.push({
+                        name: station.name,
+                        url: station.url,
+                        genre: station.genre,
+                        language: this.selectedLanguage
+                    });
+                }
+
+                this.saveFavorites();
+
+                // Update the heart icon in the UI
+                this.updateFavoriteButtons();
+
+                // If we're currently viewing favorites, refresh the list
+                if (this.currentView === 'favorites') {
+                    this.showFavorites();
+                }
+            }
+
+            isFavorite(station) {
+                const stationId = `${station.name}-${station.url}`;
+                return this.favorites.some(fav => `${fav.name}-${fav.url}` === stationId);
+            }
+
+            updateFavoriteButtons() {
+                const stationItems = this.stationsContainer.querySelectorAll('.station-item');
+                stationItems.forEach((item, index) => {
+                    const favoriteBtn = item.querySelector('.favorite-btn');
+                    const heartIcon = favoriteBtn.querySelector('.material-symbols-rounded');
+
+                    if (this.stations[index] && this.isFavorite(this.stations[index])) {
+                        favoriteBtn.classList.add('favorited');
+                        heartIcon.textContent = 'favorite';
+                    } else {
+                        favoriteBtn.classList.remove('favorited');
+                        heartIcon.textContent = 'favorite_border';
+                    }
+                });
+            }
+
             generateStatusUrl(streamUrl) {
                 try {
                     const url = new URL(streamUrl);
@@ -918,7 +1078,7 @@
 
                 // Only try methods that actually work in browsers
                 const success = await this.tryStatusEndpoints();
-                
+
                 if (!success) {
                     // If no metadata available, just hide the current song
                     this.hideCurrentSong();
@@ -932,23 +1092,23 @@
 
                 try {
                     const baseUrl = new URL(this.currentStation.url);
-                    
+
                     // List of common metadata endpoints that might actually work
                     const endpoints = [
                         // Standard Icecast status endpoints
                         `${baseUrl.protocol}//${baseUrl.host}/status-json.xsl`,
                         `${baseUrl.protocol}//${baseUrl.host}/status.xsl`,
-                        
+
                         // Shoutcast endpoints
                         `${baseUrl.protocol}//${baseUrl.host}/7.html`,
                         `${baseUrl.protocol}//${baseUrl.host}/stats?json=1`,
-                        
+
                         // Alternative common endpoints
                         `${baseUrl.protocol}//${baseUrl.host}/api/nowplaying`,
                         `${baseUrl.protocol}//${baseUrl.host}/nowplaying`,
                         `${baseUrl.protocol}//${baseUrl.host}/np`,
                         `${baseUrl.protocol}//${baseUrl.host}/current`,
-                        
+
                         // Try with different ports commonly used for admin
                         `${baseUrl.protocol}//${baseUrl.hostname}:8000/status-json.xsl`,
                         `${baseUrl.protocol}//${baseUrl.hostname}:8080/status-json.xsl`,
@@ -957,7 +1117,7 @@
                     for (const endpoint of endpoints) {
                         try {
                             console.log(`Trying endpoint: ${endpoint}`);
-                            
+
                             const response = await fetch(endpoint, {
                                 method: 'GET',
                                 mode: 'cors',
@@ -975,10 +1135,10 @@
                                     try {
                                         const data = await response.json();
                                         console.log('JSON response:', data);
-                                        
+
                                         // Try various JSON structures
                                         songTitle = this.extractTitleFromJSON(data);
-                                        
+
                                     } catch (jsonError) {
                                         console.log('JSON parse error:', jsonError);
                                         continue;
@@ -987,7 +1147,7 @@
                                     // Try parsing as text/HTML
                                     const text = await response.text();
                                     console.log('Text response preview:', text.substring(0, 200));
-                                    
+
                                     if (endpoint.includes('7.html')) {
                                         // Shoutcast 7.html format: comma-separated values
                                         songTitle = this.parseShoutcast7HTML(text);
@@ -1018,7 +1178,7 @@
                 } catch (error) {
                     console.log('Error in tryStatusEndpoints:', error);
                 }
-                
+
                 return false;
             }
 
@@ -1028,7 +1188,7 @@
                     // Icecast
                     () => data.icestats?.source?.title,
                     () => Array.isArray(data.icestats?.source) ? data.icestats.source[data.icestats.source.length - 1]?.title : data.icestats?.source?.title,
-                    
+
                     // Generic
                     () => data.title,
                     () => data.song,
@@ -1038,14 +1198,14 @@
                     () => data.nowPlaying,
                     () => data.track,
                     () => data.current,
-                    
+
                     // Nested structures
                     () => data.data?.title,
                     () => data.result?.title,
                     () => data.response?.title,
                     () => data.current?.title,
                     () => data.live?.title,
-                    
+
                     // Array structures
                     () => Array.isArray(data) && data.length > 0 ? data[0].title : null,
                     () => data.tracks?.[0]?.title,
@@ -1061,7 +1221,7 @@
                         continue;
                     }
                 }
-                
+
                 return null;
             }
 
@@ -1096,7 +1256,7 @@
 
                 // Generate status URL for current station (fallback method)
                 this.currentStatusUrl = this.generateStatusUrl(this.currentStation.url);
-                
+
                 // Start fetching immediately - this will try multiple methods
                 this.fetchCurrentSong();
             }
@@ -1121,7 +1281,15 @@
 
             async loadStations(languageKey) {
                 this.selectedLanguage = languageKey;
-                
+                this.currentView = languageKey;
+
+                // Update section title based on language
+                const titleMap = {
+                    'malayalam': 'Malayalam Stations',
+                    'english': 'English Stations'
+                };
+                this.sectionTitle.textContent = titleMap[languageKey] || 'Stations';
+
                 try {
                     this.stationsContainer.innerHTML = `
                         <div class="empty-state">
@@ -1174,10 +1342,14 @@
 
             renderStations() {
                 if (this.stations.length === 0) {
+                    const emptyMessage = this.currentView === 'favorites'
+                        ? 'No favorite stations yet'
+                        : 'No stations available';
+
                     this.stationsContainer.innerHTML = `
                         <div class="empty-state">
-                            <span class="material-symbols-rounded">radio</span>
-                            <p>No stations available</p>
+                            <span class="material-symbols-rounded">${this.currentView === 'favorites' ? 'favorite_border' : 'radio'}</span>
+                            <p>${emptyMessage}</p>
                         </div>
                     `;
                     this.prevBtn.disabled = true;
@@ -1191,6 +1363,10 @@
                     stationElement.className = 'station-item';
                     stationElement.dataset.index = index;
 
+                    const isFav = this.isFavorite(station);
+                    const heartIcon = isFav ? 'favorite' : 'favorite_border';
+                    const heartClass = isFav ? 'favorited' : '';
+
                     stationElement.innerHTML = `
                         <div class="station-avatar">
                             <span class="material-symbols-rounded">radio</span>
@@ -1199,13 +1375,26 @@
                             <div class="station-name">${station.name}</div>
                             <div class="station-genre">${station.genre || 'Music'}</div>
                         </div>
+                        <button class="favorite-btn ${heartClass}" data-index="${index}">
+                            <span class="material-symbols-rounded">${heartIcon}</span>
+                        </button>
                         <div class="playing-indicator">
                             <span class="material-symbols-rounded">graphic_eq</span>
                         </div>
                     `;
 
-                    stationElement.addEventListener('click', () => {
-                        this.selectStation(index, true); // Auto-play when tapped
+                    // Station click handler (excluding favorite button)
+                    stationElement.addEventListener('click', (e) => {
+                        if (!e.target.closest('.favorite-btn')) {
+                            this.selectStation(index, true);
+                        }
+                    });
+
+                    // Favorite button click handler
+                    const favoriteBtn = stationElement.querySelector('.favorite-btn');
+                    favoriteBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        this.toggleFavorite(station, index);
                     });
 
                     this.stationsContainer.appendChild(stationElement);
@@ -1215,18 +1404,47 @@
                 this.nextBtn.disabled = false;
 
                 // Select first station without auto-playing on initial load
-                if (!this.hasPlayedOnce) {
+                if (!this.hasPlayedOnce && this.currentView !== 'favorites') {
                     this.selectStation(0, false);
                 }
             }
 
-            async selectLanguage(languageKey) {
-                const wasPlaying = this.isPlaying;
-                this.pause();
+            showFavorites() {
+                this.currentView = 'favorites';
+                this.sectionTitle.textContent = 'Favorite Stations';
+                this.stopStatusPolling();
+
+                // Don't change selectedLanguage, keep it for when user goes back
+                this.stations = [...this.favorites]; // Copy favorites array
                 this.currentStation = null;
                 this.currentStationIndex = 0;
                 this.hideGenreChips();
-                this.stopStatusPolling(); // Stop polling when changing language
+
+                if (!this.hasPlayedOnce) {
+                    this.showPressPlayMessage();
+                } else {
+                    this.stationTitle.textContent = 'Select a favorite station';
+                }
+
+                this.prevBtn.disabled = true;
+                this.nextBtn.disabled = true;
+                this.updatePlayingIndicators();
+                this.renderStations();
+            }
+
+            async selectLanguage(languageKey) {
+                if (languageKey === 'favorites') {
+                    this.showFavorites();
+                    return;
+                }
+
+                const wasPlaying = this.isPlaying;
+                this.pause();
+                this.currentView = languageKey;
+                this.currentStation = null;
+                this.currentStationIndex = 0;
+                this.hideGenreChips();
+                this.stopStatusPolling();
 
                 if (!this.hasPlayedOnce) {
                     this.showPressPlayMessage();
@@ -1251,7 +1469,7 @@
             selectStation(index, autoPlay = false) {
                 // Stop polling for previous station
                 this.stopStatusPolling();
-                
+
                 // Remove active class from all stations
                 const allStations = this.stationsContainer.querySelectorAll('.station-item');
                 allStations.forEach(station => station.classList.remove('active'));
@@ -1296,7 +1514,7 @@
 
             previousStation() {
                 if (this.stations.length === 0) return;
-                this.currentStationIndex = this.currentStationIndex === 0 ? 
+                this.currentStationIndex = this.currentStationIndex === 0 ?
                     this.stations.length - 1 : this.currentStationIndex - 1;
                 this.selectStation(this.currentStationIndex, this.isPlaying);
             }
