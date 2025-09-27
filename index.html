@@ -379,6 +379,22 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            margin-bottom: 4px;
+        }
+
+        .current-song {
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--md-sys-color-on-surface-variant);
+            line-height: 1.3;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: none;
+        }
+
+        .current-song.visible {
+            display: block;
         }
 
         .press-play-message {
@@ -623,6 +639,7 @@
                         Press play to begin
                     </div>
                 </div>
+                <div class="current-song" id="currentSong"></div>
             </div>
             <div class="player-controls">
                 <button class="control-btn" id="prevBtn" disabled>
@@ -649,6 +666,7 @@
                 this.prevBtn = document.getElementById('prevBtn');
                 this.nextBtn = document.getElementById('nextBtn');
                 this.stationTitle = document.getElementById('stationTitle');
+                this.currentSong = document.getElementById('currentSong');
                 this.genreChips = document.getElementById('genreChips');
                 this.errorMessage = document.getElementById('errorMessage');
                 this.installPrompt = document.getElementById('installPrompt');
@@ -664,6 +682,8 @@
                 this.selectedLanguage = 'malayalam';
                 this.currentGenre = '';
                 this.deferredPrompt = null;
+                this.statusPollInterval = null;
+                this.currentStatusUrl = null;
 
                 this.init();
             }
@@ -728,11 +748,14 @@
                 }
             }
 
-            updateMediaSessionMetadata() {
+            updateMediaSessionMetadata(currentSong = null) {
                 if ('mediaSession' in navigator && this.currentStation) {
+                    const title = currentSong || this.currentStation.name;
+                    const artist = this.currentGenre || this.currentStation.genre || 'Radio Station';
+                    
                     navigator.mediaSession.metadata = new MediaMetadata({
-                        title: this.currentStation.name,
-                        artist: this.currentGenre || this.currentStation.genre || 'Radio Station',
+                        title: title,
+                        artist: artist,
                         album: 'Radio Wave',
                         artwork: [{
                             src: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" fill="%236750A4"/><circle cx="256" cy="256" r="150" fill="white"/><circle cx="256" cy="256" r="75" fill="%236750A4"/></svg>',
@@ -751,6 +774,7 @@
                     if (this.hasPlayedOnce) {
                         this.stationTitle.innerHTML = '<div class="loading-indicator"><div class="spinner"></div>Loading...</div>';
                         this.hideGenreChips();
+                        this.hideCurrentSong();
                     }
                     this.clearError();
                 });
@@ -771,6 +795,8 @@
                     if (this.currentStation) {
                         this.stationTitle.textContent = this.currentStation.name;
                         this.extractMetadata();
+                        // Start polling for current song when playback begins
+                        this.startStatusPolling();
                     }
                 });
 
@@ -779,6 +805,8 @@
                     this.updatePlayButton();
                     this.updatePlayingIndicators();
                     this.updateMediaSessionMetadata();
+                    // Stop polling when paused
+                    this.stopStatusPolling();
                 });
 
                 this.audio.addEventListener('error', () => {
@@ -789,7 +817,10 @@
                         this.stationTitle.textContent = 'Error loading station';
                     }
                     this.hideGenreChips();
+                    this.hideCurrentSong();
                     this.updatePlayingIndicators();
+                    // Stop polling on error
+                    this.stopStatusPolling();
                 });
 
                 this.audio.addEventListener('ended', () => {
@@ -856,6 +887,227 @@
             hideGenreChips() {
                 this.genreChips.innerHTML = '';
                 this.currentGenre = '';
+            }
+
+            showCurrentSong(song) {
+                if (song && song.trim()) {
+                    this.currentSong.textContent = song.trim();
+                    this.currentSong.classList.add('visible');
+                } else {
+                    this.hideCurrentSong();
+                }
+            }
+
+            hideCurrentSong() {
+                this.currentSong.classList.remove('visible');
+                this.currentSong.textContent = '';
+            }
+
+            generateStatusUrl(streamUrl) {
+                try {
+                    const url = new URL(streamUrl);
+                    // Common Icecast status URL patterns
+                    return `${url.protocol}//${url.host}/status-json.xsl`;
+                } catch (error) {
+                    return null;
+                }
+            }
+
+            async fetchCurrentSong() {
+                if (!this.currentStation) return;
+
+                // Only try methods that actually work in browsers
+                const success = await this.tryStatusEndpoints();
+                
+                if (!success) {
+                    // If no metadata available, just hide the current song
+                    this.hideCurrentSong();
+                    // Don't stop polling completely - try again in case metadata becomes available
+                    this.scheduleNextPoll();
+                }
+            }
+
+            async tryStatusEndpoints() {
+                if (!this.currentStation) return false;
+
+                try {
+                    const baseUrl = new URL(this.currentStation.url);
+                    
+                    // List of common metadata endpoints that might actually work
+                    const endpoints = [
+                        // Standard Icecast status endpoints
+                        `${baseUrl.protocol}//${baseUrl.host}/status-json.xsl`,
+                        `${baseUrl.protocol}//${baseUrl.host}/status.xsl`,
+                        
+                        // Shoutcast endpoints
+                        `${baseUrl.protocol}//${baseUrl.host}/7.html`,
+                        `${baseUrl.protocol}//${baseUrl.host}/stats?json=1`,
+                        
+                        // Alternative common endpoints
+                        `${baseUrl.protocol}//${baseUrl.host}/api/nowplaying`,
+                        `${baseUrl.protocol}//${baseUrl.host}/nowplaying`,
+                        `${baseUrl.protocol}//${baseUrl.host}/np`,
+                        `${baseUrl.protocol}//${baseUrl.host}/current`,
+                        
+                        // Try with different ports commonly used for admin
+                        `${baseUrl.protocol}//${baseUrl.hostname}:8000/status-json.xsl`,
+                        `${baseUrl.protocol}//${baseUrl.hostname}:8080/status-json.xsl`,
+                    ];
+
+                    for (const endpoint of endpoints) {
+                        try {
+                            console.log(`Trying endpoint: ${endpoint}`);
+                            
+                            const response = await fetch(endpoint, {
+                                method: 'GET',
+                                mode: 'cors',
+                                cache: 'no-cache',
+                                headers: {
+                                    'Accept': 'application/json, text/plain, text/html, */*'
+                                }
+                            });
+
+                            if (response.ok) {
+                                const contentType = response.headers.get('content-type') || '';
+                                let songTitle = null;
+
+                                if (contentType.includes('application/json') || endpoint.includes('json')) {
+                                    try {
+                                        const data = await response.json();
+                                        console.log('JSON response:', data);
+                                        
+                                        // Try various JSON structures
+                                        songTitle = this.extractTitleFromJSON(data);
+                                        
+                                    } catch (jsonError) {
+                                        console.log('JSON parse error:', jsonError);
+                                        continue;
+                                    }
+                                } else {
+                                    // Try parsing as text/HTML
+                                    const text = await response.text();
+                                    console.log('Text response preview:', text.substring(0, 200));
+                                    
+                                    if (endpoint.includes('7.html')) {
+                                        // Shoutcast 7.html format: comma-separated values
+                                        songTitle = this.parseShoutcast7HTML(text);
+                                    } else if (text.length < 500 && !text.includes('<html>')) {
+                                        // Assume short text response might be the song title
+                                        const cleanText = text.trim();
+                                        if (cleanText && !cleanText.toLowerCase().includes('error')) {
+                                            songTitle = cleanText;
+                                        }
+                                    }
+                                }
+
+                                if (songTitle && songTitle.trim() && songTitle.length < 200) {
+                                    console.log('Found song title:', songTitle);
+                                    this.showCurrentSong(songTitle.trim());
+                                    this.updateMediaSessionMetadata(songTitle.trim());
+                                    this.scheduleNextPoll();
+                                    return true;
+                                }
+                            } else {
+                                console.log(`Endpoint ${endpoint} returned ${response.status}`);
+                            }
+                        } catch (error) {
+                            console.log(`Error with endpoint ${endpoint}:`, error.message);
+                            continue;
+                        }
+                    }
+                } catch (error) {
+                    console.log('Error in tryStatusEndpoints:', error);
+                }
+                
+                return false;
+            }
+
+            extractTitleFromJSON(data) {
+                // Try various JSON structures commonly used by streaming servers
+                const possiblePaths = [
+                    // Icecast
+                    () => data.icestats?.source?.title,
+                    () => Array.isArray(data.icestats?.source) ? data.icestats.source[data.icestats.source.length - 1]?.title : data.icestats?.source?.title,
+                    
+                    // Generic
+                    () => data.title,
+                    () => data.song,
+                    () => data.current_song,
+                    () => data.currentSong,
+                    () => data.now_playing,
+                    () => data.nowPlaying,
+                    () => data.track,
+                    () => data.current,
+                    
+                    // Nested structures
+                    () => data.data?.title,
+                    () => data.result?.title,
+                    () => data.response?.title,
+                    () => data.current?.title,
+                    () => data.live?.title,
+                    
+                    // Array structures
+                    () => Array.isArray(data) && data.length > 0 ? data[0].title : null,
+                    () => data.tracks?.[0]?.title,
+                ];
+
+                for (const pathFn of possiblePaths) {
+                    try {
+                        const title = pathFn();
+                        if (title && typeof title === 'string' && title.trim()) {
+                            return title;
+                        }
+                    } catch (e) {
+                        continue;
+                    }
+                }
+                
+                return null;
+            }
+
+            parseShoutcast7HTML(text) {
+                try {
+                    // Shoutcast 7.html format is comma-separated values
+                    // Usually: currentlisteners,streamstatus,peaklisteners,maxlisteners,uniquelisteners,bitrate,songtitle
+                    const parts = text.split(',');
+                    if (parts.length >= 7) {
+                        const songTitle = parts[6].trim();
+                        return songTitle || null;
+                    }
+                } catch (error) {
+                    console.log('Error parsing Shoutcast format:', error);
+                }
+                return null;
+            }
+
+            scheduleNextPoll() {
+                if (this.statusPollInterval) {
+                    clearTimeout(this.statusPollInterval);
+                }
+                this.statusPollInterval = setTimeout(() => {
+                    if (this.isPlaying && this.currentStation) {
+                        this.fetchCurrentSong();
+                    }
+                }, 5000);
+            }
+
+            startStatusPolling() {
+                if (!this.currentStation) return;
+
+                // Generate status URL for current station (fallback method)
+                this.currentStatusUrl = this.generateStatusUrl(this.currentStation.url);
+                
+                // Start fetching immediately - this will try multiple methods
+                this.fetchCurrentSong();
+            }
+
+            stopStatusPolling() {
+                if (this.statusPollInterval) {
+                    clearTimeout(this.statusPollInterval);
+                    this.statusPollInterval = null;
+                }
+                this.currentStatusUrl = null;
+                this.hideCurrentSong();
             }
 
             showPressPlayMessage() {
@@ -974,6 +1226,7 @@
                 this.currentStation = null;
                 this.currentStationIndex = 0;
                 this.hideGenreChips();
+                this.stopStatusPolling(); // Stop polling when changing language
 
                 if (!this.hasPlayedOnce) {
                     this.showPressPlayMessage();
@@ -996,6 +1249,9 @@
             }
 
             selectStation(index, autoPlay = false) {
+                // Stop polling for previous station
+                this.stopStatusPolling();
+                
                 // Remove active class from all stations
                 const allStations = this.stationsContainer.querySelectorAll('.station-item');
                 allStations.forEach(station => station.classList.remove('active'));
@@ -1010,6 +1266,7 @@
                 this.currentStation = this.stations[index];
                 this.audio.src = this.currentStation.url;
                 this.hideGenreChips();
+                this.hideCurrentSong();
 
                 if (!this.hasPlayedOnce && !autoPlay) {
                     this.showPressPlayMessage();
@@ -1023,6 +1280,11 @@
 
                 if (autoPlay) {
                     this.play();
+                } else if (this.isPlaying) {
+                    // If we were playing, start polling for the new station
+                    setTimeout(() => {
+                        this.startStatusPolling();
+                    }, 1000); // Give the stream a moment to start
                 }
             }
 
