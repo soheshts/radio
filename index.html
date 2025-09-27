@@ -341,7 +341,6 @@
 
         .favorite-btn.favorited:hover {
             background: var(--md-sys-color-error-container);
-            color: var(--md-sys-color-on-error-container);
         }
 
         .station-item.active .favorite-btn {
@@ -353,12 +352,8 @@
         }
 
         .favorite-btn .material-symbols-rounded {
-            color: var(--md-sys-color-on-surface-variant);
+            color: inherit;
             transition: color 0.2s;
-        }
-
-        .favorite-btn.favorited .material-symbols-rounded {
-            color: var(--md-sys-color-error);
         }
 
         @keyframes pulse {
@@ -682,6 +677,9 @@
             <div class="language-selector" id="languageSelector">
                 <button class="language-btn active" data-lang="malayalam">മലയാളം</button>
                 <button class="language-btn" data-lang="english">English</button>
+                <button class="language-btn" data-lang="others">
+                    <span class="material-symbols-rounded">language</span>
+                </button>
                 <button class="language-btn" data-lang="favorites">
                     <span class="material-symbols-rounded">favorite</span>
                 </button>
@@ -764,9 +762,8 @@
                 this.currentGenre = '';
                 this.deferredPrompt = null;
                 this.statusPollInterval = null;
-                this.currentStatusUrl = null;
                 this.favorites = this.loadFavorites();
-                this.currentView = 'malayalam'; // Track current view: 'malayalam', 'english', 'favorites'
+                this.currentView = 'malayalam'; // Track current view: 'malayalam', 'english', 'others', 'favorites'
 
                 this.init();
             }
@@ -1063,123 +1060,40 @@
                 });
             }
 
-            generateStatusUrl(streamUrl) {
-                try {
-                    const url = new URL(streamUrl);
-                    // Common Icecast status URL patterns
-                    return `${url.protocol}//${url.host}/status-json.xsl`;
-                } catch (error) {
-                    return null;
-                }
-            }
-
             async fetchCurrentSong() {
                 if (!this.currentStation) return;
 
-                // Only try methods that actually work in browsers
-                const success = await this.tryStatusEndpoints();
-
-                if (!success) {
-                    // If no metadata available, just hide the current song
-                    this.hideCurrentSong();
-                    // Don't stop polling completely - try again in case metadata becomes available
-                    this.scheduleNextPoll();
-                }
-            }
-
-            async tryStatusEndpoints() {
-                if (!this.currentStation) return false;
-
                 try {
                     const baseUrl = new URL(this.currentStation.url);
+                    const statusUrl = `${baseUrl.protocol}//${baseUrl.host}/status-json.xsl`;
 
-                    // List of common metadata endpoints that might actually work
-                    const endpoints = [
-                        // Standard Icecast status endpoints
-                        `${baseUrl.protocol}//${baseUrl.host}/status-json.xsl`,
-                        `${baseUrl.protocol}//${baseUrl.host}/status.xsl`,
+                    const response = await fetch(statusUrl, {
+                        method: 'GET',
+                        mode: 'cors',
+                        cache: 'no-cache',
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
 
-                        // Shoutcast endpoints
-                        `${baseUrl.protocol}//${baseUrl.host}/7.html`,
-                        `${baseUrl.protocol}//${baseUrl.host}/stats?json=1`,
+                    if (response.ok) {
+                        const data = await response.json();
+                        const songTitle = this.extractTitleFromJSON(data);
 
-                        // Alternative common endpoints
-                        `${baseUrl.protocol}//${baseUrl.host}/api/nowplaying`,
-                        `${baseUrl.protocol}//${baseUrl.host}/nowplaying`,
-                        `${baseUrl.protocol}//${baseUrl.host}/np`,
-                        `${baseUrl.protocol}//${baseUrl.host}/current`,
-
-                        // Try with different ports commonly used for admin
-                        `${baseUrl.protocol}//${baseUrl.hostname}:8000/status-json.xsl`,
-                        `${baseUrl.protocol}//${baseUrl.hostname}:8080/status-json.xsl`,
-                    ];
-
-                    for (const endpoint of endpoints) {
-                        try {
-                            console.log(`Trying endpoint: ${endpoint}`);
-
-                            const response = await fetch(endpoint, {
-                                method: 'GET',
-                                mode: 'cors',
-                                cache: 'no-cache',
-                                headers: {
-                                    'Accept': 'application/json, text/plain, text/html, */*'
-                                }
-                            });
-
-                            if (response.ok) {
-                                const contentType = response.headers.get('content-type') || '';
-                                let songTitle = null;
-
-                                if (contentType.includes('application/json') || endpoint.includes('json')) {
-                                    try {
-                                        const data = await response.json();
-                                        console.log('JSON response:', data);
-
-                                        // Try various JSON structures
-                                        songTitle = this.extractTitleFromJSON(data);
-
-                                    } catch (jsonError) {
-                                        console.log('JSON parse error:', jsonError);
-                                        continue;
-                                    }
-                                } else {
-                                    // Try parsing as text/HTML
-                                    const text = await response.text();
-                                    console.log('Text response preview:', text.substring(0, 200));
-
-                                    if (endpoint.includes('7.html')) {
-                                        // Shoutcast 7.html format: comma-separated values
-                                        songTitle = this.parseShoutcast7HTML(text);
-                                    } else if (text.length < 500 && !text.includes('<html>')) {
-                                        // Assume short text response might be the song title
-                                        const cleanText = text.trim();
-                                        if (cleanText && !cleanText.toLowerCase().includes('error')) {
-                                            songTitle = cleanText;
-                                        }
-                                    }
-                                }
-
-                                if (songTitle && songTitle.trim() && songTitle.length < 200) {
-                                    console.log('Found song title:', songTitle);
-                                    this.showCurrentSong(songTitle.trim());
-                                    this.updateMediaSessionMetadata(songTitle.trim());
-                                    this.scheduleNextPoll();
-                                    return true;
-                                }
-                            } else {
-                                console.log(`Endpoint ${endpoint} returned ${response.status}`);
-                            }
-                        } catch (error) {
-                            console.log(`Error with endpoint ${endpoint}:`, error.message);
-                            continue;
+                        if (songTitle && songTitle.trim() && songTitle.length < 200) {
+                            this.showCurrentSong(songTitle.trim());
+                            this.updateMediaSessionMetadata(songTitle.trim());
+                        } else {
+                            this.hideCurrentSong();
                         }
                     }
                 } catch (error) {
-                    console.log('Error in tryStatusEndpoints:', error);
+                    // Silently fail for current song fetching
+                    console.log('Could not fetch current song:', error.message);
                 }
 
-                return false;
+                // Schedule next poll
+                this.scheduleNextPoll();
             }
 
             extractTitleFromJSON(data) {
@@ -1225,21 +1139,6 @@
                 return null;
             }
 
-            parseShoutcast7HTML(text) {
-                try {
-                    // Shoutcast 7.html format is comma-separated values
-                    // Usually: currentlisteners,streamstatus,peaklisteners,maxlisteners,uniquelisteners,bitrate,songtitle
-                    const parts = text.split(',');
-                    if (parts.length >= 7) {
-                        const songTitle = parts[6].trim();
-                        return songTitle || null;
-                    }
-                } catch (error) {
-                    console.log('Error parsing Shoutcast format:', error);
-                }
-                return null;
-            }
-
             scheduleNextPoll() {
                 if (this.statusPollInterval) {
                     clearTimeout(this.statusPollInterval);
@@ -1248,16 +1147,11 @@
                     if (this.isPlaying && this.currentStation) {
                         this.fetchCurrentSong();
                     }
-                }, 5000);
+                }, 10000); // Poll every 10 seconds
             }
 
             startStatusPolling() {
                 if (!this.currentStation) return;
-
-                // Generate status URL for current station (fallback method)
-                this.currentStatusUrl = this.generateStatusUrl(this.currentStation.url);
-
-                // Start fetching immediately - this will try multiple methods
                 this.fetchCurrentSong();
             }
 
@@ -1266,7 +1160,6 @@
                     clearTimeout(this.statusPollInterval);
                     this.statusPollInterval = null;
                 }
-                this.currentStatusUrl = null;
                 this.hideCurrentSong();
             }
 
@@ -1286,7 +1179,8 @@
                 // Update section title based on language
                 const titleMap = {
                     'malayalam': 'Malayalam Stations',
-                    'english': 'English Stations'
+                    'english': 'English Stations',
+                    'others': 'Other Languages'
                 };
                 this.sectionTitle.textContent = titleMap[languageKey] || 'Stations';
 
@@ -1311,12 +1205,20 @@
                             { name: "Radio Mango", url: "http://bcovlive-a.akamaihd.net/1d86dc6e8a174dbf9647fbeee9c0e8b1/ap-south-1/6034685947001/playlist.m3u8", genre: "Malayalam Hits" },
                             { name: "Asianet Radio", url: "http://bcovlive-a.akamaihd.net/1d86dc6e8a174dbf9647fbeee9c0e8b1/ap-south-1/6034685947001/playlist.m3u8", genre: "Entertainment" },
                             { name: "Red FM Kerala", url: "https://redm.redmedia.com:1935/red_tamil/playlist.m3u8", genre: "Malayalam Popular" }
+                        ],
+                        'others': [
+                            { name: "Radio France Inter", url: "https://direct.franceinter.fr/live/franceinter-midfi.mp3", genre: "French News" },
+                            { name: "Deutsche Welle", url: "https://dw-i-05-c01-cdn.svc.ctl.io/live/988349/playlist_64.m3u8", genre: "German News" },
+                            { name: "NHK World Radio Japan", url: "https://radio-stream.nhk.jp/hls/live/2023229/nhkradiruakr/master.m3u8", genre: "Japanese" },
+                            { name: "China Radio International", url: "https://sk-cri.mediacdn.pl/cri/english.mp3", genre: "Chinese English" }
                         ]
                     };
 
                     let stations;
+                    const jsonFile = languageKey === 'others' ? 'stations_others.json' : `stations_${languageKey}.json`;
+                    
                     try {
-                        const response = await fetch(`stations_${languageKey}.json`);
+                        const response = await fetch(jsonFile);
                         if (response.ok) {
                             stations = await response.json();
                         } else {
@@ -1366,6 +1268,11 @@
                     const isFav = this.isFavorite(station);
                     const heartIcon = isFav ? 'favorite' : 'favorite_border';
                     const heartClass = isFav ? 'favorited' : '';
+                    
+                    // For "others" view, show language from JSON; otherwise show genre
+                    const displayText = this.currentView === 'others' && station.language 
+                        ? station.language 
+                        : (station.genre || 'Music');
 
                     stationElement.innerHTML = `
                         <div class="station-avatar">
@@ -1373,7 +1280,7 @@
                         </div>
                         <div class="station-details">
                             <div class="station-name">${station.name}</div>
-                            <div class="station-genre">${station.genre || 'Music'}</div>
+                            <div class="station-genre">${displayText}</div>
                         </div>
                         <button class="favorite-btn ${heartClass}" data-index="${index}">
                             <span class="material-symbols-rounded">${heartIcon}</span>
