@@ -1,927 +1,1158 @@
 [
-    {
-        "name": "Naga FM",
-        "url": "http://live.nagafm.in:1380/stream",
-        "language": "Tamil"
-    },
-    {
-        "name": "60North Radio",
-        "url": "http://r5.zetcast.net/flac",
-        "language": ""
-    },
-    {
-        "name": "95bFM",
-        "url": "https://streams.95bfm.com/stream112",
-        "language": ""
-    },
-    {
-        "name": "AIDA Radio",
-        "url": "https://cdn05.radio.cloud:8128/AIDA-OMNIA-GAI",
-        "language": ""
-    },
-    {
-        "name": "Antena Zadar – 97.2 FM",
-        "url": "http://hifi.antenazadar.hr:8000/hifi",
-        "language": ""
-    },
-    {
-        "name": "AURAL Radio",
-        "url": "http://radio.auralradiokerala.com:1320/stream",
-        "language": ""
-    },
-    {
-        "name": "Bailrigg 95.3FM",
-        "url": "https://bfm-live.lancs.ac.uk/listen/bfm/flac",
-        "language": ""
-    },
-    {
-        "name": "BDPST Rock Radio",
-        "url": "https://s2.audiostream.hu/bdpstrock_FLAC",
-        "language": ""
-    },
-    {
-        "name": "BesideFM",
-        "url": "http://5.128.138.8:8000/stream",
-        "language": ""
-    },
-    {
-        "name": "Big Bang Radio",
-        "url": "https://audio-edge-cmc51.fra.h.radiomast.io/2b410ada-8653-40aa-a654-3e8954cf4a4d",
-        "language": ""
-    },
-    {
-        "name": "BluesWave Radio",
-        "url": "http://blueswave.radio:8050/FlacBlues",
-        "language": ""
-    },
-    {
-        "name": "C9 Radio",
-        "url": "https://stream.c9.fr/c9radio-flac.ogg.m3u",
-        "language": ""
-    },
-    {
-        "name": "Calamar Rradio",
-        "url": "http://www.calamarrradio.org:8000/stream",
-        "language": ""
-    },
-    {
-        "name": "City Radio",
-        "url": "http://cityradio.ddns.net:8000/cityradio48flac",
-        "language": ""
-    },
-    {
-        "name": "Classical 90.5 FM §",
-        "url": "https://hls.azpm.org/t-fmp4/FLAC/KUAT_FLAC.m3u8?StreamS-MSE-1.0_uuid=46b1af39-6fdf-4824-9acd-8b2924c29996?StreamS-MSE-1.0_uuid=46b1af39-6fdf-4824-9acd-8b2924c29996",
-        "language": ""
-    },
-    {
-        "name": "Classics Radio",
-        "url": "http://vriezenet.nl:11051/flac",
-        "language": ""
-    },
-    {
-        "name": "Club Retro Hits Radio",
-        "url": "http://v4.tustreaming.cl:18156/stream",
-        "language": ""
-    },
-    {
-        "name": "Czech Radio ČRo Vltava",
-        "url": "https://amp.cesnet.cz:8443/cro3.flac",
-        "language": ""
-    },
-    {
-        "name": "Czech Radio ČRo D-dur",
-        "url": "https://amp.cesnet.cz:8443/cro-d-dur.flac",
-        "language": ""
-    },
-    {
-        "name": "Czech Radio ČRo Jazz",
-        "url": "https://amp.cesnet.cz:8443/cro-jazz.flac",
-        "language": ""
-    },
-    {
-        "name": "Czech Radio ČRo Radio Wave",
-        "url": "https://amp.cesnet.cz:8443/cro-radio-wave.flac",
-        "language": ""
-    },
-    {
-        "name": "Dance Classics Radio",
-        "url": "http://vriezenet.nl:11051/dcflac",
-        "language": ""
-    },
-    {
-        "name": "Dance Wave",
-        "url": "http://dancewave.online/dance.flac.ogg",
-        "language": ""
-    },
-    {
-        "name": "Dance Wave Retro!",
-        "url": "http://retro.dancewave.online/retrodance.flac.ogg",
-        "language": ""
-    },
-    {
-        "name": "Danubius Radio",
-        "url": "https://danubiusradio.hu/live_HiFi.mp3",
-        "language": ""
-    },
-    {
-        "name": "DHECTAR Radio",
-        "url": "http://manager.dhectar.fr:1300/stream",
-        "language": ""
-    },
-    {
-        "name": "DHECTAR Hits",
-        "url": "http://manager.dhectar.fr:1110/stream",
-        "language": ""
-    },
-    {
-        "name": "Djam Radio",
-        "url": "https://stream10.xdevel.com/audio15s976748-2280/stream/icecast.audio",
-        "language": ""
-    },
-    {
-        "name": "EasyRadio",
-        "url": "http://live.easyradio.bg/flac",
-        "language": ""
-    },
-    {
-        "name": "Flacall Radio – Radio Annushka",
-        "url": "http://flacradio.ru:1090/stream",
-        "language": ""
-    },
-    {
-        "name": "Flacall Radio – Hit Radio",
-        "url": "http://flacradio.ru:1070/stream",
-        "language": ""
-    },
-    {
-        "name": "Flacall Radio – International Women’s Radio March 8",
-        "url": "http://flacradio.ru:1140/stream",
-        "language": ""
-    },
-    {
-        "name": "Flacall Radio – Radio Summer",
-        "url": "http://flacradio.ru:1110/stream",
-        "language": ""
-    },
-    {
-        "name": "Flow Radio",
-        "url": "http://st1.urbanrevolution.es:8000/flowhd",
-        "language": ""
-    },
-    {
-        "name": "Free Music Radio",
-        "url": "http://stream.freemusicradio.nl:8100/stream.oga",
-        "language": ""
-    },
-    {
-        "name": "ForEver La Radio – Arcachon",
-        "url": "http://stream.sweetfm.fr:8000/flac-forever-arc",
-        "language": ""
-    },
-    {
-        "name": "ForEver La Radio – Bordeaux",
-        "url": "http://stream.sweetfm.fr:8000/flac-forever-bdx",
-        "language": ""
-    },
-    {
-        "name": "Fréquence 3",
-        "url": "https://frequence3.net-radio.fr/frequence3.flac",
-        "language": ""
-    },
-    {
-        "name": "Fréquence 3 – Touraine",
-        "url": "https://frequence3.net-radio.fr/frequence3-fm37.flac",
-        "language": ""
-    },
-    {
-        "name": "Fréquence 3 – Loir-et-Cher",
-        "url": "https://frequence3.net-radio.fr/frequence3-fm41.flac",
-        "language": ""
-    },
-    {
-        "name": "Fréquence 3 Dance",
-        "url": "https://frequence3.net-radio.fr/frequence3dance.flac",
-        "language": ""
-    },
-    {
-        "name": "Fréquence 3 Gold",
-        "url": "https://frequence3.net-radio.fr/frequence3gold.flac",
-        "language": ""
-    },
-    {
-        "name": "Fréquence 3 Urban",
-        "url": "https://frequence3.net-radio.fr/frequence3urban.flac",
-        "language": ""
-    },
-    {
-        "name": "Fréquence 3 World",
-        "url": "https://frequence3.net-radio.fr/frequence3world.flac",
-        "language": ""
-    },
-    {
-        "name": "Futura.FM",
-        "url": "https://futura.fm/stream.ogg?ts=1699656027.325",
-        "language": ""
-    },
-    {
-        "name": "GGRN‡",
-        "url": "http://ggrn.de:8040/ggrn.flac",
-        "language": ""
-    },
-    {
-        "name": "Greek Hits",
-        "url": "https://radio.newageradio.gr:8040/autodj.flac",
-        "language": ""
-    },
-    {
-        "name": "H2O",
-        "url": "http://ice2.ikoula.net-radio.fr/h2oradio.flac",
-        "language": ""
-    },
-    {
-        "name": "Haarlem 105",
-        "url": "http://studio.haarlem105.nl:8000/haarlem105DAB.flac?_res_tag_=audio",
-        "language": ""
-    },
-    {
-        "name": "Haarlem Shuffle Radio",
-        "url": "https://stream.tbmp.nl:8000/haarlemshuffle.flac",
-        "language": ""
-    },
-    {
-        "name": "High Fi Dream Radio",
-        "url": "https://cdn06-us-east.radio.cloud/80ba63862a97bd69c593cc7a2ccaab1c_hq",
-        "language": ""
-    },
-    {
-        "name": "Hi On Line Radio",
-        "url": "http://mscp2.live-streams.nl:8100/flac.flac",
-        "language": ""
-    },
-    {
-        "name": "HitMix",
-        "url": "https://stream.hitmix.ee:8443/PFL",
-        "language": ""
-    },
-    {
-        "name": "Incondicionalmente Retro",
-        "url": "http://v4.tustreaming.cl:18128/stream",
-        "language": ""
-    },
-    {
-        "name": "Insanity Radio",
-        "url": "https://stream.cor.insanityradio.com/insanity.flac",
-        "language": ""
-    },
-    {
-        "name": "Intense Radio",
-        "url": "http://secure.live-streams.nl/flac.flac",
-        "language": ""
-    },
-    {
-        "name": "ISEKOI Radio",
-        "url": "https://isekoi-radio.com/listen/isekoi/radio.flac",
-        "language": ""
-    },
-    {
-        "name": "ISEKOI Ambient",
-        "url": "https://isekoi-radio.com/listen/ambient/ambientradio.flac",
-        "language": ""
-    },
-    {
-        "name": "ISEKOI Chill Zone",
-        "url": "https://isekoi-radio.com/listen/chill/radio.flac",
-        "language": ""
-    },
-    {
-        "name": "Jammin Vibez Network – Reggae Classics Mix",
-        "url": "https://online.jamminvibezradio.com/listen/reggae/live.flac",
-        "language": ""
-    },
-    {
-        "name": "Jammin Vibez Network – Caribbean Variety Mix",
-        "url": "https://online.jamminvibezradio.com/listen/reggae/live.flac",
-        "language": ""
-    },
-    {
-        "name": "Jammin Vibez Network – Caribbean Christmas Mix",
-        "url": "https://online.jamminvibezradio.com/listen/caribbean/live.flac",
-        "language": ""
-    },
-    {
-        "name": "Jammin Vibez Network – Classic Oldies Mix",
-        "url": "https://online.jamminvibezradio.com/listen/oldies/live.flac",
-        "language": ""
-    },
-    {
-        "name": "JB Radio-2",
-        "url": "https://mediacp.jb-radio.net:8001/flac",
-        "language": ""
-    },
-    {
-        "name": "Joy Hits",
-        "url": "http://joyhits.online/joyhits.flac.ogg",
-        "language": ""
-    },
-    {
-        "name": "K-Free",
-        "url": "https://kfre.s3.amazonaws.com/truehd/FLAC/program.m3u8",
-        "language": ""
-    },
-    {
-        "name": "Kiss Collector",
-        "url": "http://live7.avf.ch:8000/kisscollector_main",
-        "language": ""
-    },
-    {
-        "name": "LapFox Radio",
-        "url": "https://radio.lapfoxradio.com/radio/8000/stream-flac.flac",
-        "language": ""
-    },
-    {
-        "name": "La Pop’ulaire",
-        "url": "http://hyperion.lapopulai.re:8000/radio.flac",
-        "language": ""
-    },
-    {
-        "name": "La SuperSonica",
-        "url": "http://c11.radioboss.fm:8093/stream",
-        "language": ""
-    },
-    {
-        "name": "La Urban Radio",
-        "url": "http://st1.urbanrevolution.es:8000/zonaelectronica",
-        "language": ""
-    },
-    {
-        "name": "Le Bon Mix",
-        "url": "https://stream10.xdevel.com/audio17s976748-2218/stream/icecast.audio",
-        "language": ""
-    },
-    {
-        "name": "Le Son Parisien",
-        "url": "http://stream.lesonparisien.com/live.flac",
-        "language": ""
-    },
-    {
-        "name": "Lux Radio",
-        "url": "https://live7.avf.ch/lux_main",
-        "language": ""
-    },
-    {
-        "name": "Magic Radio",
-        "url": "http://mp3.magic-radio.net/flac",
-        "language": ""
-    },
-    {
-        "name": "MaXXima",
-        "url": "http://maxxima.mine.nu:8000/maxx.ogg",
-        "language": ""
-    },
-    {
-        "name": "MBP Radio",
-        "url": "https://radiozender.mpbnetwerken.nl/radio1-stl",
-        "language": ""
-    },
-    {
-        "name": "Mother Earth Radio",
-        "url": "https://motherearth.streamserver24.com/listen/motherearth/motherearth",
-        "language": ""
-    },
-    {
-        "name": "Mother Earth Radio",
-        "url": "https://motherearth.streamserver24.com/listen/motherearth/motherearth.flac-lo",
-        "language": ""
-    },
-    {
-        "name": "Mother Earth Instrumental",
-        "url": "https://motherearth.streamserver24.com/listen/motherearth_instrumental/motherearth.instrumental",
-        "language": ""
-    },
-    {
-        "name": "Mother Earth Instrumental",
-        "url": "https://motherearth.streamserver24.com/listen/motherearth_jazz/motherearth.jazz.flac-lo",
-        "language": ""
-    },
-    {
-        "name": "Mother Earth Jazz",
-        "url": "https://motherearth.streamserver24.com/listen/motherearth_jazz/motherearth.jazz",
-        "language": ""
-    },
-    {
-        "name": "Mother Earth Jazz",
-        "url": "https://motherearth.streamserver24.com/listen/motherearth_jazz/motherearth.jazz.flac-lo",
-        "language": ""
-    },
-    {
-        "name": "Mother Earth Klassik",
-        "url": "https://motherearth.streamserver24.com/listen/motherearth_klassik/motherearth.klassik",
-        "language": ""
-    },
-    {
-        "name": "Mother Earth Klassik",
-        "url": "https://motherearth.streamserver24.com/listen/motherearth_klassik/motherearth.klassik.flac-lo",
-        "language": ""
-    },
-    {
-        "name": "MybobbaFM",
-        "url": "https://radio.edith.gg/listen/mybobbafm/radio_flac.flac",
-        "language": ""
-    },
-    {
-        "name": "Naim Classical",
-        "url": "http://mscp3.live-streams.nl:8250/class-flac.flac",
-        "language": ""
-    },
-    {
-        "name": "Naim Jazz",
-        "url": "http://mscp3.live-streams.nl:8340/jazz-flac",
-        "language": ""
-    },
-    {
-        "name": "Naim Radio",
-        "url": "http://mscp3.live-streams.nl:8360/flac.flac",
-        "language": ""
-    },
-    {
-        "name": "openbroadcast",
-        "url": "http://stream.openbroadcast.ch/16bit.flac",
-        "language": ""
-    },
-    {
-        "name": "OpenSky Radio",
-        "url": "https://audio.opensky.radio:8082/flac?_res_tag_=audio",
-        "language": ""
-    },
-    {
-        "name": "Periscope Radio",
-        "url": "http://mumia.periszkopradio.hu:8050/periszkop.ogg",
-        "language": ""
-    },
-    {
-        "name": "Pi ano",
-        "url": "http://stream.p-node.org/piano.flac",
-        "language": ""
-    },
-    {
-        "name": "PiratenKanon.nl",
-        "url": "https://stream.piratenkanon.nl:10700/flac",
-        "language": ""
-    },
-    {
-        "name": "Progressieve Rock",
-        "url": "https://progressieverock.nl/flac",
-        "language": ""
-    },
-    {
-        "name": "Punkrockers Radio",
-        "url": "https://stream.punkrockers-radio.de:8443/prr.flac",
-        "language": ""
-    },
-    {
-        "name": "PureClassix Radio",
-        "url": "http://mscp4.live-streams.nl:8140/flac.ogg",
-        "language": ""
-    },
-    {
-        "name": "Pure Lounge Radio",
-        "url": "https://mscp4.live-streams.nl:8142/lounge.ogg",
-        "language": ""
-    },
-    {
-        "name": "Pure Radio Holland – The Underground Channel",
-        "url": "https://streamserver.pure-isp.eu/radio/8000/flac",
-        "language": ""
-    },
-    {
-        "name": "Pure Radio Holland – Trance-Electro Channel",
-        "url": "https://streamserver.pure-isp.eu/radio/8020/flac",
-        "language": ""
-    },
-    {
-        "name": "Pure Radio Holland – Hardcore Channel",
-        "url": "https://streamserver.pure-isp.eu/radio/8010/flac",
-        "language": ""
-    },
-    {
-        "name": "Pure Radio Holland – DownTempo Channel",
-        "url": "https://streamserver.pure-isp.eu/radio/8040/flac",
-        "language": ""
-    },
-    {
-        "name": "Pure Radio Channel – Live Party Channel",
-        "url": "https://streamserver.pure-isp.eu/radio/8060/flac",
-        "language": ""
-    },
-    {
-        "name": "Pure Radio Channel – Dance Channel",
-        "url": "https://streamserver.pure-isp.eu/radio/8030/flac",
-        "language": ""
-    },
-    {
-        "name": "Pure Radio Channel – DJ R.I.P.’s Podcast",
-        "url": "https://streamserver.pure-isp.eu/radio/8050/flac",
-        "language": ""
-    },
-    {
-        "name": "Pure Radio Channel – Various Channel",
-        "url": "https://streamserver.pure-isp.eu/radio/8070/flac",
-        "language": ""
-    },
-    {
-        "name": "Pure Radio Channel – Rap & HIP-HOP Channel",
-        "url": "https://streamserver.pure-isp.eu/radio/8100/flac",
-        "language": ""
-    },
-    {
-        "name": "Qabayan FM",
-        "url": "https://c2.radioboss.fm:8478/live",
-        "language": ""
-    },
-    {
-        "name": "Queer Hits",
-        "url": "https://stream.queerhits.nl/queerhits.hq",
-        "language": ""
-    },
-    {
-        "name": "Radio 700",
-        "url": "https://streaming.radio700.eu/radio700.flac",
-        "language": ""
-    },
-    {
-        "name": "Radio 80FM Valencia",
-        "url": "http://stream.radio90.fm:2000/stream",
-        "language": ""
-    },
-    {
-        "name": "Radio Audiomastering",
-        "url": "https://transliacija.audiomastering.lt/pure",
-        "language": ""
-    },
-    {
-        "name": "Radio Bias",
-        "url": "https://admin.biasradio.com/radio/8000/flac",
-        "language": ""
-    },
-    {
-        "name": "Radio BluesFlac",
-        "url": "https://streams.radiomast.io/radioblues-flac",
-        "language": ""
-    },
-    {
-        "name": "Radio Calico",
-        "url": "http://radio3.radio-calico.com:8080/calico",
-        "language": ""
-    },
-    {
-        "name": "Radio Calico (Roon stream)",
-        "url": "http://roon.radio-calico.com:8000/roon",
-        "language": ""
-    },
-    {
-        "name": "Radio Campus Gremoble 90.8",
-        "url": "https://live.campusgrenoble.org/dab",
-        "language": ""
-    },
-    {
-        "name": "Radio Club Classic",
-        "url": "https://stream.radioclub80.cl:8002/clasicos80.flac",
-        "language": ""
-    },
-    {
-        "name": "Radio Club Classic",
-        "url": "https://stream.radioclub80.cl:10032/clasicoras",
-        "language": ""
-    },
-    {
-        "name": "Radio Club Trance",
-        "url": "https://stream.radioclub80.cl:8052/trance80.flac",
-        "language": ""
-    },
-    {
-        "name": "Radio Club Trance",
-        "url": "https://stream.radioclub80.cl:10012/live.flac",
-        "language": ""
-    },
-    {
-        "name": "Radio Club Retro",
-        "url": "https://stream.radioclub80.cl:8022/retro80.flac",
-        "language": ""
-    },
-    {
-        "name": "Radio Club Retro",
-        "url": "https://stream.radioclub80.cl:8022/retro80.flac24",
-        "language": ""
-    },
-    {
-        "name": "Radio Club Lossless",
-        "url": "https://stream.radioclub80.cl:8032/stream.euro80flac",
-        "language": ""
-    },
-    {
-        "name": "Radio Club Latino Hits",
-        "url": "https://stream.radioclub80.cl:8012/espanol80.flac",
-        "language": ""
-    },
-    {
-        "name": "Radio Club Ballads",
-        "url": "https://stream.radioclub80.cl:8042/baladas80.flac",
-        "language": ""
-    },
-    {
-        "name": "Radio Club 80 Movie Sound",
-        "url": "https://stream.radioclub80.cl:8072/peliculas80.flac",
-        "language": ""
-    },
-    {
-        "name": "Radio Classic Rock Best",
-        "url": "http://stream.radioclub80.cl:9040/live.flac",
-        "language": ""
-    },
-    {
-        "name": "Radio G!",
-        "url": "http://46.105.110.80:8000/fluxradiogHD",
-        "language": ""
-    },
-    {
-        "name": "Radio Haugaland",
-        "url": "http://radioip.no:443/flac",
-        "language": ""
-    },
-    {
-        "name": "Radio Jeunes Rheims",
-        "url": "http://stream.rjrradio.fr:8000/rjr-dab.flac",
-        "language": ""
-    },
-    {
-        "name": "Radio Juventus",
-        "url": "http://s2.audiostream.hu:8090/juventus_FLAC",
-        "language": ""
-    },
-    {
-        "name": "Radio Mast",
-        "url": "https://streams.radiomast.io/ref-lossless-ogg-flac-stereo",
-        "language": ""
-    },
-    {
-        "name": "Radio Paradise Main Mix",
-        "url": "http://stream.radioparadise.com/flac",
-        "language": ""
-    },
-    {
-        "name": "Radio Paradise Mellow Mix",
-        "url": "http://stream.radioparadise.com/mellow-flac",
-        "language": ""
-    },
-    {
-        "name": "Radio Paradise Rock Mix",
-        "url": "http://stream.radioparadise.com/rock-flac",
-        "language": ""
-    },
-    {
-        "name": "Radio Paradise Global Mix",
-        "url": "http://stream.radioparadise.com/global-flac",
-        "language": ""
-    },
-    {
-        "name": "Radio Remusica",
-        "url": "http://v4.tustreaming.cl:18144/stream",
-        "language": ""
-    },
-    {
-        "name": "Radio Radar",
-        "url": "http://radioradar.online:8000/radar.ogg",
-        "language": ""
-    },
-    {
-        "name": "Radio Radar – House",
-        "url": "https://radioradar.online/listen/r_house/r_house.ogg",
-        "language": ""
-    },
-    {
-        "name": "Radio Random",
-        "url": "http://radiorandom.org:8000/WBJM-FLAC",
-        "language": ""
-    },
-    {
-        "name": "Radio Sputnik",
-        "url": "https://radiosputnik.nl:8443/flac",
-        "language": ""
-    },
-    {
-        "name": "Radio Summer",
-        "url": "http://flacradio.ru:1110/stream",
-        "language": ""
-    },
-    {
-        "name": "Radio Tornagaleones",
-        "url": "http://tornagaleones.ddns.net:9000/Flac",
-        "language": ""
-    },
-    {
-        "name": "Radio X",
-        "url": "https://mp3.radiox.ch/standard.ogg",
-        "language": ""
-    },
-    {
-        "name": "Retrosquad Radio",
-        "url": "https://radio.retrosquad.id/listen/retrosquad/high",
-        "language": ""
-    },
-    {
-        "name": "RIO – Rádio Internacional Odemira",
-        "url": "http://c30.radioboss.fm:8510/autodj",
-        "language": ""
-    },
-    {
-        "name": "Riverside Radio",
-        "url": "https://stream.and-stuff.nl:8443/riverside",
-        "language": ""
-    },
-    {
-        "name": "Rlocale Radio",
-        "url": "https://rlocale.org/listen/rlocale/rlocale-flac.ogg",
-        "language": ""
-    },
-    {
-        "name": "RockStar Radio",
-        "url": "http://live7.avf.ch:8000/rockstar_main",
-        "language": ""
-    },
-    {
-        "name": "Rondo Klasu",
-        "url": "https://iradio.fi/klasu.flac",
-        "language": ""
-    },
-    {
-        "name": "Rondo Klasu Pro",
-        "url": "https://iradio.fi/klasupro.flac",
-        "language": ""
-    },
-    {
-        "name": "Roxy Radio",
-        "url": "https://s2.audiostream.hu/roxy_FLAC",
-        "language": ""
-    },
-    {
-        "name": "Sanctuary Radio – Dark Electro Channel",
-        "url": "http://66.94.113.88:8000/ultra_hq",
-        "language": ""
-    },
-    {
-        "name": "Sanctuary Radio – 80’s Alternative Channel",
-        "url": "http://66.94.113.88:8000/retro_ultra_hq",
-        "language": ""
-    },
-    {
-        "name": "Sanctuary Radio – Club Mix Channel",
-        "url": "http://66.94.113.88:8000/clubmix_ultra_hq",
-        "language": ""
-    },
-    {
-        "name": "SECTOR Classical",
-        "url": "http://89.223.45.5:8000/nota-flac",
-        "language": ""
-    },
-    {
-        "name": "SECTOR Progressive",
-        "url": "http://89.223.45.5:8000/progressive-flac",
-        "language": ""
-    },
-    {
-        "name": "SECTOR Space",
-        "url": "http://89.223.45.5:8000/space-flac",
-        "language": ""
-    },
-    {
-        "name": "SECTOR 80s",
-        "url": "http://89.223.45.5:8000/geny-flac",
-        "language": ""
-    },
-    {
-        "name": "SECTOR 90s",
-        "url": "http://89.223.45.5:8000/next-flac",
-        "language": ""
-    },
-    {
-        "name": "SECTOR 10s",
-        "url": "http://89.223.45.5:8000/zed-flac",
-        "language": ""
-    },
-    {
-        "name": "SECTOR 00s",
-        "url": "http://89.223.45.5:8000/indigo-flac",
-        "language": ""
-    },
-    {
-        "name": "SECTOR Jazz",
-        "url": "http://89.223.45.5:8000/jazz-flac",
-        "language": ""
-    },
-    {
-        "name": "shadowfr69 Radio",
-        "url": "https://radio.shadowfr69.eu/lossless",
-        "language": ""
-    },
-    {
-        "name": "Sing Sing",
-        "url": "http://stream.sing-sing-bis.org:8000/singsingFlac",
-        "language": ""
-    },
-    {
-        "name": "Skylegend Radio",
-        "url": "http://173.212.250.212:8200/flac",
-        "language": ""
-    },
-    {
-        "name": "SomaFM‡§",
-        "url": "https://hls.somafm.com/hls/groovesalad/FLAC/program.m3u8",
-        "language": ""
-    },
-    {
-        "name": "Starter FM",
-        "url": "http://10321.cloudrad.io:9054/hd",
-        "language": ""
-    },
-    {
-        "name": "Stereo Anime",
-        "url": "http://radio.stereoanime.net:8000/flac",
-        "language": ""
-    },
-    {
-        "name": "SUBJAM",
-        "url": "http://orbit.citrus3.com:9016/stream",
-        "language": ""
-    },
-    {
-        "name": "SUN",
-        "url": "http://diffusion.lafrap.fr:8000/sun.flac",
-        "language": ""
-    },
-    {
-        "name": "SuperStereo Network¶",
-        "url": "–",
-        "language": ""
-    },
-    {
-        "name": "Sveriges Radio",
-        "url": "https://live1.sr.se/p2-flac",
-        "language": ""
-    },
-    {
-        "name": "Sweet FM",
-        "url": "http://stream.sweetfm.fr:8000/dab-forever-lms",
-        "language": ""
-    },
-    {
-        "name": "TEKnival Radio",
-        "url": "https://listen.teknivalradio.com/listen/teknivalradio/radio.flac",
-        "language": ""
-    },
-    {
-        "name": "The Cheese",
-        "url": "https://station.thecheese.co.nz/listen/the_cheese/flac",
-        "language": ""
-    },
-    {
-        "name": "TrancePulse",
-        "url": "http://stream.trance.ie:8000/tpmixes",
-        "language": ""
-    },
-    {
-        "name": "URBN Radio",
-        "url": "http://live7.avf.ch:8000/urbn_main",
-        "language": ""
-    },
-    {
-        "name": "Violent Forces Radio",
-        "url": "https://tuneintoradio1.com:8000/stream.flac",
-        "language": ""
-    },
-    {
-        "name": "Violent Forces Radio",
-        "url": "https://tuneintoradio1.com:8010/stream.flac",
-        "language": ""
-    },
-    {
-        "name": "WBOR (91.1FM)",
-        "url": "https://azura.wbor.org/listen/wbor/flac",
-        "language": ""
-    },
-    {
-        "name": "Yes FM",
-        "url": "http://live7.avf.ch:8000/yesfm_main",
-        "language": ""
-    },
-    {
-        "name": "Zap! FM",
-        "url": "https://zapstream.nl:8443/1",
-        "language": ""
-    },
-    {
-        "name": "Zappa Stream Radio",
-        "url": "https://streams.norbert.de/zappa.flac",
-        "language": ""
-    }
+  {
+    "name": "Naga FM",
+    "url": "http://live.nagafm.in:1380/stream",
+    "encoding": "mp3",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": "320 kbps"
+  },
+  {
+    "name": "60North Radio",
+    "url": "http://r5.zetcast.net/flac",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "95bFM",
+    "url": "https://streams.95bfm.com/stream112",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "AIDA Radio",
+    "url": "https://cdn05.radio.cloud:8128/AIDA-OMNIA-GAI",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "AURAL Radio",
+    "url": "http://radio.auralradiokerala.com:1320/stream",
+    "encoding": "aac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": "33 kbps"
+  },
+  {
+    "name": "Bailrigg 95.3FM",
+    "url": "https://bfm-live.lancs.ac.uk/listen/bfm/flac",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "BDPST Rock Radio",
+    "url": "https://s2.audiostream.hu/bdpstrock_FLAC",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Big Bang Radio",
+    "url": "https://audio-edge-cmc51.fra.h.radiomast.io/2b410ada-8653-40aa-a654-3e8954cf4a4d",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "BluesWave Radio",
+    "url": "http://blueswave.radio:8050/FlacBlues",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "C9 Radio",
+    "url": "https://stream.c9.fr/c9radio-flac.ogg.m3u"
+  },
+  {
+    "name": "Calamar Rradio",
+    "url": "http://www.calamarrradio.org:8000/stream"
+  },
+  {
+    "name": "City Radio",
+    "url": "http://cityradio.ddns.net:8000/cityradio48flac",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Classics Radio",
+    "url": "http://vriezenet.nl:11051/flac",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Club Retro Hits Radio",
+    "url": "http://v4.tustreaming.cl:18156/stream",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Czech Radio \u00c4\u0152Ro Vltava",
+    "url": "https://amp.cesnet.cz:8443/cro3.flac",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Czech Radio \u00c4\u0152Ro D-dur",
+    "url": "https://amp.cesnet.cz:8443/cro-d-dur.flac",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Czech Radio \u00c4\u0152Ro Jazz",
+    "url": "https://amp.cesnet.cz:8443/cro-jazz.flac",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Czech Radio \u00c4\u0152Ro Radio Wave",
+    "url": "https://amp.cesnet.cz:8443/cro-radio-wave.flac"
+  },
+  {
+    "name": "Dance Classics Radio",
+    "url": "http://vriezenet.nl:11051/dcflac",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Dance Wave",
+    "url": "http://dancewave.online/dance.flac.ogg",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Dance Wave Retro!",
+    "url": "http://retro.dancewave.online/retrodance.flac.ogg",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Danubius Radio",
+    "url": "https://danubiusradio.hu/live_HiFi.mp3",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "DHECTAR Radio",
+    "url": "http://manager.dhectar.fr:1300/stream",
+    "encoding": "mp3",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": "320 kbps"
+  },
+  {
+    "name": "Djam Radio",
+    "url": "https://stream10.xdevel.com/audio15s976748-2280/stream/icecast.audio",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "EasyRadio",
+    "url": "http://live.easyradio.bg/flac",
+    "encoding": "flac",
+    "sample_rate": "192.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Free Music Radio",
+    "url": "http://stream.freemusicradio.nl:8100/stream.oga",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "ForEver La Radio \u00e2\u20ac\u201c Arcachon",
+    "url": "http://stream.sweetfm.fr:8000/flac-forever-arc",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "ForEver La Radio \u00e2\u20ac\u201c Bordeaux",
+    "url": "http://stream.sweetfm.fr:8000/flac-forever-bdx",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Fr\u00c3\u00a9quence 3",
+    "url": "https://frequence3.net-radio.fr/frequence3.flac",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Fr\u00c3\u00a9quence 3 \u00e2\u20ac\u201c Touraine",
+    "url": "https://frequence3.net-radio.fr/frequence3-fm37.flac",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Fr\u00c3\u00a9quence 3 \u00e2\u20ac\u201c Loir-et-Cher",
+    "url": "https://frequence3.net-radio.fr/frequence3-fm41.flac",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Fr\u00c3\u00a9quence 3 Dance",
+    "url": "https://frequence3.net-radio.fr/frequence3dance.flac",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Fr\u00c3\u00a9quence 3 Gold",
+    "url": "https://frequence3.net-radio.fr/frequence3gold.flac",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Fr\u00c3\u00a9quence 3 Urban",
+    "url": "https://frequence3.net-radio.fr/frequence3urban.flac",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Fr\u00c3\u00a9quence 3 World",
+    "url": "https://frequence3.net-radio.fr/frequence3world.flac",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Futura.FM",
+    "url": "https://futura.fm/stream.ogg?ts=1699656027.325",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Greek Hits",
+    "url": "https://radio.newageradio.gr:8040/autodj.flac",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "H2O",
+    "url": "http://ice2.ikoula.net-radio.fr/h2oradio.flac",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Haarlem 105",
+    "url": "http://studio.haarlem105.nl:8000/haarlem105DAB.flac?_res_tag_=audio",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Haarlem Shuffle Radio",
+    "url": "https://stream.tbmp.nl:8000/haarlemshuffle.flac",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "High Fi Dream Radio",
+    "url": "https://cdn06-us-east.radio.cloud/80ba63862a97bd69c593cc7a2ccaab1c_hq",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Hi On Line Radio",
+    "url": "http://mscp2.live-streams.nl:8100/flac.flac",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "HitMix",
+    "url": "https://stream.hitmix.ee:8443/PFL",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Incondicionalmente Retro",
+    "url": "http://v4.tustreaming.cl:18128/stream",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Insanity Radio",
+    "url": "https://stream.cor.insanityradio.com/insanity.flac",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Intense Radio",
+    "url": "http://secure.live-streams.nl/flac.flac",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "ISEKOI Ambient",
+    "url": "https://isekoi-radio.com/listen/ambient/ambientradio.flac",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "ISEKOI Chill Zone",
+    "url": "https://isekoi-radio.com/listen/chill/radio.flac",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Jammin Vibez Network \u00e2\u20ac\u201c Reggae Classics Mix",
+    "url": "https://online.jamminvibezradio.com/listen/reggae/live.flac",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Jammin Vibez Network \u00e2\u20ac\u201c Caribbean Variety Mix",
+    "url": "https://online.jamminvibezradio.com/listen/reggae/live.flac",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Jammin Vibez Network \u00e2\u20ac\u201c Caribbean Christmas Mix",
+    "url": "https://online.jamminvibezradio.com/listen/caribbean/live.flac",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Jammin Vibez Network \u00e2\u20ac\u201c Classic Oldies Mix",
+    "url": "https://online.jamminvibezradio.com/listen/oldies/live.flac",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "JB Radio-2",
+    "url": "https://mediacp.jb-radio.net:8001/flac",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Joy Hits",
+    "url": "http://joyhits.online/joyhits.flac.ogg",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "K-Free",
+    "url": "https://kfre.s3.amazonaws.com/truehd/FLAC/program.m3u8",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": "1238 kbps"
+  },
+  {
+    "name": "Kiss Collector",
+    "url": "http://live7.avf.ch:8000/kisscollector_main",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "LapFox Radio",
+    "url": "https://radio.lapfoxradio.com/radio/8000/stream-flac.flac",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "La SuperSonica",
+    "url": "http://c11.radioboss.fm:8093/stream",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Le Bon Mix",
+    "url": "https://stream10.xdevel.com/audio17s976748-2218/stream/icecast.audio",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Le Son Parisien",
+    "url": "http://stream.lesonparisien.com/live.flac",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Lux Radio",
+    "url": "https://live7.avf.ch/lux_main",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Magic Radio",
+    "url": "http://mp3.magic-radio.net/flac",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "MaXXima",
+    "url": "http://maxxima.mine.nu:8000/maxx.ogg",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "MBP Radio",
+    "url": "https://radiozender.mpbnetwerken.nl/radio1-stl",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Naim Classical",
+    "url": "http://mscp3.live-streams.nl:8250/class-flac.flac",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Naim Radio",
+    "url": "http://mscp3.live-streams.nl:8360/flac.flac",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "openbroadcast",
+    "url": "http://stream.openbroadcast.ch/16bit.flac",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "OpenSky Radio",
+    "url": "https://audio.opensky.radio:8082/flac?_res_tag_=audio",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Pi ano",
+    "url": "http://stream.p-node.org/piano.flac",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Progressieve Rock",
+    "url": "https://progressieverock.nl/flac",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Punkrockers Radio",
+    "url": "https://stream.punkrockers-radio.de:8443/prr.flac",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "PureClassix Radio",
+    "url": "http://mscp4.live-streams.nl:8140/flac.ogg",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Pure Lounge Radio",
+    "url": "https://mscp4.live-streams.nl:8142/lounge.ogg",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Pure Radio Holland \u00e2\u20ac\u201c The Underground Channel",
+    "url": "https://streamserver.pure-isp.eu/radio/8000/flac",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Pure Radio Holland \u00e2\u20ac\u201c Trance-Electro Channel",
+    "url": "https://streamserver.pure-isp.eu/radio/8020/flac",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Pure Radio Holland \u00e2\u20ac\u201c Hardcore Channel",
+    "url": "https://streamserver.pure-isp.eu/radio/8010/flac",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Pure Radio Holland \u00e2\u20ac\u201c DownTempo Channel",
+    "url": "https://streamserver.pure-isp.eu/radio/8040/flac",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Pure Radio Channel \u00e2\u20ac\u201c Live Party Channel",
+    "url": "https://streamserver.pure-isp.eu/radio/8060/flac",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Pure Radio Channel \u00e2\u20ac\u201c Dance Channel",
+    "url": "https://streamserver.pure-isp.eu/radio/8030/flac",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Pure Radio Channel \u00e2\u20ac\u201c DJ R.I.P.\u00e2\u20ac\u2122s Podcast",
+    "url": "https://streamserver.pure-isp.eu/radio/8050/flac",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Pure Radio Channel \u00e2\u20ac\u201c Various Channel",
+    "url": "https://streamserver.pure-isp.eu/radio/8070/flac",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Pure Radio Channel \u00e2\u20ac\u201c Rap & HIP-HOP Channel",
+    "url": "https://streamserver.pure-isp.eu/radio/8100/flac",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Qabayan FM",
+    "url": "https://c2.radioboss.fm:8478/live",
+    "encoding": "aac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": "318 kbps"
+  },
+  {
+    "name": "Radio 700",
+    "url": "https://streaming.radio700.eu/radio700.flac",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Radio 80FM Valencia",
+    "url": "http://stream.radio90.fm:2000/stream",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Radio Audiomastering",
+    "url": "https://transliacija.audiomastering.lt/pure",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Radio Bias",
+    "url": "https://admin.biasradio.com/radio/8000/flac",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Radio BluesFlac",
+    "url": "https://streams.radiomast.io/radioblues-flac",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Radio Calico",
+    "url": "http://radio3.radio-calico.com:8080/calico",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Radio Calico (Roon stream)",
+    "url": "http://roon.radio-calico.com:8000/roon",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Radio Campus Gremoble 90.8",
+    "url": "https://live.campusgrenoble.org/dab",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Radio Club Classic",
+    "url": "https://stream.radioclub80.cl:8002/clasicos80.flac",
+    "encoding": "flac",
+    "sample_rate": "192.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Radio Club Trance",
+    "url": "https://stream.radioclub80.cl:8052/trance80.flac",
+    "encoding": "flac",
+    "sample_rate": "96.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Radio Club Retro",
+    "url": "https://stream.radioclub80.cl:8022/retro80.flac",
+    "encoding": "flac",
+    "sample_rate": "192.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Radio Club Retro",
+    "url": "https://stream.radioclub80.cl:8022/retro80.flac24"
+  },
+  {
+    "name": "Radio Club Latino Hits",
+    "url": "https://stream.radioclub80.cl:8012/espanol80.flac",
+    "encoding": "flac",
+    "sample_rate": "192.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Radio Club Ballads",
+    "url": "https://stream.radioclub80.cl:8042/baladas80.flac",
+    "encoding": "flac",
+    "sample_rate": "192.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Radio Club 80 Movie Sound",
+    "url": "https://stream.radioclub80.cl:8072/peliculas80.flac",
+    "encoding": "flac",
+    "sample_rate": "96.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Radio Classic Rock Best",
+    "url": "http://stream.radioclub80.cl:9040/live.flac",
+    "encoding": "flac",
+    "sample_rate": "192.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Radio G!",
+    "url": "http://46.105.110.80:8000/fluxradiogHD",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Radio Haugaland",
+    "url": "http://radioip.no:443/flac",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Radio Jeunes Rheims",
+    "url": "http://stream.rjrradio.fr:8000/rjr-dab.flac",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Radio Juventus",
+    "url": "http://s2.audiostream.hu:8090/juventus_FLAC",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Radio Mast",
+    "url": "https://streams.radiomast.io/ref-lossless-ogg-flac-stereo",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Radio Paradise Main Mix",
+    "url": "http://stream.radioparadise.com/flac",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Radio Paradise Mellow Mix",
+    "url": "http://stream.radioparadise.com/mellow-flac",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Radio Paradise Rock Mix",
+    "url": "http://stream.radioparadise.com/rock-flac",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Radio Paradise Global Mix",
+    "url": "http://stream.radioparadise.com/global-flac",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Radio Remusica",
+    "url": "http://v4.tustreaming.cl:18144/stream",
+    "encoding": "aac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": "116 kbps"
+  },
+  {
+    "name": "Radio Radar",
+    "url": "http://radioradar.online:8000/radar.ogg",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Radio Radar \u00e2\u20ac\u201c House",
+    "url": "https://radioradar.online/listen/r_house/r_house.ogg",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Radio Random",
+    "url": "http://radiorandom.org:8000/WBJM-FLAC",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Radio Sputnik",
+    "url": "https://radiosputnik.nl:8443/flac",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Radio Tornagaleones",
+    "url": "http://tornagaleones.ddns.net:9000/Flac",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Radio X",
+    "url": "https://mp3.radiox.ch/standard.ogg",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Retrosquad Radio",
+    "url": "https://radio.retrosquad.id/listen/retrosquad/high",
+    "encoding": "aac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": "128 kbps"
+  },
+  {
+    "name": "RIO \u00e2\u20ac\u201c R\u00c3\u00a1dio Internacional Odemira",
+    "url": "http://c30.radioboss.fm:8510/autodj",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Riverside Radio",
+    "url": "https://stream.and-stuff.nl:8443/riverside",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Rlocale Radio",
+    "url": "https://rlocale.org/listen/rlocale/rlocale-flac.ogg",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "RockStar Radio",
+    "url": "http://live7.avf.ch:8000/rockstar_main",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Roxy Radio",
+    "url": "https://s2.audiostream.hu/roxy_FLAC",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Sanctuary Radio \u00e2\u20ac\u201c Dark Electro Channel",
+    "url": "http://66.94.113.88:8000/ultra_hq",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Sanctuary Radio \u00e2\u20ac\u201c 80\u00e2\u20ac\u2122s Alternative Channel",
+    "url": "http://66.94.113.88:8000/retro_ultra_hq",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Sanctuary Radio \u00e2\u20ac\u201c Club Mix Channel",
+    "url": "http://66.94.113.88:8000/clubmix_ultra_hq",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "SECTOR Classical",
+    "url": "http://89.223.45.5:8000/nota-flac",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "SECTOR Progressive",
+    "url": "http://89.223.45.5:8000/progressive-flac",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "SECTOR Space",
+    "url": "http://89.223.45.5:8000/space-flac",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "SECTOR 80s",
+    "url": "http://89.223.45.5:8000/geny-flac",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "SECTOR 90s",
+    "url": "http://89.223.45.5:8000/next-flac",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "SECTOR 10s",
+    "url": "http://89.223.45.5:8000/zed-flac",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "SECTOR 00s",
+    "url": "http://89.223.45.5:8000/indigo-flac"
+  },
+  {
+    "name": "SECTOR Jazz",
+    "url": "http://89.223.45.5:8000/jazz-flac"
+  },
+  {
+    "name": "shadowfr69 Radio",
+    "url": "https://radio.shadowfr69.eu/lossless",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Sing Sing",
+    "url": "http://stream.sing-sing-bis.org:8000/singsingFlac",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Skylegend Radio",
+    "url": "http://173.212.250.212:8200/flac",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "SomaFM\u00e2\u20ac\u00a1\u00c2\u00a7",
+    "url": "https://hls.somafm.com/hls/groovesalad/FLAC/program.m3u8",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": "942 kbps"
+  },
+  {
+    "name": "Starter FM",
+    "url": "http://10321.cloudrad.io:9054/hd",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Stereo Anime",
+    "url": "http://radio.stereoanime.net:8000/flac",
+    "encoding": "mp3",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": "128 kbps"
+  },
+  {
+    "name": "SUBJAM",
+    "url": "http://orbit.citrus3.com:9016/stream",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "SUN",
+    "url": "http://diffusion.lafrap.fr:8000/sun.flac",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Sweet FM",
+    "url": "http://stream.sweetfm.fr:8000/dab-forever-lms",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "TEKnival Radio",
+    "url": "https://listen.teknivalradio.com/listen/teknivalradio/radio.flac"
+  },
+  {
+    "name": "TrancePulse",
+    "url": "http://stream.trance.ie:8000/tpmixes",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "URBN Radio",
+    "url": "http://live7.avf.ch:8000/urbn_main",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Violent Forces Radio",
+    "url": "https://tuneintoradio1.com:8000/stream.flac",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Violent Forces Radio",
+    "url": "https://tuneintoradio1.com:8010/stream.flac",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Yes FM",
+    "url": "http://live7.avf.ch:8000/yesfm_main",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  },
+  {
+    "name": "Zappa Stream Radio",
+    "url": "https://streams.norbert.de/zappa.flac",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
+  }
 ]

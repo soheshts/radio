@@ -4,7 +4,8 @@ const urlsToCache = [
   '/index.html',
   '/manifest_json.json',
   '/stations_malayalam.json',
-  '/stations_english.json'
+  '/stations_english.json',
+  '/stations_others.json'
 ];
 
 // Install event - cache resources

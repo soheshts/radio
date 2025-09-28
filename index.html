@@ -7,7 +7,8 @@
             var theme = localStorage.getItem('radioAppTheme');
             if (theme === 'dark') {
                 document.documentElement.style.backgroundColor = '#0F0F0F';
-            } else {
+            }
+            else {
                 document.documentElement.style.backgroundColor = '#FFFBFE';
             }
         })();
@@ -291,6 +292,61 @@
 
         .station-item.active .station-genre {
             color: var(--md-sys-color-on-primary-container);
+        }
+
+        .station-quality {
+            font-size: 12px;
+            color: var(--md-sys-color-on-surface-variant);
+            line-height: 1.2;
+            display: none;
+            margin-bottom: 4px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .station-quality.visible {
+            display: flex;
+        }
+
+        .quality-badge {
+            background: var(--md-sys-color-surface-container-high);
+            color: var(--md-sys-color-on-surface);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .quality-badge.encoding {
+            background: var(--md-sys-color-primary-container);
+            color: var(--md-sys-color-on-primary-container);
+        }
+
+        .audio-quality-inline {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: 4px;
+        }
+
+        .quality-badge-inline {
+            background: var(--md-sys-color-surface-container);
+            color: var(--md-sys-color-on-surface-variant);
+            padding: 2px 6px;
+            border-radius: 8px;
+            font-size: 9px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .station-item.active .quality-badge-inline {
+            background: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+            opacity: 0.8;
         }
 
         .playing-indicator {
@@ -717,6 +773,7 @@
                         Press play to begin
                     </div>
                 </div>
+                <div class="station-quality" id="stationQuality"></div>
                 <div class="current-song" id="currentSong"></div>
             </div>
             <div class="player-controls">
@@ -745,6 +802,7 @@
                 this.nextBtn = document.getElementById('nextBtn');
                 this.stationTitle = document.getElementById('stationTitle');
                 this.currentSong = document.getElementById('currentSong');
+                this.stationQuality = document.getElementById('stationQuality');
                 this.genreChips = document.getElementById('genreChips');
                 this.errorMessage = document.getElementById('errorMessage');
                 this.installPrompt = document.getElementById('installPrompt');
@@ -763,7 +821,7 @@
                 this.deferredPrompt = null;
                 this.statusPollInterval = null;
                 this.favorites = this.loadFavorites();
-                this.currentView = 'malayalam'; // Track current view: 'malayalam', 'english', 'others', 'favorites'
+                this.currentView = 'malayalam';
 
                 this.init();
             }
@@ -823,7 +881,6 @@
                         }
                     }
                 });
-
             }
 
             setupMediaSession() {
@@ -863,6 +920,7 @@
                         this.stationTitle.innerHTML = '<div class="loading-indicator"><div class="spinner"></div>Loading...</div>';
                         this.hideGenreChips();
                         this.hideCurrentSong();
+                        this.hideStationQuality();
                     }
                     this.clearError();
                 });
@@ -870,6 +928,7 @@
                 this.audio.addEventListener('canplay', () => {
                     if (this.currentStation && this.hasPlayedOnce) {
                         this.stationTitle.textContent = this.currentStation.name;
+                        this.updateStationQuality(this.currentStation);
                     }
                 });
 
@@ -882,8 +941,8 @@
 
                     if (this.currentStation) {
                         this.stationTitle.textContent = this.currentStation.name;
+                        this.updateStationQuality(this.currentStation);
                         this.extractMetadata();
-                        // Start polling for current song when playback begins
                         this.startStatusPolling();
                     }
                 });
@@ -893,7 +952,6 @@
                     this.updatePlayButton();
                     this.updatePlayingIndicators();
                     this.updateMediaSessionMetadata();
-                    // Stop polling when paused
                     this.stopStatusPolling();
                 });
 
@@ -906,8 +964,8 @@
                     }
                     this.hideGenreChips();
                     this.hideCurrentSong();
+                    this.hideStationQuality();
                     this.updatePlayingIndicators();
-                    // Stop polling on error
                     this.stopStatusPolling();
                 });
 
@@ -919,7 +977,6 @@
             }
 
             async extractMetadata() {
-                // Try to extract ICY metadata from stream headers
                 try {
                     const response = await fetch(this.currentStation.url, {
                         method: 'HEAD',
@@ -935,7 +992,6 @@
                         this.hideGenreChips();
                     }
                 } catch (error) {
-                    // Fallback to station genre if ICY metadata not available
                     if (this.currentStation.genre) {
                         this.currentGenre = this.currentStation.genre;
                         this.showGenreChips(this.currentGenre);
@@ -946,7 +1002,6 @@
             }
 
             showGenreChips(genreString) {
-                // Clear existing chips
                 this.genreChips.innerHTML = '';
 
                 if (!genreString) {
@@ -954,11 +1009,10 @@
                     return;
                 }
 
-                // Split by comma and clean up each genre
                 const genres = genreString.split(',')
                     .map(genre => genre.trim())
                     .filter(genre => genre.length > 0)
-                    .slice(0, 3); // Limit to 3 genres
+                    .slice(0, 3);
 
                 if (genres.length > 0) {
                     genres.forEach(genre => {
@@ -991,6 +1045,75 @@
                 this.currentSong.textContent = '';
             }
 
+            generateAudioQualityBadge(station) {
+                const qualities = [];
+
+                if (station.encoding && station.encoding !== 'none' && station.encoding.toLowerCase() !== 'none') {
+                    qualities.push(`<span class="quality-badge-inline encoding">${station.encoding.toUpperCase()}</span>`);
+                }
+
+                if (station.sample_rate && station.sample_rate !== 'none' && station.sample_rate.toLowerCase() !== 'none') {
+                    qualities.push(`<span class="quality-badge-inline">${station.sample_rate}</span>`);
+                }
+
+                if (station.channels && station.channels !== 'none' && station.channels.toLowerCase() !== 'none') {
+                    qualities.push(`<span class="quality-badge-inline">${station.channels}</span>`);
+                }
+
+                if (station.bit_rate && station.bit_rate !== 'none' && station.bit_rate !== null && station.bit_rate.toString().toLowerCase() !== 'none') {
+                    qualities.push(`<span class="quality-badge-inline">${station.bit_rate}</span>`);
+                }
+
+                return qualities.length > 0 ? `<div class="audio-quality-inline">${qualities.join('')}</div>` : '';
+            }
+
+            updateStationQuality(station) {
+                if (!station || !this.stationQuality) return;
+
+                const qualities = [];
+
+                if (station.encoding && station.encoding !== 'none' && station.encoding.toLowerCase() !== 'none') {
+                    qualities.push(`<span class="quality-badge encoding">${station.encoding.toUpperCase()}</span>`);
+                }
+
+                if (station.sample_rate && station.sample_rate !== 'none' && station.sample_rate.toLowerCase() !== 'none') {
+                    qualities.push(`<span class="quality-badge">${station.sample_rate}</span>`);
+                }
+
+                if (station.channels && station.channels !== 'none' && station.channels.toLowerCase() !== 'none') {
+                    qualities.push(`<span class="quality-badge">${station.channels}</span>`);
+                }
+
+                if (station.bit_rate && station.bit_rate !== 'none' && station.bit_rate !== null && station.bit_rate.toString().toLowerCase() !== 'none') {
+                    qualities.push(`<span class="quality-badge">${station.bit_rate}</span>`);
+                }
+
+                if (qualities.length > 0) {
+                    this.stationQuality.innerHTML = qualities.join('');
+                    this.stationQuality.classList.add('visible');
+                } else {
+                    this.stationQuality.classList.remove('visible');
+                    this.stationQuality.innerHTML = '';
+                }
+            }
+
+            hideStationQuality() {
+                if (this.stationQuality) {
+                    this.stationQuality.classList.remove('visible');
+                    this.stationQuality.innerHTML = '';
+                }
+            }
+
+            showPressPlayMessage() {
+                this.stationTitle.innerHTML = `
+                    <div class="press-play-message">
+                        <span class="material-symbols-rounded">play_arrow</span>
+                        Press play to begin
+                    </div>
+                `;
+                this.hideStationQuality();
+            }
+
             loadFavorites() {
                 try {
                     const saved = localStorage.getItem('radioWaveFavorites');
@@ -1009,31 +1132,30 @@
                 }
             }
 
-            toggleFavorite(station, stationIndex = null) {
+            toggleFavorite(station) {
                 const stationId = `${station.name}-${station.url}`;
                 const existingIndex = this.favorites.findIndex(fav =>
                     `${fav.name}-${fav.url}` === stationId
                 );
 
                 if (existingIndex >= 0) {
-                    // Remove from favorites
                     this.favorites.splice(existingIndex, 1);
                 } else {
-                    // Add to favorites
                     this.favorites.push({
                         name: station.name,
                         url: station.url,
                         genre: station.genre,
-                        language: this.selectedLanguage
+                        language: this.selectedLanguage,
+                        encoding: station.encoding,
+                        sample_rate: station.sample_rate,
+                        channels: station.channels,
+                        bit_rate: station.bit_rate
                     });
                 }
 
                 this.saveFavorites();
-
-                // Update the heart icon in the UI
                 this.updateFavoriteButtons();
 
-                // If we're currently viewing favorites, refresh the list
                 if (this.currentView === 'favorites') {
                     this.showFavorites();
                 }
@@ -1088,22 +1210,16 @@
                         }
                     }
                 } catch (error) {
-                    // Silently fail for current song fetching
                     console.log('Could not fetch current song:', error.message);
                 }
 
-                // Schedule next poll
                 this.scheduleNextPoll();
             }
 
             extractTitleFromJSON(data) {
-                // Try various JSON structures commonly used by streaming servers
                 const possiblePaths = [
-                    // Icecast
                     () => data.icestats?.source?.title,
                     () => Array.isArray(data.icestats?.source) ? data.icestats.source[data.icestats.source.length - 1]?.title : data.icestats?.source?.title,
-
-                    // Generic
                     () => data.title,
                     () => data.song,
                     () => data.current_song,
@@ -1112,15 +1228,11 @@
                     () => data.nowPlaying,
                     () => data.track,
                     () => data.current,
-
-                    // Nested structures
                     () => data.data?.title,
                     () => data.result?.title,
                     () => data.response?.title,
                     () => data.current?.title,
                     () => data.live?.title,
-
-                    // Array structures
                     () => Array.isArray(data) && data.length > 0 ? data[0].title : null,
                     () => data.tracks?.[0]?.title,
                 ];
@@ -1147,7 +1259,7 @@
                     if (this.isPlaying && this.currentStation) {
                         this.fetchCurrentSong();
                     }
-                }, 10000); // Poll every 10 seconds
+                }, 10000);
             }
 
             startStatusPolling() {
@@ -1163,20 +1275,10 @@
                 this.hideCurrentSong();
             }
 
-            showPressPlayMessage() {
-                this.stationTitle.innerHTML = `
-                    <div class="press-play-message">
-                        <span class="material-symbols-rounded">play_arrow</span>
-                        Press play to begin
-                    </div>
-                `;
-            }
-
             async loadStations(languageKey) {
                 this.selectedLanguage = languageKey;
                 this.currentView = languageKey;
 
-                // Update section title based on language
                 const titleMap = {
                     'malayalam': 'Malayalam Stations',
                     'english': 'English Stations',
@@ -1194,29 +1296,29 @@
 
                     const defaultStations = {
                         'english': [
-                            { name: "BBC Radio 1", url: "http://stream.live.vc.bbcmedia.co.uk/bbc_radio_one", genre: "Pop Music" },
-                            { name: "NPR News", url: "https://npr-ice.streamguys1.com/live.mp3", genre: "News & Talk" },
-                            { name: "Classic FM", url: "http://media-ice.musicradio.com/ClassicFMMP3", genre: "Classical" },
-                            { name: "Jazz FM", url: "https://edge-bauerall-01-gos2.sharp-stream.com/jazzfm.mp3", genre: "Jazz" },
-                            { name: "Smooth Radio", url: "http://media-ice.musicradio.com/SmoothUKMP3", genre: "Easy Listening" }
+                            { name: "BBC Radio 1", url: "http://stream.live.vc.bbcmedia.co.uk/bbc_radio_one", genre: "Pop Music", encoding: "mp3", sample_rate: "44.1 kHz", channels: "2 ch", bit_rate: "128 kbps" },
+                            { name: "NPR News", url: "https://npr-ice.streamguys1.com/live.mp3", genre: "News & Talk", encoding: "mp3", sample_rate: "44.1 kHz", channels: "2 ch", bit_rate: "64 kbps" },
+                            { name: "Classic FM", url: "http://media-ice.musicradio.com/ClassicFMMP3", genre: "Classical", encoding: "mp3", sample_rate: "44.1 kHz", channels: "2 ch", bit_rate: "128 kbps" },
+                            { name: "Jazz FM", url: "https://edge-bauerall-01-gos2.sharp-stream.com/jazzfm.mp3", genre: "Jazz", encoding: "mp3", sample_rate: "44.1 kHz", channels: "2 ch", bit_rate: "128 kbps" },
+                            { name: "Smooth Radio", url: "http://media-ice.musicradio.com/SmoothUKMP3", genre: "Easy Listening", encoding: "mp3", sample_rate: "44.1 kHz", channels: "2 ch", bit_rate: "128 kbps" }
                         ],
                         'malayalam': [
-                            { name: "AIR Malayalam", url: "http://air.pc.cdn.bitgravity.com/air/live/pbaudio022/playlist.m3u8", genre: "Malayalam Music" },
-                            { name: "Radio Mango", url: "http://bcovlive-a.akamaihd.net/1d86dc6e8a174dbf9647fbeee9c0e8b1/ap-south-1/6034685947001/playlist.m3u8", genre: "Malayalam Hits" },
-                            { name: "Asianet Radio", url: "http://bcovlive-a.akamaihd.net/1d86dc6e8a174dbf9647fbeee9c0e8b1/ap-south-1/6034685947001/playlist.m3u8", genre: "Entertainment" },
-                            { name: "Red FM Kerala", url: "https://redm.redmedia.com:1935/red_tamil/playlist.m3u8", genre: "Malayalam Popular" }
+                            { name: "AIR Malayalam", url: "http://air.pc.cdn.bitgravity.com/air/live/pbaudio022/playlist.m3u8", genre: "Malayalam Music", encoding: "aac", sample_rate: "44.1 kHz", channels: "2 ch", bit_rate: "96 kbps" },
+                            { name: "Radio Mango", url: "http://bcovlive-a.akamaihd.net/1d86dc6e8a174dbf9647fbeee9c0e8b1/ap-south-1/6034685947001/playlist.m3u8", genre: "Malayalam Hits", encoding: "aac", sample_rate: "48 kHz", channels: "2 ch", bit_rate: "128 kbps" },
+                            { name: "Asianet Radio", url: "http://bcovlive-a.akamaihd.net/1d86dc6e8a174dbf9647fbeee9c0e8b1/ap-south-1/6034685947001/playlist.m3u8", genre: "Entertainment", encoding: "aac", sample_rate: "44.1 kHz", channels: "2 ch", bit_rate: "96 kbps" },
+                            { name: "Red FM Kerala", url: "https://redm.redmedia.com:1935/red_tamil/playlist.m3u8", genre: "Malayalam Popular", encoding: "aac", sample_rate: "44.1 kHz", channels: "2 ch", bit_rate: "128 kbps" }
                         ],
                         'others': [
-                            { name: "Radio France Inter", url: "https://direct.franceinter.fr/live/franceinter-midfi.mp3", genre: "French News" },
-                            { name: "Deutsche Welle", url: "https://dw-i-05-c01-cdn.svc.ctl.io/live/988349/playlist_64.m3u8", genre: "German News" },
-                            { name: "NHK World Radio Japan", url: "https://radio-stream.nhk.jp/hls/live/2023229/nhkradiruakr/master.m3u8", genre: "Japanese" },
-                            { name: "China Radio International", url: "https://sk-cri.mediacdn.pl/cri/english.mp3", genre: "Chinese English" }
+                            { name: "Radio France Inter", url: "https://direct.franceinter.fr/live/franceinter-midfi.mp3", genre: "French News", language: "French", encoding: "mp3", sample_rate: "44.1 kHz", channels: "2 ch", bit_rate: "128 kbps" },
+                            { name: "Deutsche Welle", url: "https://dw-i-05-c01-cdn.svc.ctl.io/live/988349/playlist_64.m3u8", genre: "German News", language: "German", encoding: "aac", sample_rate: "44.1 kHz", channels: "2 ch", bit_rate: "64 kbps" },
+                            { name: "NHK World Radio Japan", url: "https://radio-stream.nhk.jp/hls/live/2023229/nhkradiruakr/master.m3u8", genre: "Japanese", language: "Japanese", encoding: "aac", sample_rate: "48 kHz", channels: "2 ch", bit_rate: "96 kbps" },
+                            { name: "China Radio International", url: "https://sk-cri.mediacdn.pl/cri/english.mp3", genre: "Chinese English", language: "English", encoding: "mp3", sample_rate: "44.1 kHz", channels: "2 ch", bit_rate: "128 kbps" }
                         ]
                     };
 
                     let stations;
                     const jsonFile = languageKey === 'others' ? 'stations_others.json' : `stations_${languageKey}.json`;
-                    
+
                     try {
                         const response = await fetch(jsonFile);
                         if (response.ok) {
@@ -1268,10 +1370,9 @@
                     const isFav = this.isFavorite(station);
                     const heartIcon = isFav ? 'favorite' : 'favorite_border';
                     const heartClass = isFav ? 'favorited' : '';
-                    
-                    // For "others" view, show language from JSON; otherwise show genre
-                    const displayText = this.currentView === 'others' && station.language 
-                        ? station.language 
+
+                    const displayText = this.currentView === 'others' && station.language
+                        ? station.language
                         : (station.genre || 'Music');
 
                     stationElement.innerHTML = `
@@ -1281,6 +1382,7 @@
                         <div class="station-details">
                             <div class="station-name">${station.name}</div>
                             <div class="station-genre">${displayText}</div>
+                            ${this.generateAudioQualityBadge(station)}
                         </div>
                         <button class="favorite-btn ${heartClass}" data-index="${index}">
                             <span class="material-symbols-rounded">${heartIcon}</span>
@@ -1290,14 +1392,12 @@
                         </div>
                     `;
 
-                    // Station click handler (excluding favorite button)
                     stationElement.addEventListener('click', (e) => {
                         if (!e.target.closest('.favorite-btn')) {
                             this.selectStation(index, true);
                         }
                     });
 
-                    // Favorite button click handler
                     const favoriteBtn = stationElement.querySelector('.favorite-btn');
                     favoriteBtn.addEventListener('click', (e) => {
                         e.stopPropagation();
@@ -1310,7 +1410,6 @@
                 this.prevBtn.disabled = false;
                 this.nextBtn.disabled = false;
 
-                // Select first station without auto-playing on initial load
                 if (!this.hasPlayedOnce && this.currentView !== 'favorites') {
                     this.selectStation(0, false);
                 }
@@ -1321,11 +1420,11 @@
                 this.sectionTitle.textContent = 'Favorite Stations';
                 this.stopStatusPolling();
 
-                // Don't change selectedLanguage, keep it for when user goes back
-                this.stations = [...this.favorites]; // Copy favorites array
+                this.stations = [...this.favorites];
                 this.currentStation = null;
                 this.currentStationIndex = 0;
                 this.hideGenreChips();
+                this.hideStationQuality();
 
                 if (!this.hasPlayedOnce) {
                     this.showPressPlayMessage();
@@ -1365,7 +1464,6 @@
 
                 await this.loadStations(languageKey);
 
-                // Auto-play first station if user was already listening
                 if (this.stations.length > 0 && wasPlaying && this.hasPlayedOnce) {
                     setTimeout(() => {
                         this.selectStation(0, true);
@@ -1374,14 +1472,11 @@
             }
 
             selectStation(index, autoPlay = false) {
-                // Stop polling for previous station
                 this.stopStatusPolling();
 
-                // Remove active class from all stations
                 const allStations = this.stationsContainer.querySelectorAll('.station-item');
                 allStations.forEach(station => station.classList.remove('active'));
 
-                // Add active class to selected station
                 const selectedStation = this.stationsContainer.querySelector(`[data-index="${index}"]`);
                 if (selectedStation) {
                     selectedStation.classList.add('active');
@@ -1397,6 +1492,7 @@
                     this.showPressPlayMessage();
                 } else if (this.hasPlayedOnce) {
                     this.stationTitle.textContent = this.currentStation.name;
+                    this.updateStationQuality(this.currentStation);
                 }
 
                 this.clearError();
@@ -1406,10 +1502,9 @@
                 if (autoPlay) {
                     this.play();
                 } else if (this.isPlaying) {
-                    // If we were playing, start polling for the new station
                     setTimeout(() => {
                         this.startStatusPolling();
-                    }, 1000); // Give the stream a moment to start
+                    }, 1000);
                 }
             }
 
@@ -1442,10 +1537,8 @@
             updatePlayingIndicators() {
                 const allStations = this.stationsContainer.querySelectorAll('.station-item');
                 allStations.forEach((station, index) => {
-                    const indicator = station.querySelector('.playing-indicator');
                     if (index === this.currentStationIndex && this.isPlaying) {
                         station.classList.add('active');
-                        // Playing indicator is shown via CSS when station is active
                     } else if (index === this.currentStationIndex) {
                         station.classList.add('active');
                     } else {

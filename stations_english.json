@@ -1,23 +1,43 @@
 [
   {
     "name": "Radio Paradise Main",
-    "url": "http://stream.radioparadise.com/flacm"
+    "url": "http://stream.radioparadise.com/flacm",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
   },
   {
     "name": "Radio Paradise Rock",
-    "url": "http://stream.radioparadise.com/rock-flacm"
+    "url": "http://stream.radioparadise.com/rock-flacm",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
   },
   {
     "name": "Radio Paradise Global",
-    "url": "http://stream.radioparadise.com/global-flacm"
+    "url": "http://stream.radioparadise.com/global-flacm",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
   },
   {
     "name": "BDPST",
-    "url": "https://s2.audiostream.hu/bdpstrock_FLAC"
+    "url": "https://s2.audiostream.hu/bdpstrock_FLAC",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
   },
   {
     "name": "Danubius Radio",
-    "url": "https://stream.danubiusradio.hu/danubius_HiFi"
+    "url": "https://stream.danubiusradio.hu/danubius_HiFi",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
   },
   {
     "name": "Juventus Radio",
@@ -25,66 +45,86 @@
   },
   {
     "name": "Roxy Radio",
-    "url": "https://s2.audiostream.hu/roxy_FLAC"
+    "url": "https://s2.audiostream.hu/roxy_FLAC",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
   },
   {
     "name": "HiFi Dream Radio",
-    "url": "https://cdn06-us-east.radio.cloud/80ba63862a97bd69c593cc7a2ccaab1c_hq"
+    "url": "https://cdn06-us-east.radio.cloud/80ba63862a97bd69c593cc7a2ccaab1c_hq",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
   },
-{
+  {
     "name": "Riverside Radio",
-    "url": "https://stream.and-stuff.nl:8443/riverside"
+    "url": "https://stream.and-stuff.nl:8443/riverside",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
   },
   {
     "name": "95bFM Radio",
-    "url": "https://ice.radiorandom.org/WBJM-FLAC"
+    "url": "https://ice.radiorandom.org/WBJM-FLAC",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
   },
   {
     "name": "Open Sky Radio",
-    "url": "https://audio.opensky.radio:8082/flac"
+    "url": "https://audio.opensky.radio:8082/flac",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
   },
   {
     "name": "JB Radio",
-    "url": "https://mediacp.jb-radio.net:8001/flac"
+    "url": "https://mediacp.jb-radio.net:8001/flac",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
   },
   {
     "name": "Violent Forces Radio",
-    "url": "https://tuneintoradio1.com/listen/violent_forces_radio/stream.flac"
+    "url": "https://tuneintoradio1.com/listen/violent_forces_radio/stream.flac",
+    "encoding": "flac",
+    "sample_rate": "48.0 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
   },
   {
     "name": "Djam Radio",
-    "url": "https://stream10.xdevel.com/audio15s976748-2280/stream/icecast.audio"
-  },
-  {
-    "name": "Classic FM",
-    "url": "http://media-ice.musicradio.com/ClassicFMMP3"
-  },
-  {
-    "name": "Jazz FM London",
-    "url": "https://edge-bauerall-01-gos2.sharp-stream.com/jazzfm.mp3"
-  },
-  {
-    "name": "Smooth Radio",
-    "url": "http://media-ice.musicradio.com/SmoothUKMP3"
+    "url": "https://stream10.xdevel.com/audio15s976748-2280/stream/icecast.audio",
+    "encoding": "flac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": null
   },
   {
     "name": "BBC Radio 4",
     "url": "http://stream.live.vc.bbcmedia.co.uk/bbc_radio_fourfm"
   },
   {
-    "name": "Capital FM",
-    "url": "http://media-ice.musicradio.com/CapitalMP3"
-  },
-  {
-    "name": "Heart Radio",
-    "url": "http://media-ice.musicradio.com/HeartLondonMP3"
-  },
-  {
     "name": "Radio Paradise",
-    "url": "http://stream.radioparadise.com/aac-320"
+    "url": "http://stream.radioparadise.com/aac-320",
+    "encoding": "aac",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": "319 kbps"
   },
   {
     "name": "Chill Out Radio",
-    "url": "https://streams.ilovemusic.de/iloveradio17.mp3"
+    "url": "https://streams.ilovemusic.de/iloveradio17.mp3",
+    "encoding": "mp3",
+    "sample_rate": "44.1 kHz",
+    "channels": "2 ch",
+    "bit_rate": "192 kbps"
   }
 ]
